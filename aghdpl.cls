@@ -313,7 +313,7 @@
 	language=autobib,
 	autolang=other,
 	% Zapisuj datę dostępu do strony WWW w formacie RRRR-MM-DD.
-	urldate=iso8601,
+	urldate=iso,
 	% Nie dodawaj numerów stron, na których występuje cytowanie.
 	backref=false,
 	% Podawaj ISBN.
