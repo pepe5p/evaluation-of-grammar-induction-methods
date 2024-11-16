@@ -142,11 +142,11 @@ Rozpoczynamy od tworzenia minimalnych zbiorów \textit{S} i \textit{E}:
 \[
 S = \{\epsilon\}, \quad E = \{\epsilon\}.
 \]
-Uczeń zadaje zapytanie o członkostwo \( MQ(\epsilon) \), a Nauczyciel odpowiada „tak”, ponieważ \( \epsilon \in L \). Na tej podstawie tabela obserwacji wygląda następująco:
+Uczeń zadaje zapytanie o członkostwo \( MQ(\epsilon) \), a Nauczyciel odpowiada „tak”, ponieważ \( \epsilon \in L \). Na tej podstawie tabela obserwacji wygląda następująco (warto odnotować, że przykład jest na tyle prosty, że nie zwiększymy zbioru \textit{E}, w przeciwnym wypadku powstałoby więcej kolumn):
 
 \[
 \begin{array}{c|c}
-S \cup (S \cdot A) \setminus E & \epsilon \\
+S \cup (S \cdot \Sigma) \setminus E & \epsilon \\
 \hline
 \epsilon      & 1 \\
 \end{array}
@@ -161,7 +161,7 @@ Aktualizacja tabeli:
 
 \[
 \begin{array}{c|c}
-S \cup (S \cdot A) \setminus E & \epsilon \\
+S \cup (S \cdot \Sigma) \setminus E & \epsilon \\
 \hline
 \epsilon      & 1 \\
 \hline
@@ -181,7 +181,7 @@ S = \{\epsilon, a\}.
 Nowa tabela obserwacji:
 \[
 \begin{array}{c|c}
-S \cup (S \cdot A) \setminus E & \epsilon \\
+S \cup (S \cdot \Sigma) \setminus E & \epsilon \\
 \hline
 \epsilon      & 1 \\
 a             & 0 \\
