@@ -1,68 +1,162 @@
-@Book{Lam92,
-author = {Lamport, L.},
-title = {LaTeX system przygotowywania dokumentów},
-publisher = {Wydawnictwo Ariel},
-year = {1992},
-address = {Kraków},
-
-langid = {polish},
+@book{reason:Chomsky57a,
+    address = {The Hague},
+    author = {Chomsky, Noam},
+    publisher = {Mouton and Co.},
+    title = {Syntactic Structures},
+    year = 1957
 }
 
-@Book{Dil00,
-author = {Diller, A.},
-title = {LaTeX wiersz po wierszu},
-publisher = {Wydawnictwo Helion},
-year = {2000},
-address = {Gliwice},
-
-langid = {polish},
+@article{GOLD1967447,
+    title = {Language identification in the limit},
+    journal = {Information and Control},
+    volume = {10},
+    number = {5},
+    pages = {447-474},
+    year = {1967},
+    issn = {0019-9958},
+    doi = {https://doi.org/10.1016/S0019-9958(67)91165-5},
+    url = {https://www.sciencedirect.com/science/article/pii/S0019995867911655},
+    author = {E Mark Gold},
+    abstract = {Language learnability has been investigated. This refers to the following situation: A class of possible languages is specified, together with a method of presenting information to the learner about an unknown language, which is to be chosen from the class. The question is now asked, “Is the information sufficient to determine which of the possible languages is the unknown language?” Many definitions of learnability are possible, but only the following is considered here: Time is quantized and has a finite starting time. At each time the learner receives a unit of information and is to make a guess as to the identity of the unknown language on the basis of the information received so far. This process continues forever. The class of languages will be considered learnable with respect to the specified method of information presentation if there is an algorithm that the learner can use to make his guesses, the algorithm having the following property: Given any language of the class, there is some finite time after which the guesses will all be the same and they will be correct. In this preliminary investigation, a language is taken to be a set of strings on some finite alphabet. The alphabet is the same for all languages of the class. Several variations of each of the following two basic methods of information presentation are investigated: A text for a language generates the strings of the language in any order such that every string of the language occurs at least once. An informant for a language tells whether a string is in the language, and chooses the strings in some order such that every string occurs at least once. It was found that the class of context-sensitive languages is learnable from an informant, but that not even the class of regular languages is learnable from a text.}
 }
 
-
-@Manual{ARM06,
-title = {Ada Reference Manual {ISO}/{IEC} 8652:200y({E}) {E}d. 3},
-organization = {Ada Europe},
-year = {2006}
+@article{L_STAR,
+    title = {Learning regular sets from queries and counterexamples},
+    journal = {Information and Computation},
+    volume = {75},
+    number = {2},
+    pages = {87-106},
+    year = {1987},
+    issn = {0890-5401},
+    doi = {https://doi.org/10.1016/0890-5401(87)90052-6},
+    url = {https://www.sciencedirect.com/science/article/pii/0890540187900526},
+    author = {Dana Angluin},
+    abstract = {The problem of identifying an unknown regular set from examples of its members and nonmembers is addressed. It is assumed that the regular set is presented by a minimally adequate Teacher, which can answer membership queries about the set and can also test a conjecture and indicate whether it is equal to the unknown set and provide a counterexample if not. (A counterexample is a string in the symmetric difference of the correct set and the conjectured set.) A learning algorithm L∗ is described that correctly learns any regular set from any minimally adequate Teacher in time polynomial in the number of states of the minimum dfa for the set and the maximum length of any counterexample provided by the Teacher. It is shown that in a stochastic setting the ability of the Teacher to test conjectures may be replaced by a random sampling oracle, EX( ). A polynomial-time learning algorithm is shown for a particular problem of context-free language identification.}
 }
 
-@Article{BuDo03,
-author = {Burns, A. and Dobbing, B.},
-title = {The {R}avenscar {P}rofile for Real--Time and High Integrity Systems},
-journal = {Cross{T}alk},
-year = {2003},
-volume = {16},
-number = {11},
-pages = {9--12}
+@InProceedings{ALERGIA,
+    author="Carrasco, Rafael C. and Oncina, Jose",
+    editor="Carrasco, Rafael C. and Oncina, Jose",
+    title="Learning stochastic regular grammars by means of a state merging method",
+    booktitle="Grammatical Inference and Applications",
+    year="1994",
+    publisher="Springer Berlin Heidelberg",
+    address="Berlin, Heidelberg",
+    pages="139--152",
+    abstract="We propose a new algorithm which allows for the identification of any stochastic deterministic regular language as well as the determination of the probabilities of the strings in the language. The algorithm builds the prefix tree acceptor from the sample set and merges systematically equivalent states. Experimentally, it proves very fast and the time needed grows only linearly with the size of the sample set.",
+    isbn="978-3-540-48985-6"
 }
 
-
-
-@InProceedings{PeDa04,
-author = {Peleska, J. and Große, D. and Haxthausen, A. E. and Drechsler, R.},
-title = {Automated Verification for Train Control Systems},
-booktitle = {Proc. of the 5th Symposium on Formal Methods for Automation and Safety in Railway and Automotive Systems (FORMS/FORMAT 2004)},
-year = {2004},
-pages = {252--265},
-address = {Braunschweig, Germany},
-month = {12}
+@InProceedings{ECGI,
+    author="Rulot, H{\'e}ctor and Vidal, Enrique",
+    editor="Devijver, Pierre A. and Kittler, Josef",
+    title="Modelling (Sub)String Length Based Constraints through a Grammatical Inference Method",
+    booktitle="Pattern Recognition Theory and Applications",
+    year="1987",
+    publisher="Springer Berlin Heidelberg",
+    address="Berlin, Heidelberg",
+    pages="451--459",
+    abstract="In this paper a new Grammatical Inference method is proposed. In this method, a finite-state automaton is constructed by means of an incremental procedure which performs both Inference and Recognition in an integrated and simultaneous way. The (incremental) growth of the inferred automaton is controlled by explicitly minimizing (by Dynamic Programming Methods) the number of states added when each new sample is presented. This procedure has been shown to achieve an ``abstraction'' process which tends to capture all the relevant variability present in the local (sub)structures of the patterns being considered, and their concatenation, as well as in the lengths (extents) of these structures. The results of the application of this method to a (simple) Automatic Speech Recognition task are presented, showing its capability of achieving recognition rates which are higher than those obtained with the automata constructed by hand by experienced speech researchers.",
+    isbn="978-3-642-83069-3"
 }
 
-@TechReport{BuDoVa03,
-author = {Burns, A. and Dobbing, B. and Vardanega, T.},
-title = {Guide for the Use of the Ada Ravenscar Profile in High Integrity Systems},
-institution = {University of York},
-year = {2003},
-number = {YCS-2003-348}
+@ARTICLE{k-TSSI,
+    author={Garcia, P. and Vidal, E.},
+    journal={IEEE Transactions on Pattern Analysis and Machine Intelligence}, 
+    title={Inference of k-testable languages in the strict sense and application to syntactic pattern recognition}, 
+    year={1990},
+    volume={12},
+    number={9},
+    pages={920-925},
+    keywords={Pattern recognition;Natural languages;Learning automata;Gold;Stochastic processes;Frequency;Terminology;Speech recognition;Testing},
+    doi={10.1109/34.57687}
 }
 
+@InProceedings{GIG,
+    author="Dupont, Pierre",
+    editor="Carrasco, Rafael C.
+    and Oncina, Jose",
+    title="Regular grammatical inference from positive and negative samples by genetic search: the GIG method",
+    booktitle="Grammatical Inference and Applications",
+    year="1994",
+    publisher="Springer Berlin Heidelberg",
+    address="Berlin, Heidelberg",
+    pages="236--245",
+    abstract="We recall briefly in this paper the formal theory of regular grammatical inference from positive and negative samples of the language to be learned. We state this problem as a search toward an optimal element in a boolean lattice built from the positive information. We explain how a genetic search technique may be applied to this problem and we introduce a new set of genetic operators. In view of limiting the increasing complexity as the sample size grows, we propose a semi-incremental procedure. Finally, an experimental protocol to assess the performance of a regular inference technique is detailed and comparative results are given.",
+    isbn="978-3-540-48985-6"
+}
 
+@article{GIG_PDA,
+    author = {Pandey, Hari},
+    year = {2017},
+    month = {09},
+    pages = {100},
+    title = {Genetic Algorithm for Grammar Induction and Rules Verification through a PDA Simulator},
+    volume = {6},
+    journal = {IAES International Journal of Artificial Intelligence (IJ-AI)},
+    doi = {10.11591/ijai.v6.i3.pp100-111}
+}
 
-@manual{Alvis2011,
-	organization = {AGH University of Science and Technology},
-	year = {2011},
-	title = {{On Line Alvis Manual}},
-	note = {\\\texttt{http://fm.ia.agh.edu.pl/alvis:manual}},
-	author = {Szpyrka, M.},
+@ARTICLE{MGGI,
+    author={Garcia, Pedro and Vidal, Enrique and Casacuberta, Francisco},
+    journal={IEEE Transactions on Pattern Analysis and Machine Intelligence}, 
+    title={Local Languages, the Succesor Method, and a Step Towards a General Methodology for the Inference of Regular Grammars}, 
+    year={1987},
+    volume={PAMI-9},
+    number={6},
+    pages={841-845},
+    keywords={Pattern recognition;Samarium;Phase estimation;Gold;Automata;Power generation;Learning;local languages;morphisms;regular grammar inference;standard K-languages;syntactic pattern recognition},
+    doi={10.1109/TPAMI.1987.4767991}
+}
 
-	langid = {english},
+@article{MGGI_SPEECH_RECONGNITION,
+    author = {GARC\'{I}A, PEDRO and SEGARRA, ENCARNA and VIDAL, ENRIQUE and GALIANO, ISABEL},
+    title = {ON THE USE OF THE MORPHIC GENERATOR GRAMMATICAL INFERENCE (MGGI) METHODOLOGY IN AUTOMATIC SPEECH RECOGNITION},
+    journal = {International Journal of Pattern Recognition and Artificial Intelligence},
+    volume = {04},
+    number = {04},
+    pages = {667-685},
+    year = {1990},
+    doi = {10.1142/S021800149000037X},
+    URL = { https://doi.org/10.1142/S021800149000037X },
+    eprint = { https://doi.org/10.1142/S021800149000037X},
+    abstract = { Recently, a new methodology, referred to as “Morphic Generator Grammatical Inference” (MGGI), has been introduced as a step towards a general methodology for the inference of regular languages. In this paper we consider the application of this methodology to a real problem of automatic speech recognition, thus allowing (and also requiring) the proposed problem to be properly formulated within the canonical framework of syntactic pattern recognition. The results show both the viability and appropriateness of the application of MGGI to the problem considered. }
+}
+
+@article{RPNI,
+    author = {Oncina, Jose and García, Pedro},
+    year = {1992},
+    month = {01},
+    pages = {},
+    title = {Inferring regular languages in polynomial update time},
+    isbn = {978-981-02-0881-3},
+    journal = {World Scientific},
+    doi = {10.1142/9789812797902_0004}
+}
+
+@unknown{RPNI_OMEGA_AUTOMATA,
+    author = {Bohn, León and Löding, Christof},
+    year = {2021},
+    month = {08},
+    pages = {},
+    title = {Constructing deterministic $\omega$-automata from examples by an extension of the RPNI algorithm},
+    doi = {10.48550/arXiv.2108.03735}
+}
+
+@article{reversible-languages-algorithms,
+    author = {Angluin, Dana},
+    title = {Inference of Reversible Languages},
+    year = {1982},
+    issue_date = {July 1982},
+    publisher = {Association for Computing Machinery},
+    address = {New York, NY, USA},
+    volume = {29},
+    number = {3},
+    issn = {0004-5411},
+    url = {https://doi.org/10.1145/322326.322334},
+    doi = {10.1145/322326.322334},
+    journal = {J. ACM},
+    month = jul,
+    pages = {741–765},
+    numpages = {25}
 }
