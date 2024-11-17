@@ -1,7 +1,9 @@
 \chapter{Algorytm \textit{L*}}
 \label{cha:l-star}
 
-Algorytm \textit{L*} \cite{L_STAR} jest fundamentalnym podejściem do uczenia się języków regularnych za pomocą zapytań i kontrprzykładów. Jego celem jest skonstruowanie minimalnego automatu deterministycznego (DFA), który rozpoznaje dany język regularny, na podstawie ograniczonych interakcji między dwoma uczestnikami procesu uczenia: \textbf{nauczycielem} i \textbf{uczniem}.
+Algorytm \textit{L*} \cite{L_STAR} jest wyróżniającym się podejściem do odkrywania gramatyki języka regularnego dzięki swojemu unikalnemu podejściu do uczenia. Większość innych algorytmów opiera się wyłącznie na przykładach pozytywnych lub zarówno na przykładach pozytywnych, jak i negatywnych. Algorytm \textit{L*} wyłamuje się z tej konwencji, wykorzystując zapytania oraz kontrprzykłady do procesu nauki. Dzięki tej właściwości może być uznawany za bardziej intuicyjny dla człowieka.
+
+Model algorytmu składa się z dwóch aktorów: \textbf{nauczyciela} oraz \textbf{ucznia}. Jego celem jest skonstruowanie minimalnego deterministycznego automatu skończonego (DFA), który rozpoznaje dany język regularny na podstawie ograniczonych interakcji między dwoma uczestnikami procesu.
 
 \section{Metoda}
 
@@ -11,18 +13,19 @@ Konstruowanie minimalnego automatu deterministycznego (DFA), który akceptuje j�
     \item \textbf{Zapytania o równoważność (Equivalence Queries, \textit{EQ}):} Uczeń przedstawia hipotezę \( H \), reprezentującą język \( L(H) \), i pyta, czy \( L(H) = L \). Jeśli hipoteza jest niepoprawna, nauczyciel dostarcza kontrprzykład \( w \), dla którego \( w \in L \) i \( w \notin L(H) \), lub \( w \notin L \) i \( w \in L(H) \).
 \end{itemize}
 
-Nauczyciela często nazywa się też \textbf{wyrocznią} jako skrót myślowy, ponieważ formalnie nauczyciel jest parą \textbf{wyroczni (oracles)} \textit{MQ} i \textit{EQ}.
+Nauczyciel musi być skonstruowany w taki sposób, aby mógł udzielać prawdziwych odpowiedzi na zadawane pytania. Nauczyciela często nazywa się również \textbf{wyrocznią}, co jest skrótem myślowym, ponieważ formalnie nauczyciel składa się z pary \textbf{wyroczni (oracles)}: \textit{MQ} i \textit{EQ}. Zazwyczaj to na użytkowniku algorytmu spoczywa odpowiedzialność za określenie nauczyciela, co wymaga już na wstępie posiadania pewnej wiedzy na temat danego języka. Jest to największe ograniczenie w zastosowaniu algorytmu \textit{L*}.
 
-Proces algorytmu \textit{L*} opiera się na iteracyjnym konstruowaniu \textbf{tabeli obserwacji (Observation Table)}, która zawiera informacje o języku \( L \) zebrane z zapytań \textit{MQ}. Na podstawie tabeli tworzone są kolejne hipotezy automatu DFA, które są następnie testowane za pomocą zapytań \textit{EQ}.
+Proces algorytmu \textit{L*} opiera się na iteracyjnym konstruowaniu \textbf{tabeli obserwacji (Observation Table)}, która gromadzi informacje o języku L uzyskane na podstawie zapytań typu \textit{MQ}. Na podstawie zawartości tabeli formułowane są kolejne hipotezy dotyczące automatu DFA, które następnie poddawane są weryfikacji za pomocą zapytań typu \textit{EQ}.
 
 Główne kroki algorytmu:
 \begin{enumerate}
-    \item \textbf{Inicjalizacja:} Algorytm rozpoczyna od utworzenia tabeli obserwacji z minimalnymi zbiorami prefiksów (\( S \)) i sufiksów (\( E \)).
+    \item \textbf{Inicjalizacja:} Algorytm rozpoczyna od utworzenia tabeli obserwacji wykorzystując minimalne zbiory prefiksów (\( S \)) i sufiksów (\( E \)).
     \item \textbf{Sprawdzanie zamknięcia i spójności:} Algorytm weryfikuje, czy tabela obserwacji spełnia wymagania:
     \begin{itemize}
-        \item \textbf{Zamknięcie:} Każdy prefiks prowadzi do jednego ze znanych stanów.
+        \item \textbf{Zamknięcie:} Każdy prefiks prowadzi do jednego z już znanych stanów.
         \item \textbf{Spójność:} Wiersze tabeli są rozróżnialne za pomocą sufiksów w \( E \).
     \end{itemize}
+    Jeśli tabela nie spełnia tych wymagań algorytm zwiększa zbiory \( S \) i \( E \).
     \item \textbf{Tworzenie hipotezy:} Na podstawie tabeli obserwacji generowany jest automat DFA \( H \).
     \item \textbf{Test równoważności:} Hipoteza \( H \) jest testowana za pomocą \textit{EQ}. W przypadku błędu tabela jest aktualizowana na podstawie kontrprzykładu.
     \item \textbf{Terminacja:} Proces kończy się, gdy hipoteza \( H \) jest poprawna.
@@ -76,7 +79,7 @@ Jeśli hipoteza \( H \) nie jest równoważna \( L \), Nauczyciel dostarcza kont
 
 \section{Złożoność czasowa}
 
-Algorytm \textit{L*} składa się z kilku etapów, których złożoność można szczegółowo przeanalizować. Złożoność czasowa jest wielomianowa, co zostało wykazane \cite{L_STAR}.
+Algorytm \textit{L*} składa się z kilku etapów, których złożoność można szczegółowo przeanalizować. Złożoność czasowa algorytmu jest wielomianowa, co zostało udowodnione w \cite{L_STAR}.
 
 \section{Złożoność pamięciowa}
 
@@ -87,7 +90,7 @@ Przyjmijmy:
     \item \(|\Sigma|\) - rozmiar alfabetu.
 \end{itemize}
 
-\subsubsection*{Struktura danych}
+\subsubsection*{Struktura danych:}
 \begin{itemize}
     \item \textbf{Tabela obserwacji:}
     \begin{itemize}
@@ -95,10 +98,7 @@ Przyjmijmy:
         \item Zbiór \(E\) (sufiksy): maksymalnie \(O(n)\) wpisów,
         \item Całkowity rozmiar tabeli: \(O(n \cdot m)\).
     \end{itemize}
-    \item \textbf{DFA hipotezy:}
-    \begin{itemize}
-        \item DFA może mieć maksymalnie \(n\) stanów i \(O(n \cdot |\Sigma|)\) przejść.
-    \end{itemize}
+    \item \textbf{DFA hipotezy:} DFA może mieć maksymalnie \(n\) stanów i \(O(n \cdot |\Sigma|)\) przejść.
 \end{itemize}
 
 \subsubsection*{Łączna złożoność pamięciowa}
