@@ -1,5 +1,11 @@
 \documentclass[12pt]{aghdpl}
-% \documentclass[language=en,11pt]{aghdpl}  % praca w języku angielskim
+
+\newtheorem{theorem}{Twierdzenie}
+\newtheorem{definition}{Definicja}
+\newtheorem{lemma}{Lemat}
+\newtheorem{corollary}{Wniosek}
+
+\usepackage{diagbox}
 
 %---------------------------------------------------------------------------
 
@@ -38,28 +44,26 @@
 
 
 \begin{document}
-
-	\titlepages
-	\RedefinePlainStyle
-	
-	\setcounter{tocdepth}{2}
-	\tableofcontents
-	\clearpage
+    \titlepages
+    \RedefinePlainStyle
+    
+    \setcounter{tocdepth}{2}
+    \tableofcontents
+    \clearpage
     
     \include{rozdzialy/wprowadzenie}
     \include{rozdzialy/metodyka}
-    \include{rozdzialy/l_star}
     \include{rozdzialy/algorytmy}
     \include{rozdzialy/eksperymenty}
     \include{rozdzialy/wyniki}
     \include{rozdzialy/wnioski}
-	
-	% itd. TODO
-	% \appendix
-	% \include{dodatekA}
-	% \include{dodatekB}
-	% itd.
-	
-	\printbibliography
+    
+    % itd. TODO
+    % \appendix
+    % \include{dodatekA}
+    % \include{dodatekB}
+    % itd.
+    
+    \printbibliography
 
 \end{document}
