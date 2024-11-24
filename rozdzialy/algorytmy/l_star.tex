@@ -163,22 +163,13 @@ Podsumowując czynnikami wpływającymi na złożoność pamięciową są:
 
 \subsection{Przykłady działania}
 
-Aby rozjaśnić działanie algorytmu \textit{L*}, rozważmy proste języki $L_1$ i $L_2$
+Aby rozjaśnić działanie algorytmu \textit{L*}, rozważmy prosty język $L$:
 
 \[
-L_1 = \{ w \in \{a, b\}^* \mid \text{liczba liter } a \text{ w } w \text{ jest parzysta} \}.
-\]
-\[
-L_2 = \{ w \in \{a, b\}^* \mid \text{liczba liter } a \text{ jest parzysta lub liczba liter } b \text{ jest parzysta} \}.
+L = \{ w \in \{a, b\}^* \mid \text{liczba liter } a \text{ jest parzysta lub liczba liter } b \text{ jest parzysta} \}.
 \]
 
-Minimalny DFA dla języka $L_1$ ma dwa stany:
-\begin{itemize}
-    \item Stan $s_0$: parzysta liczba $a$,
-    \item Stan $s_1$: nieparzysta liczba $a$.
-\end{itemize}
-
-Dla języka $L_2$ zawiera cztery stany, ponieważ istnieją cztery możliwe kombinacje parzystości:
+DFA dla języka $L$ zawiera cztery stany, ponieważ istnieją cztery możliwe kombinacje parzystości:
 \begin{itemize}
     \item Stan $s_0$: parzysta liczba $a$ i parzysta liczba $b$,
     \item Stan $s_1$: nieparzysta liczba $a$ i parzysta liczba $b$,
@@ -186,120 +177,25 @@ Dla języka $L_2$ zawiera cztery stany, ponieważ istnieją cztery możliwe komb
     \item Stan $s_3$: parzysta liczba $a$ i nieparzysta liczba $b$.
 \end{itemize}
 
-Schematy minimalnych DFA można zobaczyć kolejno na rysunkach \ref{fig:dfa_even_a} i \ref{fig:dfa_even_a_or_even_b}.
+Schemat minimalnego DFA można zobaczyć na rysunku \ref{fig:dfa_even_a_or_even_b}.
 
-\subsubsection{Przykład 1}
+\begin{figure}[ht]
+    \centering
+    \includegraphics[width=0.2\linewidth]{images/dfa_even_a_or_even_b.png}
+    \caption{Minimalny DFA dla języka $L$.}
+    \label{fig:dfa_even_a_or_even_b}
+\end{figure}
 
 \paragraph*{Inicjalizacja tabeli obserwacji.}
 Rozpoczynamy od tworzenia minimalnych zbiorów \textit{S} i \textit{E}:
 \[
 S = \{\epsilon\}, \quad E = \{\epsilon\}.
 \]
-Uczeń zadaje pytanie o członkostwo \( MQ(\epsilon) \), a Nauczyciel odpowiada „tak”, ponieważ \( \epsilon \in L \). Na tej podstawie konstruujemy tabelę \ref{tab:lang_1_observation_1}.
-
-\begin{table}
-    \centering
-    \begin{tabular}{c|c}
-        \diagbox{\( S \cup (S \cdot \Sigma) \)}{$E$} & \( \epsilon \) \\
-        \hline
-        $\epsilon$ & 1 \\
-    \end{tabular}
-    \caption{Tabela obserwacji $T_0$ dla języka \( L_1 \).}
-    \label{tab:lang_1_observation_1}
-\end{table}
-
-\paragraph*{Dodanie nowych wierszy.}
-Uczeń dodaje \( S \cdot \Sigma = \{a, b\} \) do tabeli i zadaje zapytania o członkostwo:
+Uczeń zadaje pytanie o członkostwo dla każdego elementu zbioru \( S \cup (S \cdot \Sigma) \):
 \[
-MQ(a) = 0, \quad MQ(b) = 1.
+MQ(\epsilon) = 1, \quad MQ(a) = 1, \quad MQ(b) = 1.
 \]
-Zaktualizowaną tabelę widać w tabeli \ref{tab:lang_1_observation_2}.Tabela jest \textbf{niedomknięta}, ponieważ dla \(a\) nie istnieje takie \(s \in S \), że \( \forall e \in E, \, T(a, e) = T(s, e) \).
-
-\begin{table}
-    \centering
-    \begin{tabular}{c|c}
-        \diagbox{\( S \cup (S \cdot \Sigma) \)}{$E$} & \( \epsilon \) \\
-        \hline
-        $\epsilon$ & 1 \\
-        \hline
-        $a$              & 0 \\
-        $b$              & 1 \\
-    \end{tabular}
-    \caption{Tabela obserwacji $T_1$ dla języka \( L_1 \).}
-    \label{tab:lang_1_observation_2}
-\end{table}
-
-\paragraph*{Rozszerzenie \( S \).}
-Dodajemy \( a \) do \( S \), aby tabela była domknięta:
-\[
-S = \{\epsilon, a\}.
-\]
-Uczeń zadaje zapytania dla nowych rozszerzeń \( S \cdot \Sigma \):
-\[
-MQ(aa) = 1, \quad MQ(ab) = 0.
-\]
-Nowe obserwacje widać w tabeli \ref{tab:lang_1_observation_3}. Tabela jest teraz \textbf{domknięta}. Jest też ona \textbf{spójna}. Możemy teraz skonstruować hipotezę.
-
-\begin{table}
-    \centering
-    \begin{tabular}{c|c}
-        \diagbox{\( S \cup (S \cdot \Sigma) \)}{$E$} & \( \epsilon \) \\
-        \hline
-        $\epsilon$      & 1 \\
-        $a$             & 0 \\
-        \hline
-        $b$             & 1 \\
-        $aa$            & 1 \\
-        $ab$            & 0 \\
-    \end{tabular}
-    \caption{Tabela obserwacji $T_2$ dla języka \( L_1 \).}
-    \label{tab:lang_1_observation_3}
-\end{table}
-
-\paragraph*{Konstrukcja hipotezy.}
-Na podstawie tabeli obserwacji \ref{tab:lang_1_observation_3} konstruujemy hipotezę automatu DFA:
-\begin{itemize}
-    \item \textbf{Stany DFA:} \( q_\epsilon, q_a \), odpowiadające \( T(\epsilon, \epsilon) \) oraz \( T(a, \epsilon) \).
-    \item \textbf{Przejścia:}
-    \begin{align*}
-        & q_\epsilon \xrightarrow{a} q_a, \quad q_\epsilon \xrightarrow{b} q_\epsilon, \\
-        & q_a \xrightarrow{a} q_\epsilon, \quad q_a \xrightarrow{b} q_a.
-    \end{align*}
-    \item \textbf{Stan początkowy:} \( q_\epsilon \), ponieważ odpowiada wierszowi \( \epsilon \).
-    \item \textbf{Stany akceptujące:} \( q_\epsilon \), ponieważ odpowiada \( T(\epsilon, \epsilon) = 1 \).
-    \item \textbf{Stany nieakceptujące:} \( q_a \), ponieważ \( T(a, \epsilon) = 0 \).
-\end{itemize}
-
-\paragraph*{Testowanie hipotezy.}
-Hipoteza jest testowana przez zapytanie o równoważność (EQ). Nauczyciel odpowiada "tak" co kończy działanie algorytmu. 
-
-\paragraph*{Ostateczny automat.}
-Automat DFA reprezentujący język o parzystej liczbie \( a \):
-\[
-\begin{array}{c|c|c}
-\text{Stan} & a & b \\
-\hline
-\rightarrow * q_\epsilon & q_a & q_\epsilon \\
-q_a & q_\epsilon & q_a \\
-\end{array}
-\]
-
-\begin{figure}[ht]
-    \centering
-    \includegraphics[width=0.2\linewidth]{images/dfa_even_a.png}
-    \caption{Minimalny DFA generujący język $L_1$.}
-    \label{fig:dfa_even_a}
-\end{figure}
-
-\subsubsection{Przykład 2}
-
-\paragraph*{Dodanie nowych wierszy.}
-Inicjalizacja tabeli obserwacji przebiega tak samo jak w przykładzie pierwszym.
-Uczeń rozszerza \( S \) o \( S \cdot \Sigma = \{a, b\} \) i zadaje pytania:
-\[
-MQ(a) = 0, \quad MQ(b) = 0.
-\]
-Tabelę po aktualizacji widać w tabeli \ref{tab:lang_2_observation_1}. Jest ona \textbf{spójna} i \textbf{domknięta}. Można, więc skonstruować hipotezę.
+Wynik tego etapu można zobaczyć w tabeli \ref{tab:observation_1}. Jest ona \textbf{spójna} i \textbf{domknięta}. Można, więc skonstruować hipotezę.
 
 \begin{table}
     \centering
@@ -311,12 +207,12 @@ Tabelę po aktualizacji widać w tabeli \ref{tab:lang_2_observation_1}. Jest ona
         $a$             & 1 \\
         $b$             & 1 \\
     \end{tabular}
-    \caption{Tabela obserwacji $T_1$ dla języka \( L_2 \).}
-    \label{tab:lang_2_observation_1}
+    \caption{Początkowa tabela obserwacji.}
+    \label{tab:observation_1}
 \end{table}
 
 \paragraph*{Konstrukcja hipotezy $H_1$.}
-Na podstawie tabeli obserwacji \ref{tab:lang_2_observation_1} konstruujemy hipotezę:
+Na podstawie tabeli obserwacji \ref{tab:observation_1} konstruujemy hipotezę:
 \begin{itemize}
     \item \textbf{Stany DFA:} \( q_\epsilon \), odpowiadający unikalnym wierszom tabeli.
     \item \textbf{Przejścia:}
@@ -328,7 +224,7 @@ Na podstawie tabeli obserwacji \ref{tab:lang_2_observation_1} konstruujemy hipot
 \end{itemize}
 
 \paragraph*{Testowanie hipotezy $H_1$.}
-Hipoteza jest testowana przez zapytanie o równoważność (EQ). Można wybrać nieskończenie wiele kontrprzykładów, ale ja przyjmę, że nauczyciel zwraca $ba$.
+Hipoteza jest testowana przez zapytanie o równoważność ($EQ$). Można wybrać nieskończenie wiele kontrprzykładów, ale ja przyjmę, że nauczyciel zwraca $ba$.
 
 \paragraph*{Aktualizacja tabeli obserwacji.}
 Po otrzymaniu kontrprzykładu \( ba \), algorytm aktualizuje tabelę obserwacji. Wszystkie prefiksy \( ba \) są dodawane do zbioru \( S \), co prowadzi do:
@@ -339,13 +235,18 @@ Uczeń zadaje zapytania \( MQ \) dla nowych elementów \( S \cup (S \cdot \Sigma
 \[
 MQ(ba) = 0, \quad MQ(baa) = 1, \quad MQ(bab) = 1.
 \]
-Na tej podstawie aktualizujemy tabelę obserwacji. Wynikową tabelę obserwacji pokazano w tabeli \ref{tab:lang_2_observation_2}. Jest ona \textbf{domknięta} i \textbf{niespójna}, ponieważ \( T(\epsilon, \epsilon) = T(b, \epsilon) \), a \( T(\epsilon \cdot a, \epsilon) \neq T(b \cdot a, \epsilon) \), stąd $a$ jest rozróżniającym sufiksem. Dodajemy $a$ do $E$ i uzupełniamy tabelę obserwacji \ref{tab:lang_2_observation_3}. Jest ona \textbf{domknięta} i \textbf{spójna}, więc możemy skonstruować hipotezę.
+Wynikową tabelę obserwacji pokazano w tabeli \ref{tab:observation_2}. Jest ona \textbf{domknięta}, lecz \textbf{niespójna}, ponieważ:
+\[
+T(\epsilon, \epsilon) = T(b, \epsilon) \wedge T(\epsilon \cdot a, \epsilon) \neq T(b \cdot a, \epsilon),
+\]
+stąd $a$ jest rozróżniającym sufiksem. Dodajemy $a$ do $E$ i uzupełniamy tabelę obserwacji \ref{tab:observation_3}:
 \[
 MQ(\epsilon \cdot a) = 1, \quad MQ(b \cdot a) = 0, \quad MQ(ba \cdot a) = 1,
 \]
 \[
 MQ(a \cdot a) = 1, \quad MQ(bb \cdot a) = 1, \quad MQ(baa \cdot a) = 0, \quad MQ(bab \cdot a) = 1.
 \]
+Tabela obserwacji jest teraz \textbf{domknięta} i \textbf{spójna}, więc możemy skonstruować hipotezę.
 
 \begin{table}
     \centering
@@ -361,8 +262,8 @@ MQ(a \cdot a) = 1, \quad MQ(bb \cdot a) = 1, \quad MQ(baa \cdot a) = 0, \quad MQ
         $baa$           & 1 \\
         $bab$           & 1 \\
     \end{tabular}
-    \caption{Tabela obserwacji $T_2$ dla języka \( L_2 \).}
-    \label{tab:lang_2_observation_2}
+    \caption{Tabela obserwacji po otrzymaniu kontrprzykładu $ba$.}
+    \label{tab:observation_2}
 \end{table}
 
 \begin{table}
@@ -379,14 +280,14 @@ MQ(a \cdot a) = 1, \quad MQ(bb \cdot a) = 1, \quad MQ(baa \cdot a) = 0, \quad MQ
         $baa$           & 1 & 0 \\
         $bab$           & 1 & 1 \\
     \end{tabular}
-    \caption{Tabela obserwacji $T_3$ dla języka \( L_2 \).}
-    \label{tab:lang_2_observation_3}
+    \caption{Tabela obserwacji po rozszerzeniu $E$ o element $a$.}
+    \label{tab:observation_3}
 \end{table}
 
 \paragraph*{Konstrukcja hipotezy $H_2$.}
-Na podstawie tabeli obserwacji \ref{tab:lang_2_observation_3} konstruujemy hipotezę:
+Na podstawie tabeli obserwacji \ref{tab:observation_3} konstruujemy hipotezę:
 \begin{itemize}
-    \item \textbf{Stany DFA:} \( q_\epsilon, q_b, q_{ba} \), odpowiadający unikalnym wierszom tabeli.
+    \item \textbf{Stany DFA:} \( q_\epsilon, q_b, q_{ba} \).
     \item \textbf{Przejścia:}
     \begin{align*}
         & q_\epsilon \xrightarrow{a} q_\epsilon, \quad q_\epsilon \xrightarrow{b} q_b, \\
@@ -398,26 +299,14 @@ Na podstawie tabeli obserwacji \ref{tab:lang_2_observation_3} konstruujemy hipot
 \end{itemize}
 
 \paragraph*{Testowanie hipotezy $H_2$.}
-Hipoteza jest testowana przez zapytanie o równoważność (EQ). Można wybrać nieskończenie wiele kontrprzykładów, ale ja przyjmę, że nauczyciel zwraca $ab$. Jest to kontrprzykład, ponieważ \( ab \in L(H) \land ab \notin L \). 
+Hipoteza jest testowana przez zapytanie o równoważność ($EQ$). Ponownie można wybrać nieskończenie wiele kontrprzykładów. Przyjmijmy, więc, że nauczyciel zwraca $ab$.
 
 \paragraph*{Aktualizacja tabeli obserwacji.}
-Po otrzymaniu kontrprzykładu \( ab \), algorytm aktualizuje tabelę obserwacji. Na początek dodajemy \( a \) oraz \( ab \) do zbioru \( S \), co prowadzi do:
+Po otrzymaniu kontrprzykładu \( ab \), algorytm aktualizuje tabelę obserwacji. Na początek dodajemy \( a \) oraz \( ab \) do zbioru \( S \):
 \[
 S = \{ \epsilon, a, b, ab, ba \}.
 \]
-Uczeń zadaje pytania \( MQ \) dla nowych elementów \( S \cup (S \cdot \Sigma) \). Wyniki zapytań są następujące:
-\[
-MQ(aa) = 1, \quad MQ(ab) = 0, \quad MQ(aba) = 1, \quad MQ(abb) = 1,
-\]
-\[
-MQ(aa \cdot a) = 1, \quad MQ(ab \cdot a) = 1, \quad MQ(aba \cdot a) = 0, \quad MQ(abb \cdot a) = 1.
-\]
-Na tej podstawie aktualizujemy tabelę obserwacji. Wynikową tabelę obserwacji pokazano w tabeli \ref{tab:lang_2_observation_4}. Tabela \( T_4 \) jest \textbf{domknięta}, ale \textbf{niespójna}, ponieważ wiersz dla $\epsilon$ jest taki sam jak wiersz dla $a$, a wiersz dla \( \epsilon \cdot b \) jest inny niż wiersz dla \( a \cdot b \), stąd $b$ jest rozróżniającym sufiksem. Dodajemy $b$ do $E$ i uzupełniamy tabelę obserwacji \ref{tab:lang_2_observation_5}. 
-Dodanie \( b \) do \( E \) pozwala naprawić niespójność, rozróżniając zachowanie stanów dla różnych sufiksów. Uczeń zadaje nowe zapytania \( MQ \) dla wszystkich \( S \cup (S \cdot \Sigma) \) i uzupełnia tabelę. Wyniki zapytań:
-\[
-MQ(\epsilon \cdot b) = 1, \quad MQ(a \cdot b) = 0, \quad MQ(b \cdot b) = 1, \quad MQ(ab \cdot b) = 1.
-\]
-Jest ona \textbf{domknięta} i \textbf{spójna}. 
+Uczeń zadaje pytania \( MQ \) dla nowych elementów zbioru \( S \cup (S \cdot \Sigma) \). Na tej podstawie aktualizujemy tabelę obserwacji. Wynikową tabelę obserwacji pokazano w tabeli \ref{tab:observation_4}. Tabela jest teraz \textbf{domknięta}, ale \textbf{niespójna}, ponieważ wiersz dla $\epsilon$ jest taki sam jak wiersz dla $a$, a wiersz dla \( \epsilon \cdot b \) jest inny niż wiersz dla \( a \cdot b \), stąd $b$ jest rozróżniającym sufiksem. Dodajemy $b$ do $E$ i uzupełniamy tabelę obserwacji \ref{tab:observation_5}. Dodanie \( b \) do \( E \) pozwala naprawić niespójność, rozróżniając zachowanie stanów dla różnych sufiksów.
 
 \begin{table}
     \centering
@@ -426,8 +315,8 @@ Jest ona \textbf{domknięta} i \textbf{spójna}.
         \hline
         $\epsilon$      & 1 & 1 \\
         $a$             & 1 & 1 \\
-        $ab$            & 0 & 1 \\
         $b$             & 1 & 0 \\
+        $ab$            & 0 & 1 \\
         $ba$            & 0 & 1 \\
         \hline
         $aa$            & 1 & 1 \\
@@ -437,8 +326,8 @@ Jest ona \textbf{domknięta} i \textbf{spójna}.
         $baa$           & 1 & 0 \\
         $bab$           & 1 & 1 \\
     \end{tabular}
-    \caption{Tabela obserwacji $T_4$ dla języka \( L_2 \) po dodaniu \( a \) i \( ab \) do \( S \).}
-    \label{tab:lang_2_observation_4}
+    \caption{Tabela obserwacji po dodaniu $a$ i $ab$ do $S$.}
+    \label{tab:observation_4}
 \end{table}
 
 \begin{table}
@@ -448,8 +337,8 @@ Jest ona \textbf{domknięta} i \textbf{spójna}.
         \hline
         $\epsilon$      & 1 & 1 & 1 \\
         $a$             & 1 & 1 & 0 \\
-        $ab$            & 0 & 1 & 1 \\
         $b$             & 1 & 0 & 1 \\
+        $ab$            & 0 & 1 & 1 \\
         $ba$            & 0 & 1 & 1 \\
         \hline
         $aa$            & 1 & 1 & 1 \\
@@ -459,14 +348,14 @@ Jest ona \textbf{domknięta} i \textbf{spójna}.
         $baa$           & 1 & 0 & 1 \\
         $bab$           & 1 & 1 & 0 \\
     \end{tabular}
-    \caption{Tabela obserwacji $T_5$ dla języka \( L_2 \) po dodaniu \( b \) do \( E \).}
-    \label{tab:lang_2_observation_5}
+    \caption{Tabela obserwacji po dodaniu $b$ do $E$.}
+    \label{tab:observation_5}
 \end{table}
 
 \paragraph*{Konstrukcja hipotezy $H_3$.}
-Na podstawie tabeli obserwacji konstruujemy hipotezę DFA:
+Na podstawie tabeli obserwacji konstruujemy hipotezę $H_3$:
 \begin{itemize}
-    \item \textbf{Stany DFA:} \( q_\epsilon, q_a, q_b, q_{ab} \)
+    \item \textbf{Stany DFA:} \( q_\epsilon, q_a, q_b, q_{ab} \), odpowiadające unikalnym wierszom tabeli.
     \item \textbf{Przejścia:}
     \begin{align*}
         & q_\epsilon \xrightarrow{a} q_a, \quad q_\epsilon \xrightarrow{b} q_b, \\
@@ -475,7 +364,8 @@ Na podstawie tabeli obserwacji konstruujemy hipotezę DFA:
         & q_{ab} \xrightarrow{a} q_b, \quad q_{ab} \xrightarrow{b} q_a.
     \end{align*}
     \item \textbf{Stan początkowy:} \( q_\epsilon \).
-    \item \textbf{Stany akceptujące:} \( q_\epsilon, q_a, q_b \)
+    \item \textbf{Stany akceptujące:} \( q_\epsilon, q_a, q_b \), ponieważ odpowiadają sytuacjom, w których parzystość jednego z \( a \) lub \( b \) jest spełniona.
+    \item \textbf{Stany nieakceptujące:} \( q_{ab} \), ponieważ odpowiada sytuacji, w której zarówno \( a \), jak i \( b \) mają nieparzystą liczbę wystąpień.
 \end{itemize}
 
 \paragraph*{Testowanie hipotezy $H_3$.}
@@ -493,12 +383,5 @@ Automat DFA reprezentujący język \( L \) ma następującą macierz przejść:
 q_{ab} & q_b & q_a \\
 \end{array}
 \]
-
-\begin{figure}[ht]
-    \centering
-    \includegraphics[width=0.2\linewidth]{images/dfa_even_a_or_even_b.png}
-    \caption{Minimalny DFA dla języka \( L_2 \): parzystość \( a \) lub \( b \).}
-    \label{fig:dfa_even_a_or_even_b}
-\end{figure}
 
 % Opcjonalnie zastosowania i rozszerzenia
