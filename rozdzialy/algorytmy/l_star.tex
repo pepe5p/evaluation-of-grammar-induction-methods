@@ -47,8 +47,13 @@ Główne kroki algorytmu:
 
 Celem tej sekcji jest przedstawienie formalnych podstaw i narzędzi matematycznych, które są niezbędne do zrozumienia algorytmu \( L^* \). W sekcji tej zawarto definicje kluczowych pojęć, takich jak języki regularne i automaty deterministyczne (DFA), które stanowią fundament problemu inferencji języka na podstawie ograniczonego zestawu danych.
 
-\begin{definition}[DFA]  
-    Skończony automat deterministyczny (DFA) to piątka uporządkowana \( M = (Q, \Sigma, \delta, q_0, F) \), gdzie:
+\begin{definition}[DFA]
+    \label{def:dfa}
+    Skończony automat deterministyczny (DFA) to piątka uporządkowana
+    \[ 
+    M = (Q, \Sigma, \delta, q_0, F), 
+    \]
+    gdzie:
     \begin{itemize}
         \item \( Q \): skończony zbiór stanów,
         \item \( \Sigma \): alfabet,
@@ -59,10 +64,12 @@ Celem tej sekcji jest przedstawienie formalnych podstaw i narzędzi matematyczny
 \end{definition}
 
 \begin{definition}[Akceptowanie słowa]
+    \label{def:word_acceptance}
     Automat \( M \) akceptuje słowo \( w \in \Sigma^* \), jeśli \( \delta(q_0, w) \in F \), gdzie \( \delta(q_0, w) \) oznacza iteracyjne zastosowanie funkcji przejścia \( \delta \) do słowa \( w \).
 \end{definition}
 
 \begin{definition}[Język regularny]  
+    \label{def:regular_language}
     Język \( L \subseteq \Sigma^* \) zdefiniowany nad alfabetem \( \Sigma \) nazywamy językiem regularnym, jeśli istnieje deterministyczny automat skończony (DFA) \( M = (Q, \Sigma, \delta, q_0, F) \), który akceptuje wszystkie słowa należące do \( L \), i tylko te słowa:
     \[
     L = \{ w \in \Sigma^* \mid M \text{ akceptuje } w \}.
@@ -75,7 +82,7 @@ Formalizacja DFA pozwala przejść od intuicyjnego opisu języka regularnego do 
     Tabela obserwacji (ObservationTable) to struktura danych definiowana jako trójka \( (S, E, T) \), gdzie:
     \begin{itemize}
         \item \( S \subseteq \Sigma^* \): skończony zbiór prefiksów,
-        \item \( E \subseteq \Sigma^* \): skończony zbiór sufiksów,
+         \item \( E \subseteq \Sigma^* \): skończony zbiór sufiksów,
         \item \( T: (S \cup S \cdot \Sigma) \times E \to \{0, 1\} \): funkcja wartościująca wynik zapytania \( MQ(s \cdot e) \), gdzie \( s \in S \cup S \cdot \Sigma \) i \( e \in E \).
     \end{itemize}
 \end{definition}
@@ -161,7 +168,7 @@ Podsumowując czynnikami wpływającymi na złożoność pamięciową są:
     \item \textbf{Liczba stanów DFA (\(n\))}: Więcej stanów oznacza większą tabelę obserwacji i więcej iteracji algorytmu.
 \end{itemize}
 
-\subsection{Przykłady działania}
+\subsection{Przykład działania}
 
 Aby rozjaśnić działanie algorytmu \textit{L*}, rozważmy prosty język $L$:
 
@@ -224,7 +231,7 @@ Na podstawie tabeli obserwacji \ref{tab:observation_1} konstruujemy hipotezę:
 \end{itemize}
 
 \paragraph*{Testowanie hipotezy $H_1$.}
-Hipoteza jest testowana przez zapytanie o równoważność ($EQ$). Można wybrać nieskończenie wiele kontrprzykładów, ale ja przyjmę, że nauczyciel zwraca $ba$.
+Hipoteza jest testowana przez zapytanie o równoważność ($EQ$). Można wybrać nieskończenie wiele kontrprzykładów, ale na potrzebę przykładu przyjmijmy, że nauczyciel zwraca $ba$.
 
 \paragraph*{Aktualizacja tabeli obserwacji.}
 Po otrzymaniu kontrprzykładu \( ba \), algorytm aktualizuje tabelę obserwacji. Wszystkie prefiksy \( ba \) są dodawane do zbioru \( S \), co prowadzi do:
@@ -383,5 +390,3 @@ Automat DFA reprezentujący język \( L \) ma następującą macierz przejść:
 q_{ab} & q_b & q_a \\
 \end{array}
 \]
-
-% Opcjonalnie zastosowania i rozszerzenia
