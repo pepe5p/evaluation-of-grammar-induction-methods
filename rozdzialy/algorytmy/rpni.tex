@@ -1,7 +1,7 @@
 \section{Algorytm \textit{RPNI}}
 \label{sec:rpni}
 
-Algorytm \textit{RPNI} (\textit{Regular Positive and Negative Inference}) \cite{RPNI} jest jednym z klasycznych algorytmów do odkrywania gramatyki języka regularnego. Wyróżnia się zdolnością do generalizacji na podstawie zbiorów przykładów pozytywnych oraz negatywnych, wykorzystując podejście łączenia stanów w drzewie akceptacji prefiksów (PTA).
+Algorytm \textit{RPNI} (\textit{Regular Positive and Negative Inference}) \cite{RPNI} jest jednym z klasycznych algorytmów do odkrywania gramatyki języka regularnego. Dokonuje on generalizacji na podstawie zbiorów przykładów pozytywnych oraz negatywnych, wykorzystując podejście łączenia stanów w drzewie akceptacji prefiksów (PTA).
 
 Model algorytmu zakłada, że język docelowy jest regularny, a dostępne dane (przykłady pozytywne \( S^+ \) i negatywne \( S^- \)) są wystarczająco reprezentatywne, aby umożliwić skonstruowanie minimalnego deterministycznego automatu skończonego (DFA). Proces ten polega na iteracyjnym scalaniu stanów w PTA w celu zbudowania modelu akceptującego wszystkie przykłady pozytywne i odrzucającego negatywne.
 
@@ -26,7 +26,7 @@ Algorytm RPNI składa się z następujących etapów:
 \begin{itemize}
     \item \textbf{Minimalizacja DFA:} Wynikowy automat jest zawsze minimalny, zgodny z \( S^+ \) i \( S^- \).
     \item \textbf{Efektywność:} Algorytm działa w czasie wielomianowym względem rozmiaru danych wejściowych.
-    \item \textbf{Zbieżność identyfikacji (identification in the limit):} RPNI gwarantuje poprawne działanie dla klas języków regularnych w przypadku wystarczająco dużego zestawu danych.
+    \item \textbf{Zbieżność identyfikacji (identification in the limit \cite{GOLD1967447}):} RPNI gwarantuje poprawne działanie dla klas języków regularnych w przypadku wystarczająco dużego zestawu danych.
 \end{itemize}
 
 \subsection{Formalizacja}
@@ -44,6 +44,7 @@ Celem niniejszej sekcji jest dostarczenie formalnych definicji oraz narzędzi ma
 Oczywistą, ale wartą odnotowania implikacją jest to, że zbiór przykładów pozytywnych i zbiór przykładów negatywnych są rozłączne (\( S^+ \cap S^- = \emptyset \)).
 
 \begin{definition}[Akceptor drzewa prefiksów (Prefix Tree Acceptor, PTA)]  
+    \label{def:pta}
     Dla zbioru \( S^+ \), akceptor drzewa prefiksów \( PTA(S^+) \) to deterministyczny automat skończony \( M = (Q, \Sigma, \delta, q_0, F) \), gdzie:
     \begin{itemize}
         \item \( Q \): zbiór wszystkich prefiksów słów z \( S^+ \),
@@ -68,8 +69,8 @@ Oczywistą, ale wartą odnotowania implikacją jest to, że zbiór przykładów 
         \item \( F' =
         \begin{cases} 
             F & \text{jeśli } q_2 \notin F \\
-            F \setminus \{q_2\} & \text{jeśli } q_1 \in F \land q_2 \in F \\
-            (F \setminus \{q_2\}) \cup \{q_1\} & \text{jeśli } q_1 \notin F \land q_2 \in F \\
+            F \setminus \{q_2\} & \text{jeśli } q_2 \in F \land q_1 \in F \\
+            (F \setminus \{q_2\}) \cup \{q_1\} & \text{jeśli } q_2 \in F \land q_1 \notin F \\
         \end{cases}
         \).
     \end{itemize}

@@ -1,2 +1,103 @@
-\section{Algorytm \textit{ALERGIA}}
-\label{sec:alergia}
+\section{Algorytm \textit{ALERGIA}}  
+\label{sec:alergia}  
+
+Algorytm \textit{ALERGIA} \cite{ALERGIA} jest podejściem do indukcji stochastycznych gramatyk regularnych. W przeciwieństwie do algorytmu \textit{RPNI}, który zakłada obecność zarówno przykładów pozytywnych, jak i negatywnych, \textit{ALERGIA} opiera się wyłącznie na zbiorze przykładów pozytywnych. Umożliwia to jego zastosowanie w sytuacjach, gdzie dostęp do przykładów negatywnych jest ograniczony lub niemożliwy.  
+
+Algorytm ten konstruuje deterministyczny stochastyczny automat skończony (DSFA) na podstawie drzewa akceptacji prefiksów (PTA) utworzonego z dostępnych danych. Proces uogólniania polega na łączeniu stanów automatu, przy jednoczesnym zachowaniu zgodności ze statystycznym rozkładem prawdopodobieństwa przejść między stanami. Decyzje o scalaniu są podejmowane na podstawie testów statystycznych, które zapewniają, że wynikowy model zachowuje probabilistyczne własności danych wejściowych.  
+
+Jedną z kluczowych cech algorytmu \textit{ALERGIA} jest jego zdolność do indukcji gramatyk stochastycznych, co czyni go szczególnie przydatnym w zastosowaniach wymagających modelowania niepewności lub probabilistycznych wzorców zachowań. Dzięki swojej efektywności obliczeniowej algorytm ten znajduje zastosowanie w zadaniach takich jak rozpoznawanie wzorców, analiza sekwencji biologicznych oraz modelowanie języka naturalnego.
+
+Algorytm działa iteracyjnie, testując kompatybilność stanów i łącząc te, które są statystycznie zgodne. Proces kończy się, gdy żadne dalsze scalenie nie jest możliwe bez naruszenia kryteriów statystycznych. Dzięki temu wynikowy automat nie tylko reprezentuje język generowany przez dane treningowe, ale także umożliwia estymację prawdopodobieństwa generacji nowych ciągów.
+
+Mimo swoich zalet, \textit{ALERGIA} zazwyczaj nie jest odpowiednim wyborem do zastąpienia algorytmów \textit{GIG}, \textit{RPNI} lub \textit{L*}. Algorytm zakłada wyłącznie przykłady pozytywne, co ogranicza jego zdolność do wykrywania granic języka i może prowadzić do zbyt ogólnych modeli. Algorytmy takie jak \textit{RPNI} uwzględniają także przykłady negatywne, co pozwala na precyzyjniejsze modelowanie. Ponadto, \textit{ALERGIA} jest zoptymalizowana pod kątem modeli probabilistycznych, co czyni go mniej odpowiednim w przypadkach, gdzie wymagane są deterministyczne gramatyki lub klasyczne modele bez prawdopodobieństw, jak \textit{GIG} i \textit{L*}. Dlatego \textit{ALERGIA} sprawdza się głównie w zadaniach probabilistycznych, gdzie brak przykładów negatywnych, natomiast w kontekście klasycznych gramatyk regularnych bardziej odpowiednie pozostają algorytmy \textit{GIG}, \textit{RPNI} i \textit{L*}.
+
+\subsection{Metoda}  
+Algorytm \textit{ALERGIA} pozwala na indukcję deterministycznego stochastycznego automatu skończonego (DSFA), który przybliża rozkład prawdopodobieństwa nad danymi wejściowymi. Proces ten obejmuje następujące kroki:  
+
+\paragraph*{Opis algorytmu.}  
+Algorytm \textit{ALERGIA} składa się z kilku etapów:  
+\begin{enumerate}  
+    \item \textbf{Budowa drzewa prefiksów (PTA):}  
+        Zbiór przykładów pozytywnych jest używany do zbudowania deterministycznego automatu reprezentującego dokładnie wszystkie sekwencje w danych.  
+    \item \textbf{Iteracyjne łączenie stanów:}  
+        Algorytm analizuje pary stanów w PTA i testuje ich zgodność statystyczną. Łączenie stanów jest realizowane tylko wtedy, gdy nie narusza statystycznej zgodności z danymi.  
+    \item \textbf{Sprawdzanie zgodności:}  
+        Kompatybilność stanów jest oceniana za pomocą testu Hoeffding'a oraz dodatkowego testu dla rozkładów wykładniczych czasów przejść.  
+    \item \textbf{Zakończenie:}  
+        Algorytm kończy działanie, gdy żadne dalsze scalenie stanów nie jest możliwe bez naruszenia zgodności statystycznej. Ostateczny automat aproksymuje rozkład probabilistyczny danych wejściowych.  
+\end{enumerate}
+
+\subsection{Formalizacja}  
+Celem niniejszej sekcji jest dostarczenie formalnych definicji oraz narzędzi matematycznych niezbędnych do pełnego zrozumienia algorytmu \textit{ALERGIA}. Algorytm bazuje na akceptorze drzewa prefiksów (PTA) zdefiniowanym w sekcji dotyczącej algorytmu \textit{RPNI} (\ref{def:pta}). Formalizacja obejmuje proces łączenia stanów w celu uogólnienia struktur automatu.  
+
+\begin{definition}[Łączenie stanów]  
+    \label{def:alergia_state_merging}  
+    Łączenie dwóch stanów \( q_1, q_2 \) w automacie deterministycznym polega na połączeniu ich rozkładów prawdopodobieństwa przejść. Nowy stan dziedziczy przejścia oraz obserwowane rozkłady, pod warunkiem zgodności statystycznej ocenianej za pomocą testu Hoeffding'a dla rozkładów przejść oraz testu dla rozkładów czasów oczekiwania.  
+\end{definition}  
+
+Proces algorytmu \textit{ALERGIA} składa się z budowy drzewa prefiksów dla danych pozytywnych, iteracyjnego łączenia stanów oraz weryfikacji zgodności probabilistycznej. Wynikiem końcowym jest automat stochastyczny, który aproksymuje rozkład prawdopodobieństwa danych wejściowych.
+
+\subsection{Złożoność}  
+Algorytm \textit{ALERGIA} charakteryzuje się złożonością wielomianową względem rozmiaru danych wejściowych. Poniżej przedstawiono analizę złożoności czasowej i pamięciowej algorytmu, uwzględniając kluczowe parametry:  
+\begin{itemize}  
+    \item \(|S^+|\) - liczba słów w zbiorze pozytywnych przykładów,  
+    \item \( l^+ \) - maksymalna długość słowa w \( S^+ \),  
+    \item \(|\Sigma|\) - rozmiar alfabetu.  
+\end{itemize}  
+
+\subsection{Złożoność}  
+Algorytm \textit{ALERGIA} cechuje się złożonością wielomianową, zależną od rozmiaru danych wejściowych. W analizie złożoności czasowej i pamięciowej uwzględniamy następujące parametry:  
+\begin{itemize}  
+    \item \(|S^+|\) - liczba przykładów pozytywnych,  
+    \item \( l^+ \) - maksymalna długość ciągu w \( S^+ \),  
+    \item \(|\Sigma|\) - liczba symboli w alfabecie.  
+\end{itemize}  
+
+\paragraph*{Złożoność czasowa}  
+Algorytm \textit{ALERGIA} przebiega w dwóch zasadniczych etapach:  
+\begin{enumerate}  
+    \item \textbf{Budowa drzewa prefiksowego (PTA):}  
+    Proces tworzenia PTA wymaga przetworzenia wszystkich słów w \( S^+ \), analizując je znak po znaku. Złożoność tego kroku wynosi:  
+    \[
+    O(|S^+| \cdot l^+).
+    \]  
+
+    \item \textbf{Scalanie stanów:}  
+    Każda para stanów w PTA jest poddawana testowi zgodności. Liczba stanów jest rzędu \( O(|S^+| \cdot l^+) \). Sprawdzenie zgodności statystycznej dla wszystkich par prowadzi do złożoności:  
+    \[
+    O((|S^+| \cdot l^+)^2).
+    \]  
+\end{enumerate}  
+
+Łączna złożoność czasowa algorytmu wynosi:  
+\[
+O(|S^+| \cdot l^+ + (|S^+| \cdot l^+)^2),
+\]  
+co można uprościć do:  
+\[
+O((|S^+| \cdot l^+)^2).
+\]
+
+\paragraph*{Złożoność pamięciowa}  
+Algorytm przechowuje następujące struktury:  
+\begin{itemize}  
+    \item \textbf{Drzewo prefiksowe (PTA):}  
+    PTA składa się z \( O(|S^+| \cdot l^+) \) stanów, z których każdy może mieć do \( |\Sigma| \) przejść. Wymagana przestrzeń pamięci wynosi:  
+    \[
+    O(|S^+| \cdot l^+ \cdot |\Sigma|).
+    \]  
+
+    \item \textbf{Statystyki przejść:}  
+    Dla każdego stanu przechowywane są rozkłady prawdopodobieństw oraz dane statystyczne, co daje dodatkowy koszt pamięciowy:  
+    \[
+    O(|S^+| \cdot l^+).
+    \]  
+\end{itemize}  
+
+Łączna złożoność pamięciowa wynosi:  
+\[
+O(|S^+| \cdot l^+ \cdot |\Sigma|).
+\]  
+
+\paragraph*{Czynniki wpływające na złożoność}  
+Efektywność algorytmu \textit{ALERGIA} zależy przede wszystkim od liczby przykładów pozytywnych (\( S^+ \)) oraz długości słów (\( l^+ \)), które determinują rozmiar drzewa prefiksowego i liczbę stanów do analizy. Dodatkowo, większy alfabet (\( |\Sigma| \)) zwiększa liczbę możliwych przejść, co wpływa zarówno na czas obliczeń, jak i wymagania pamięciowe.  

@@ -1,0 +1,79 @@
+\section{Pozostałe algorytmy}  
+Na przestrzeni lat opracowano wiele algorytmów do odkrywania struktur języków formalnych. Niektóre z nich, choć interesujące, nie zostały wykorzystane w tej pracy ze względu na ich specyfikę, ograniczenia lub brak bezpośredniej zgodności z założeniami badania.  
+
+Podczas wyboru metod do analizy wyróżniono trzy grupy algorytmów różniących się typem danych wejściowych. Pierwsza grupa obejmuje algorytmy działające wyłącznie na przykładach pozytywnych (\textit{ALERGIA, ECGIA, tail clustering method, MGGI, k-TSSI}), druga – metody korzystające zarówno z przykładów pozytywnych, jak i negatywnych (\textit{GIG, RPNI, algorithm for k-reversible languages}), a trzecia – wszystkie pozostałe algorytmy (\textit{L*}). Już na wczesnym etapie prac postanowiono wybrać taki zestaw algorytmów, który posiada reprezentanta z każdej z grup, tym samym ograniczając wybór.
+
+Uwzględniono również algorytm \textit{GIG}, który został dodany ze względu na swoje nietypowe podejście oparte na metodach genetycznych. Jest to jedyny rozważany algorytm wykorzystujący techniki ewolucyjne, co czyni go interesującym przypadkiem w kontekście indukcji gramatyk regularnych.  
+
+
+\paragraph*{\textit{ECGIA}}  
+\textit{Error-Correcting Grammar Inference Algorithm} \cite{ECGI} należy do metod indukcji gramatyk regularnych opartych na stopniowej konstrukcji automatów skończonych. Proces ten działa wyłącznie na przykładach pozytywnych, co oznacza, że model jest budowany na podstawie obserwowanych wzorców bez konieczności podawania przykładów negatywnych.  
+
+ECGIA konstruuje automat przez iteracyjne scalanie stanów, minimalizując liczbę dodawanych stanów dla każdego nowego przykładu za pomocą programowania dynamicznego. Dzięki temu model jest w stanie uchwycić lokalne zależności pomiędzy podstrukturami wzorców oraz ich długościami. Algorytm pozwala na obsługę błędów poprzez reguły korekcyjne, takie jak wstawianie, zastępowanie lub usuwanie symboli. Bazując na optymalnej korekcji błędów, minimalizuje dystans edycyjny (\textit{edit distance}) pomiędzy wzorcami a generowanym modelem, co czyni go skutecznym w zadaniach rozpoznawania wzorców z szumami lub niepełnymi danymi.  
+
+Algorytm ECGIA jest szczególnie przydatny w zastosowaniach takich jak rozpoznawanie mowy, gdzie długości segmentów dźwięków odgrywają kluczową rolę. Algorytm dobrze radzi sobie z uchwyceniem długości podstruktur, co czyni go odpowiednim do modelowania lokalnych wzorców w danych sekwencyjnych. Jednak jego złożoność obliczeniowa wzrasta wraz z rozmiarem zbioru danych i zmiennością wzorców. Dodatkowo, modele wynikowe mogą być zbyt szczegółowe, co wymaga ich dalszej optymalizacji w celu zastosowania do bardziej ogólnych zadań analizy języków formalnych.  
+
+
+\paragraph*{\textit{k-TSSI}}  
+Algorytm \textit{k-Testable in the Strict Sense Inference} \cite{k-TSSI} służy do indukcji języków regularnych opartych na skończonym zbiorze wzorców o długości \( k \). Jego podstawowym założeniem jest reprezentacja języka za pomocą ograniczonego zbioru dozwolonych podciągów o ustalonej długości.
+
+Algorytm działa na podstawie danych pozytywnych i konstruuje deterministyczny automat skończony (\textit{DFA}), który akceptuje najmniejszy język spełniający zadane ograniczenia wzorców. Zdefiniowany język jest lokalnie testowalny, co oznacza, że akceptacja ciągów zależy od ich lokalnych cech, takich jak obecność lub brak określonych podciągów o długości \( k \).  
+
+Algorytm \textit{k-TSSI} jest efektywny obliczeniowo, ponieważ wykorzystuje operacje na skończonych zbiorach wzorców. Złożoność czasowa wynosi \( O(kn \log m) \), gdzie \( n \) to suma długości ciągów w próbie treningowej, a \( m \) jest liczbą unikalnych podciągów długości \( k \). Pomimo tej efektywności, ograniczenie do wzorców o ustalonej długości może prowadzić do utraty informacji o globalnej strukturze języka.  
+
+Metoda ta znajduje zastosowanie w zadaniach takich jak rozpoznawanie wzorców i analiza syntaktyczna, szczególnie tam, gdzie lokalne zależności mają kluczowe znaczenie. Jednak jej zdolność do modelowania bardziej złożonych języków jest ograniczona, co sprawia, że lepiej sprawdza się w problemach z dobrze określoną strukturą lokalną.
+
+
+\paragraph*{\textit{MGGI}}
+Algorytm (\textit{Morphic Generator GI methodology}) \cite{MGGI} został opracowany jako metoda indukcji gramatyk regularnych, szczególnie dla języków opartych na lokalnych zależnościach. Wykorzystuje on podejście bazujące na lokalnych językach (\textit{local languages}) oraz operacjach morficznych (\textit{morphic operations}), co pozwala na modelowanie bardziej złożonych struktur niż standardowe języki lokalne.  
+
+MGGI działa w kilku etapach. Najpierw konstruuje lokalny język na podstawie danych pozytywnych, a następnie stosuje morfizmy, aby rozszerzyć ten język na bardziej złożone struktury regularne. Proces ten umożliwia dostosowanie modelu do specyfiki problemu, przy jednoczesnym ograniczeniu złożoności obliczeniowej dzięki zastosowaniu operacji lokalnych.  
+
+Kluczowym założeniem algorytmu jest analiza sukcesji symboli w danych wejściowych oraz wykrywanie lokalnych zależności. MGGI wykorzystuje przekształcenia morficzne, aby generować języki o bardziej ogólnych właściwościach, zachowując jednocześnie precyzję w rozpoznawaniu wzorców. Dzięki temu metoda ta jest w stanie odwzorować języki, które nie są bezpośrednio lokalne, a jednocześnie zachowują pewne lokalne ograniczenia.  
+
+Choć MGGI jest elastyczny i potrafi modelować szeroką klasę języków regularnych, jego skuteczność zależy od odpowiedniego doboru parametrów morfizmów. To sprawia, że algorytm wymaga starannej konfiguracji, co może stanowić wyzwanie przy pracy z dużymi i złożonymi zbiorami danych. Niemniej jednak, jego zdolność do modelowania złożonych struktur czyni go użytecznym narzędziem w zadaniach związanych z rozpoznawaniem wzorców i analizą języków formalnych. Jego aplikacja w kontekście rozpoznawania mowy została zaproponowana już w roku 1989 \cite{MGGI_SPEECH_RECONGNITION}. 
+
+
+\paragraph*{Algorytm dla języków \( k \)-odwracalnych}  
+Algorytm dla języków \( k \)-odwracalnych \cite{reversible-languages-algorithms} został zaprojektowany do indukcji gramatyk regularnych, które charakteryzują się właściwościami odwracalności dla zadanego parametru \( k \). Język jest nazywany \( k \)-odwracalnym, jeśli możliwe jest rozstrzygnięcie deterministycznych wyborów podczas przetwarzania danych, analizując \( k \) symboli do przodu lub wstecz. 
+
+Algorytm rozpoczyna działanie od konstrukcji drzewa prefiksowego (PTA) na podstawie danych pozytywnych. Następnie przeprowadza iteracyjne scalanie stanów, przestrzegając ograniczeń wynikających z warunku \( k \)-odwracalności. Proces ten polega na zapewnieniu, że żadne dwa różne stany nie mogą mieć tego samego następcy lub poprzednika w odległości co najwyżej \( k \) symboli.  
+
+Kluczową cechą algorytmu jest jego zdolność do stopniowego uogólniania danych wejściowych bez nadmiernego rozszerzania języka. Dzięki precyzyjnie zdefiniowanym regułom łączenia stanów algorytm zapewnia poprawną identyfikację w granicy dla dowolnego języka \( k \)-odwracalnego.  
+
+Złożoność obliczeniowa algorytmu jest wielomianowa względem rozmiaru danych wejściowych, a jego wydajność zależy od wartości parametru \( k \). Wyższe wartości \( k \) pozwalają na uchwycenie bardziej złożonych wzorców, ale jednocześnie zwiększają liczbę wymaganych obliczeń i rozmiar modelu wynikowego.  
+
+Algorytm znajduje zastosowanie w analizie wzorców w danych sekwencyjnych, takich jak rozpoznawanie mowy, analiza sygnałów lub modelowanie struktur biologicznych. Dzięki swojej elastyczności i zdolności do wykorzystania przykładów pozytywnych oraz negatywnych, algorytm ten oferuje szerokie możliwości w zadaniach inferencji gramatyk regularnych.
+
+
+\paragraph*{Inne metody}  
+Poniżej przedstawiono krótki opis wybranych algorytmów, dla których nie znaleziono pełnych źródeł lub szczegółowych opracowań. Opisy te koncentrują się na ich potencjalnych zastosowaniach do różnych typów gramatyk oraz na rodzaju danych, na których operują.  
+
+\begin{itemize}  
+    \item \textbf{Tail Clustering Method} – Algorytm przeznaczony do uproszczenia modeli języka poprzez grupowanie końcowych segmentów sekwencji. Stosowany głównie do gramatyk regularnych, działa na danych pozytywnych. Jest efektywny, gdy istotne są końcowe fragmenty ciągów, ale może mieć trudności z modelowaniem globalnej struktury danych.  
+
+    \item \textbf{Inside-Outside} – Algorytm służący do indukcji probabilistycznych gramatyk kontekstowo-wolnych. Operuje na danych pozytywnych i wykorzystuje iteracyjne oszacowania parametrów modelu w celu maksymalizacji prawdopodobieństwa. Jego zastosowanie do gramatyk regularnych jest ograniczone, co czyni go mniej odpowiednim dla analiz w tej pracy.  
+
+    \item \textbf{Byte Pair Encoding (BPE)} – Metoda kompresji danych stosowana w przetwarzaniu języka naturalnego (NLP). Działa na danych sekwencyjnych i iteracyjnie zastępuje najczęściej występujące pary symboli nowymi tokenami. Choć sprawdza się w zadaniach związanych z NLP, jej charakter kompresyjny ogranicza możliwości modelowania struktur gramatycznych.  
+
+    \item \textbf{Forward-Backward} – Algorytm wykorzystywany w ukrytych modelach Markowa (HMM) do obliczania prawdopodobieństw przejść pomiędzy stanami. Operuje na danych probabilistycznych i jest szczególnie użyteczny w analizie sekwencji czasowych. Jego złożoność czyni go jednak mniej praktycznym dla problemów związanych z gramatykami regularnymi.  
+
+    \item \textbf{Lempel-Ziv-Welch (LZW)} – Metoda bezstratnej kompresji danych oparta na dynamicznym budowaniu słownika wzorców. Działa na danych pozytywnych i sprawdza się głównie w zadaniach związanych z kompresją. Jego zdolność do modelowania struktur językowych jest ograniczona, co sprawia, że nie nadaje się bezpośrednio do indukcji gramatyk formalnych.  
+
+    \item \textbf{Sequitur} – Algorytm umożliwiający indukcję gramatyk kontekstowo-wolnych na podstawie sekwencji wejściowych. Działa na danych pozytywnych i tworzy reguły gramatyczne poprzez wykrywanie powtarzających się wzorców. Pomimo wysokiej efektywności w odkrywaniu hierarchicznych struktur, nie spełnia on założeń dotyczących gramatyk regularnych, które były kluczowe w tej pracy.  
+\end{itemize}  
+ 
+
+\paragraph*{Podsumowanie}  
+Zaprezentowane algorytmy przedstawiają zróżnicowane podejścia do analizy języków formalnych oraz modelowania danych sekwencyjnych. Każdy z nich posiada unikalne właściwości, które czynią go odpowiednim do konkretnych zastosowań. W niniejszej pracy zdecydowano się jednak na wybór czterech algorytmów – \textit{L*}, \textit{RPNI}, \textit{GIG} oraz \textit{ALERGIA} – które najlepiej odpowiadają założonym celom badania.  
+
+Algorytm \textit{ALERGIA} wyróżnia się zdolnością do modelowania probabilistycznych zależności w danych sekwencyjnych. Dzięki swojej konstrukcji opiera się on wyłącznie na przykładach pozytywnych, co czyni go użytecznym narzędziem w sytuacjach, gdzie dane negatywne są niedostępne lub trudne do uzyskania. Jego probabilistyczny charakter sprawia, że nadaje się do zastosowań wymagających modelowania niepewności, takich jak analiza języków naturalnych czy badanie wzorców biologicznych.  
+
+Algorytm \textit{GIG} został uwzględniony jako jedyny przedstawiciel metod wykorzystujących algorytmy genetyczne. Podejście to umożliwia eksplorację dużych przestrzeni hipotez oraz optymalizację modeli poprzez symulację procesów ewolucyjnych. Dzięki temu algorytm ten stanowi interesującą alternatywę dla tradycyjnych metod deterministycznych, szczególnie w zadaniach, gdzie poszukiwanie globalnych rozwiązań jest bardziej efektywne niż lokalne optymalizacje.  
+
+Algorytm \textit{L*} wyróżnia się unikalnym podejściem do danych wejściowych, bazującym na interakcji z wyrocznią. Tego rodzaju mechanizm pozwala na dynamiczne korygowanie i rozwijanie modelu w oparciu o dostarczane informacje zwrotne, co czyni go szczególnie efektywnym w przypadkach, gdzie dostęp do kompletnego zbioru danych wejściowych jest ograniczony.  
+
+Algorytm \textit{RPNI} został wybrany ze względu na swoje znaczenie jako jedna z klasycznych metod indukcji gramatyk regularnych. Jego solidne podstawy teoretyczne oraz liczne odniesienia w literaturze jako rozwiązanie „state of the art” sprawiają, że stanowi on punkt odniesienia dla wielu późniejszych prac z zakresu inferencji gramatyk. Dodatkowo, jego zdolność do przetwarzania zarówno danych pozytywnych, jak i negatywnych pozwala na precyzyjne odwzorowanie struktur językowych.  
+
+Ostateczny wybór algorytmów został dokonany w oparciu o ich komplementarne właściwości, umożliwiające analizę zarówno deterministycznych, jak i probabilistycznych modeli języków formalnych. Uwzględniono przy tym różnorodność typów danych wejściowych oraz podejść obliczeniowych, co pozwoliło na uzyskanie szerokiej perspektywy na problem indukcji gramatyk regularnych.  
+

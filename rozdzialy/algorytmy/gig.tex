@@ -1,2 +1,123 @@
 \section{Algorytm \textit{GIG}}
 \label{sec:gig}
+
+Algorytm \textit{GIG} (\textit{Grammatical Inference by Genetic search}) \cite{GIG}, podobnie jak algorytm \textit{RPNI}, jest przeznaczony do indukcji gramatyk regularnych na podstawie przykładów pozytywnych \( S^+ \) i negatywnych \( S^- \). Oba algorytmy opierają się na iteracyjnym łączeniu stanów w celu skonstruowania deterministycznego automatu skończonego (DFA), który jak najlepiej opisuje dane. W przypadku \textit{RPNI} znaleziony DFA zawsze jest minimalny i akceptuje wszystkie słowa z \( S^+ \), odrzucając słowa z \( S^- \). Natomiast wynik algorytmu \textit{GIG} nie jest jednoznacznie określony.
+
+W algorytmie \textit{GIG} przestrzeń możliwych rozwiązań jest reprezentowana jako podziały stanów maksymalnego automatu kanonicznego (MCA, ang. maximal canonical automaton) zbudowanego na podstawie zbioru \( S^+ \). Przeszukiwanie tej przestrzeni odbywa się przy użyciu algorytmu genetycznego, który iteracyjnie modyfikuje populację podziałów poprzez operacje takie jak krzyżowanie i mutacja. Funkcja dopasowania (\textit{fitness}) ocenia jakość każdego rozwiązania, preferując modele akceptujące jak najwięcej słów z \( S^+ \), odrzucające \( S^- \), a jednocześnie minimalizujące liczbę stanów. W efekcie uzyskane rozwiązanie może nie być optymalne ani w pełni poprawne.
+
+W przeciwieństwie do deterministycznego podejścia algorytmu \textit{RPNI}, \textit{GIG} wykorzystuje mechanizmy ewolucyjne, co umożliwia efektywne przeszukiwanie dużych i złożonych przestrzeni rozwiązań. Jest to szczególnie istotne w przypadkach, gdy liczba stanów automatu lub rozmiar zbioru przykładów uczących znacząco rośnie.
+
+W tej sekcji nie zostanie przedstawiony przykład działania, ponieważ jest to standardowy algorytm genetyczny. Zamiast tego, w podsekcji \ref{sec:gig-formalizacja} zostaną zaprezentowane przykłady operacji genetycznych, które pomogą zrozumieć działanie programu.
+
+\subsection{Metoda}
+
+GIG wykorzystuje algorytm genetyczny do indukcji deterministycznego automatu skończonego na podstawie przykładów pozytywnych i negatywnych. Kluczowym założeniem metody jest reprezentacja stanów maksymalnego automatu skończonego (MCA) jako podziału, który w procesie ewolucji jest optymalizowany pod kątem minimalizacji liczby stanów oraz zgodności z danymi wejściowymi.
+\begin{enumerate}
+    \item \textbf{Budowa automatu maksymalnego (MCA):}
+        Na podstawie zbioru \( S^+ \) tworzony jest maksymalny automat skończony (MCA), w którym każdy stan odpowiada unikalnemu prefiksowi słów z \( S^+ \). MCA akceptuje dokładnie \( S^+ \), lecz nie jest minimalny.
+    \item \textbf{Reprezentacja podziału stanów:}
+        Stany MCA są reprezentowane jako podziały, gdzie każda grupa w podziale odpowiada jednemu stanowi w wynikowym DFA. Początkowa populacja składa się z losowych podziałów oraz rozwiązań opartych na strukturze MCA.
+    \item \textbf{Ewolucja populacji:}
+        Algorytm genetyczny iteracyjnie modyfikuje populację, stosując:
+        \begin{itemize}
+            \item \textbf{Krzyżowanie:} Łączenie dwóch podziałów w celu stworzenia nowych rozwiązań, przy zachowaniu strukturalnej zgodności podziałów.
+            \item \textbf{Mutację:} Wprowadzanie losowych zmian w podziałach, aby eksplorować nowe obszary przestrzeni rozwiązań.
+        \end{itemize}
+    \item \textbf{Ocena dopasowania osobników (\textit{fitness}):}
+        Każdy osobnik jest oceniany na podstawie skonstruowanego z niego DFA. Wartość dopasowania jest wyznaczana na podstawie liczby stanów DFA, zgodności z \( S^+ \) oraz zdolności do odrzucania \( S^- \). Preferowane są mniejsze automaty, które poprawnie klasyfikują dane.
+    \item \textbf{Zakończenie:}
+        Algorytm kończy działanie po osiągnięciu określonej liczby generacji lub spełnieniu kryterium stopu (np. brak poprawy w kolejnych iteracjach). Wynikowy podział definiuje DFA zgodny z \( S^+ \) i \( S^- \).
+\end{enumerate}
+
+\subsection{Różnice podejścia genetycznego i zachłannego}
+
+Algorytm \textit{GIG} ma przewagę nad klasycznym algorytmem \textit{RPNI} w kontekście indukcji gramatyk regularnych, szczególnie w przypadku dużych i złożonych zestawów danych. Kluczową różnicą między oboma podejściami jest sposób przeszukiwania przestrzeni rozwiązań. \textit{RPNI} działa deterministycznie, łącząc stany automatu maksymalnego (PTA) w oparciu o reprezentatywność danych \( S^+ \) i \( S^- \), co pozwala na konstrukcję minimalnego automatu skończonego (DFA). Jednakże, w przypadku bardzo dużych przestrzeni rozwiązań algorytm deterministyczny może zawieść, nie będąc w stanie efektywnie eksplorować wszystkich możliwych podziałów.
+
+W odróżnieniu od tego, \textit{GIG} wykorzystuje podejście ewolucyjne, co pozwala na bardziej elastyczne przeszukiwanie przestrzeni rozwiązań. Dzięki stochastycznemu charakterowi algorytmu genetycznego, \textit{GIG} jest w stanie znaleźć akceptowalne rozwiązanie, nawet jeśli nie jest ono optymalne. To podejście pozwala na radzenie sobie z ogromnymi zbiorami danych oraz sytuacjami, w których liczba stanów w automacie maksymalnym (MCA) znacząco wzrasta. Operacje genetyczne, takie jak krzyżowanie i mutacja, umożliwiają eksplorację przestrzeni podziałów w sposób mniej deterministyczny, zwiększając szansę na znalezienie rozwiązań w złożonych przypadkach.
+
+Jednakże, w przeciwieństwie do deterministycznego podejścia \textit{RPNI}, algorytm \textit{GIG} nie gwarantuje, że uzyskane rozwiązanie będzie optymalne ani w pełni poprawne. Wynik może być jedynie przybliżeniem minimalnego automatu akceptującego \( S^+ \) i odrzucającego \( S^- \), co oznacza, że pewne nieścisłości w klasyfikacji mogą pozostać. Ponadto, czas działania \textit{GIG} jest uzależniony od parametrów takich jak liczba generacji i rozmiar populacji, co w niektórych przypadkach może prowadzić do wysokich kosztów obliczeniowych.
+
+Dodatkowo, \textit{GIG} charakteryzuje się większą adaptacyjnością. Może dynamicznie dostosowywać populację oraz kryteria dopasowania (\textit{fitness}) do specyficznych cech problemu, co czyni go bardziej elastycznym w porównaniu do \textit{RPNI}. W sytuacjach, gdy przestrzeń stanów staje się zbyt duża dla deterministycznych podejść, \textit{GIG} potrafi efektywnie przeszukiwać tę przestrzeń dzięki heurystykom genetycznym, minimalizując ryzyko przeoczenia akceptowalnych rozwiązań.
+
+Podsumowując, główną przewagą \textit{GIG} jest jego zdolność do radzenia sobie z ogromnymi zestawami danych oraz bardziej złożonymi strukturami języka, dzięki czemu może znaleźć rozwiązania, które są niedostępne dla deterministycznego podejścia \textit{RPNI}. Niemniej jednak, brak gwarancji optymalności i pełnej poprawności może być istotną wadą w sytuacjach wymagających precyzyjnych wyników.
+
+\subsection{Formalizacja}
+\label{sec:gig-formalizacja}
+
+W tej sekcji opisano sposób przedstawienia rozwiązania w osobniku, proces inicjalizacji populacji, operatory genetyczne oraz funkcję przystosowania, która kieruje ewolucją. Dla każdego z tych elementów podano odpowiednie przykłady. Potrzebnymi definicjami dla tej sekcji będą definicja \ref{def:state_merging}, ponieważ łączenie stanów w \textit{GIG} przebiega w ten sam sposób co w \textit{RPNI}, oraz definicja \ref{def:pta}, jako że MCA w \textit{GIG} to dokładnie taka sama struktura co PTA w kontekście algorytmu \textit{RPNI}.
+
+\paragraph*{Reprezentacja osobnika.}  
+Każdy osobnik w populacji jest reprezentowany jako podział zbioru stanów \( Q \) automatu maksymalnego (MCA). Podział jest zakodowany jako wektor liczb całkowitych \( \mathbf{p} \), gdzie \( \mathbf{p}[i] = c \) oznacza, że stan \( q_i \in Q \) należy do grupy \( c \). Grupy odpowiadają stanom wynikowego deterministycznego automatu skończonego (DFA). Przykładowo, jeśli \( Q = \{q_0, q_1, q_2, q_3\} \), podział \( \mathbf{p} = [0, 0, 1, 1] \) oznacza, że stany \( q_0 \) i \( q_1 \) należą do jednej grupy, a \( q_2 \) i \( q_3 \) do drugiej.
+
+Dla zapewnienia jednoznaczności i porównywalności osobników w populacji, podział \( \mathbf{p} \) musi być w formie kanonicznej. Oznacza to, że grupy w \( \mathbf{p} \) są ponumerowane w sposób ciągły, począwszy od \( 0 \), bez przeskoków w numeracji. Kanoniczność jest kluczowa, ponieważ pozwala unikać niejednoznaczności przy reprezentacji tego samego podziału oraz ułatwia operacje genetyczne, takie jak krzyżowanie i mutacja.
+
+\textbf{Przykład:}  
+Dla \( Q = \{q_0, q_1, q_2, q_3\} \), podział \( \mathbf{p} = [0, 2, 2, 5] \) nie jest kanoniczny, ponieważ grupy są ponumerowane z przeskokami (brakuje grup \( 1 \) i \( 3, 4 \)). Aby naprawić ten podział, każdej unikalnej wartości w \( \mathbf{p} \) przypisujemy nową numerację w kolejności ich występowania:
+\[
+\text{Niekanoniczny: } \mathbf{p} = [0, 2, 2, 5] \quad \rightarrow \quad \text{Kanoniczny: } \mathbf{p} = [0, 1, 1, 2].
+\]
+
+Naprawianie podziału jest procesem prostym, a dzięki kanonicznej formie reprezentacji różne osobniki o tej samej strukturze nie będą traktowane jako różne w trakcie ewolucji.
+
+\paragraph*{Inicjalizacja populacji.}  
+Początkowa populacja jest generowana w następujący sposób:
+\begin{itemize}
+    \item \textbf{Pierwszy osobnik:}  
+    Pierwszy osobnik odpowiada obecnie rozszerzonemu automatowi (MCA), w którym każdy stan \( q_i \in Q \) należy do osobnej grupy. Przykładowo, dla \( Q = \{q_0, q_1, q_2, q_3\} \), pierwszy osobnik to \( \mathbf{p} = [0, 1, 2, 3] \).
+    
+    \item \textbf{Podziały z ograniczoną liczbą grup:}  
+    Do 50\% populacji stanowią losowe podziały wybrane z \( \binom{|Q|}{2} \) możliwych podziałów, w których liczba grup wynosi \( |Q| - 1 \). Przykładowo, dla \( Q = \{q_0, q_1, q_2, q_3\} \), losowy podział może wyglądać tak: \( \mathbf{p} = [0, 0, 1, 2] \), gdzie \( q_0 \) i \( q_1 \) należą do tej samej grupy, a \( q_2 \) i \( q_3 \) są przypisane do osobnych grup.
+    
+    \item \textbf{Całkowicie losowe podziały:}  
+    Pozostałe osobniki w populacji są generowane w sposób całkowicie losowy. Dla \( Q = \{q_0, q_1, q_2, q_3\} \), przykładowy losowy podział może wyglądać tak: \( \mathbf{p} = [0, 1, 1, 0] \), gdzie \( q_0 \) i \( q_3 \) należą do jednej grupy, a \( q_1 \) i \( q_2 \) do innej.
+\end{itemize}
+
+Takie podejście pozwala na inicjalizację populacji zarówno w oparciu o strukturalnie uzasadnione podziały, jak i bardziej eksploracyjne rozwiązania, zwiększając różnorodność przestrzeni początkowych rozwiązań.
+
+\paragraph*{Mutacja.}  
+Mutacja to operator genetyczny, który wprowadza losowe zmiany w reprezentacji osobnika \( \mathbf{p} \), pozwalając na eksplorację nowych podziałów przestrzeni rozwiązań. Formalnie, mutacja działa w następujący sposób:
+
+Dla wybranego osobnika \( \mathbf{p} \), wybierany jest losowy indeks \( i \), gdzie 
+\[ i \in \{0, 1, \dots, |Q|-1\}. \]
+
+Wartość \( \mathbf{p}[i] \), odpowiadająca grupie przypisanej stanowi \( q_i \), jest zastępowana przez nową wartość \( c \), gdzie:
+\[
+c \in \{0, 1, \dots, \max(\mathbf{p}) + 1\}.
+\]
+Nowa wartość \( c \) może odpowiadać istniejącej grupie w \( \mathbf{p} \) lub utworzeniu nowej grupy. Po wykonaniu mutacji, wynikowy osobnik \( \mathbf{p}' \) jest kanonicznie porządkowany, aby zapewnić jednoznaczność reprezentacji.
+
+\textbf{Przykład:}  
+Dla osobnika \( \mathbf{p} = [0, 0, 1, 1] \), losowo wybrany indeks \( i = 3 \) (stan \( q_3 \)) prowadzi do zmiany wartości \( \mathbf{p}[3] \). Jeśli nowa wartość \( c \) to \( 2 \), to zmodyfikowany osobnik ma postać \( \mathbf{p}' = [0, 0, 1, 2] \). Po kanonicznej normalizacji osobnik pozostaje niezmieniony, ponieważ reprezentacja jest już poprawna.
+
+\paragraph*{Krzyżowanie.}  
+Krzyżowanie w algorytmie \textit{GIG} odbywa się w przestrzeni podziałów i polega na łączeniu wybranych bloków dwóch rodziców w celu utworzenia nowych osobników. Formalnie, dla dwóch rodziców \( \mathbf{p}_1 \) i \( \mathbf{p}_2 \), reprezentujących podziały \( \mathcal{P}_1 \) i \( \mathcal{P}_2 \), wybierane są losowe bloki \( B_1 \in \mathcal{P}_1 \) oraz \( B_2 \in \mathcal{P}_2 \). Bloki te są łączone w nowy blok \( B = B_1 \cup B_2 \), który zostaje wprowadzony do potomka. Nowy potomek dziedziczy pozostałe bloki od obojga rodziców, z uwzględnieniem połączenia. Po krzyżowaniu wynikowy podział jest normalizowany do postaci kanonicznej, aby zapewnić jednoznaczność reprezentacji osobnika.
+
+\textbf{Przykład:}  
+Dla dwóch rodziców:  
+\[
+\mathbf{p}_1 = [0, 0, 1, 1], \quad \mathbf{p}_2 = [0, 1, 1, 0],
+\]
+wybierane są bloki \( B_1 = \{q_0, q_1\} \) oraz \( B_2 = \{q_0, q_3\} \). Po połączeniu bloków \( B = B_1 \cup B_2 = \{q_0, q_1, q_3\} \), jeden z potomków może być reprezentowany jako:
+\[
+\mathbf{p} = [0, 0, 1, 0],
+\]
+gdzie \( q_0, q_1 \) i \( q_3 \) należą do jednej grupy, a \( q_2 \) do osobnej. Normalizacja potwierdza poprawność kanonicznej reprezentacji \( \mathbf{p} \).
+
+\paragraph*{Funkcja przystosowania.}  
+Funkcja przystosowania ocenia jakość osobników na podstawie poprawności ich podziału w kontekście danych \( S^+ \) i \( S^- \). Na przykład, DFA skonstruowany na podstawie osobnika \( \mathbf{p} = [0, 0, 1] \) może akceptować wszystkie słowa z \( S^+ \), ale odrzucać jedno słowo z \( S^- \), co obniża jego wartość przystosowania. Osobnik, który zarówno poprawnie akceptuje \( S^+ \), jak i odrzuca \( S^- \), uzyska wyższą wartość przystosowania.
+
+\paragraph*{Proces ewolucji.}  
+Algorytm iteracyjnie modyfikuje populację przez zastosowanie operatorów genetycznych (krzyżowanie i mutacja) oraz selekcję najlepszych osobników na podstawie funkcji przystosowania. Na przykład, w kolejnych generacjach populacja ewoluuje od początkowego rozwiązania \( \mathbf{p} = [0, 0, 1, 2] \) do \( \mathbf{p} = [0, 0, 0, 1] \), co prowadzi do uproszczonego automatu z mniejszą liczbą stanów.
+
+\paragraph*{Wynik.}  
+Rezultatem algorytmu jest DFA zminimalizowany na podstawie najlepszego osobnika końcowej populacji. Przykładowo, dla początkowego automatu MCA z czterema stanami \( Q = \{q_0, q_1, q_2, q_3\} \), wynikowy DFA może mieć tylko dwa stany, jeśli osobnik końcowy to \( \mathbf{p} = [0, 0, 1, 1] \).
+
+\subsection{Złożoność}
+
+W przypadku zastosowania algorytmu \textit{GIG} do indukcji gramatyk regularnych, złożoność czasowa zależy przede wszystkim od złożoności funkcji dopasowania i operatorów genetycznych, takich jak krzyżowanie i mutacja, które operują na podziałach stanów automatu maksymalnego (MCA). Liczba stanów \( Q \) w MCA oraz liczności zbiorów danych \( S^+ \) i \( S^- \) determinują koszt każdej generacji, ponieważ wpływają na czas potrzebny na konstrukcję automatu z danego podziału oraz sprawdzenie jego poprawności względem \( S^+ \) i \( S^- \).
+
+W naszej konkretnej aplikacji nie mamy pewności, na ile wybrane operatory genetyczne oraz sposób kodowania problemu rzeczywiście oddają jego strukturę. Jest to kluczowa kwestia, ponieważ jakość dopasowania operatorów do problemu wpływa na tempo konwergencji algorytmu. Jeśli struktura problemu nie jest dobrze uchwycona przez funkcję dopasowania i operatory, algorytm może potrzebować więcej generacji, aby osiągnąć akceptowalne rozwiązanie. W praktyce nie jesteśmy w stanie przewidzieć, jak szybko algorytm będzie znajdował rozwiązania o wysokiej jakości, co sprawia, że jedynym sposobem na ocenę jego efektywności jest eksperymentalne testowanie dla różnych rozmiarów danych.
+
+Zapotrzebowanie pamięciowe algorytmu wynika z przechowywania populacji, gdzie każdy osobnik jest reprezentowany jako podział zbioru \( Q \). Wymagana pamięć jest proporcjonalna do \( P \cdot |Q| \), gdzie \( P \) to liczba osobników w populacji. Dodatkowo, konieczne jest przechowywanie maksymalnego automatu skończonego (MCA), który wymaga \( O(|Q| \cdot |\Sigma|) \) pamięci, gdzie \( |\Sigma| \) to rozmiar alfabetu. Ponieważ automaty wynikowe są konstruowane dynamicznie podczas oceny funkcji dopasowania, a nie przechowywane dla każdego osobnika, pamięć nie jest dodatkowo obciążona przez pełne reprezentacje DFA.
+
+Podsumowując, złożoność algorytmu \textit{GIG} w naszym przypadku jest determinowana głównie przez rozmiar zbiorów \( S^+ \), \( S^- \), liczbę stanów \( Q \), oraz zdolność operatorów genetycznych do odzwierciedlenia struktury problemu. Ze względu na brak pewności co do jakości tego dopasowania, ocena efektywności algorytmu wymaga praktycznych eksperymentów, które pozwolą lepiej zrozumieć jego zachowanie przy różnych rozmiarach danych.
