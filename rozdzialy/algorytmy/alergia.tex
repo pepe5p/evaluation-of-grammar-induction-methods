@@ -11,17 +11,15 @@ Algorytm działa iteracyjnie, testując kompatybilność stanów i łącząc te,
 
 
 \subsection{Metoda}  
-Algorytm \textit{ALERGIA} pozwala na indukcję deterministycznego stochastycznego automatu skończonego (DSFA), który przybliża rozkład prawdopodobieństwa nad danymi wejściowymi. Proces ten obejmuje następujące kroki:  
+Algorytm \textit{ALERGIA} pozwala na indukcję deterministycznego stochastycznego automatu skończonego (DSFA), który przybliża rozkład prawdopodobieństwa danych wejściowych. Proces ten obejmuje następujące kroki:  
 
-\paragraph*{Opis algorytmu.}  
-Algorytm \textit{ALERGIA} składa się z kilku etapów:  
 \begin{enumerate}  
-    \item \textbf{Budowa drzewa prefiksów (PTA):}  
+    \item \textbf{Budowa akceptora drzewa prefiksów (PTA):}  
         Zbiór przykładów pozytywnych jest używany do zbudowania deterministycznego automatu reprezentującego dokładnie wszystkie sekwencje w danych.  
     \item \textbf{Iteracyjne łączenie stanów:}  
         Algorytm analizuje pary stanów w PTA i testuje ich zgodność statystyczną. Łączenie stanów jest realizowane tylko wtedy, gdy nie narusza statystycznej zgodności z danymi.  
     \item \textbf{Sprawdzanie zgodności:}  
-        Kompatybilność stanów jest oceniana za pomocą testu Hoeffding'a oraz dodatkowego testu dla rozkładów wykładniczych czasów przejść.  
+        Kompatybilność stanów jest oceniana za pomocą testu Hoeffding'a.  
     \item \textbf{Zakończenie:}  
         Algorytm kończy działanie, gdy żadne dalsze scalenie stanów nie jest możliwe bez naruszenia zgodności statystycznej. Ostateczny automat aproksymuje rozkład probabilistyczny danych wejściowych.  
 \end{enumerate}
@@ -51,90 +49,125 @@ gdzie:
 
 Automat \( A \) generuje język stochastyczny, w którym każda sekwencja symboli z \( \Sigma \) jest akceptowana z określonym prawdopodobieństwem, wyznaczanym przez funkcję \( P \).
 
-\begin{definition}[Zgodność stanów]  
-\label{def:alergia_state_compatibility}
-Dwa stany \( q_1, q_2 \in Q \) są uznawane za zgodne (kompatybilne) i mogą zostać scalone, jeżeli spełnione są dwa warunki:  
-\begin{enumerate}
-    \item Funkcja prawdopodobieństwa przejść \( P \) dla każdego symbolu \( a \in \Sigma \) spełniają:  
-    \[
-    |P(q_1, a) - P(q_2, a)| \leq \epsilon,
-    \]  
-    gdzie \( \epsilon \) jest granicą wyznaczoną przez test Hoeffding’a:  
-    \[
-    \epsilon = \sqrt{\frac{1}{2} \ln\left(\frac{2}{\alpha}\right)} \left( \frac{1}{\sqrt{n_1}} + \frac{1}{\sqrt{n_2}} \right),
-    \]  
-    przy czym:  
-    \begin{itemize}  
-        \item \( n_1 \) – liczba obserwacji dla stanu \( q_1 \),  
-        \item \( n_2 \) – liczba obserwacji dla stanu \( q_2 \),  
-        \item \( \alpha \) – poziom ufności.  
-    \end{itemize}
-    \item Prawdopodobieństwa terminacji \( F \) spełniają:
-    \[
-    |F(q_1) - F(q_2)| \leq \epsilon,
-    \]  
-\end{enumerate}
+\begin{definition}[Test Hoeffding’a]  
+\label{def:hoeffding_test}
+Test Hoeffding’a w algorytmie ALERGIA jest wykorzystywany do porównania dwóch stanów \( q_1, q_2 \) poprzez wyznaczenie granicy tolerancji \( \epsilon \), która określa maksymalną dopuszczalną różnicę między ich rozkładami. Granica tolerancji \( \epsilon \) jest obliczana jako:  
+\[
+\epsilon = \sqrt{\frac{1}{2} \ln\left(\frac{2}{\alpha}\right)} \left( \frac{1}{\sqrt{n_1}} + \frac{1}{\sqrt{n_2}} \right),
+\]
+gdzie:  
+\begin{itemize}  
+    \item \( n_1, n_2 \) – liczba obserwacji w stanach \( q_1 \) i \( q_2 \),  
+    \item \( \alpha \) – poziom ufności określający dopuszczalny margines błędu.  
+\end{itemize}  
 \end{definition}
 
-Test Hoeffding’a to statystyczna metoda oceny zgodności dwóch rozkładów prawdopodobieństwa, bazująca na nierówności Hoeffding’a. W kontekście algorytmu \textit{ALERGIA} test ten służy do sprawdzania, czy różnice między obserwowanymi częstościami przejść w stanach automatu można uznać za przypadkowe, czy też są one statystycznie istotne.  
+Test Hoeffding’a to statystyczna metoda oceny zgodności dwóch rozkładów prawdopodobieństwa, bazująca na nierówności Hoeffding’a. W kontekście algorytmu \textit{ALERGIA} test ten służy do sprawdzania, czy różnice między obserwowanymi częstościami przejść w stanach automatu można uznać za przypadkowe, czy też są one statystycznie istotne. W algorytmie \textit{ALERGIA} test Hoeffding’a porównuje rozkłady przejść pomiędzy stanami automatu. Jeśli różnice są mniejsze niż wyznaczony próg tolerancji, stany są uznawane za zgodne statystycznie i mogą zostać scalone. 
 
-Nierówność Hoeffding’a zapewnia górne ograniczenie na prawdopodobieństwo, że rzeczywiste wartości oczekiwane dwóch zmiennych losowych odbiegają od ich wartości estymowanych o więcej niż zadana tolerancja \( \epsilon \). 
-
-W algorytmie \textit{ALERGIA} test Hoeffding’a porównuje rozkłady przejść pomiędzy stanami automatu. Jeśli różnice są mniejsze niż wyznaczony próg tolerancji, stany są uznawane za zgodne statystycznie i mogą zostać scalone.  
+\begin{definition}[Zgodność stanów]  
+\label{def:alergia_state_compatibility}
+Dwa stany \( q_1, q_2 \in Q \) są uznawane za zgodne (kompatybilne), jeżeli spełnione są dwa warunki:  
+\begin{enumerate}
+    \item Funkcja prawdopodobieństwa przejść \( P \) dla każdego symbolu \( a \in \Sigma \) spełnia:  
+    \[
+    |P(q_1, a) - P(q_2, a)| \leq \epsilon.
+    \]  
+    \item Prawdopodobieństwa terminacji \( P_F \) spełnia:
+    \[
+    |P_F(q_1) - P_F(q_2)| \leq \epsilon,
+    \]  
+    gdzie \( \epsilon \) jest granicą wyznaczoną przez test Hoeffding’a.
+\end{enumerate}
+\end{definition} 
 
 \begin{definition}[Łączenie stanów w \textit{ALERGIA}]  
 \label{def:alergia_state_merging}  
-Łączenie dwóch stanów \( q_1, q_2 \in Q \) w stochastycznym, skończonym automacie deterministycznym (DSFA) \( A = (Q, \Sigma, \delta, q_0, P) \) polega na utworzeniu nowego automatu \( A' = (Q', \Sigma, \delta', q_0, P') \), gdzie stan \( q_1 \) reprezentuje połączone stany, a \( q_2 \) zostaje usunięty. Funkcje przejścia i prawdopodobieństwa są aktualizowane zgodnie z poniższymi regułami:  
-\begin{itemize}  
-    \item \( Q' = Q \setminus \{q_2\} \),  
-    \item \( \delta'(q, a) =  
+Łączenie dwóch stanów \( q_1, q_2 \in Q \) w stochastycznym, skończonym automacie deterministycznym (DSFA) \( A = (Q, \Sigma, \delta, q_0, P) \) polega na zintegrowaniu informacji o przejściach oraz rozkładach prawdopodobieństwa w jeden wspólny stan. Proces ten obejmuje następujące kroki:  
+
+\begin{enumerate}  
+    \item Wierzchołek reprezentujący stan \( q_2 \) zostaje przypisany jako poddrzewo do stanu \( q_1 \) poprzez modyfikację drzewa prefiksów.  
+    \item Funkcja przejścia zostaje zaktualizowana:  
+    \[
+    \delta'(q, a) =
     \begin{cases}  
         \delta(q_1, a) & \text{jeśli } \delta(q, a) = q_2, \\  
         \delta(q, a) & \text{w przeciwnym przypadku.}  
     \end{cases}  
-    \)  
-    \item Prawdopodobieństwa przejść są uśredniane w następujący sposób:  
+    \]  
+    \item Przejścia oraz rozkłady prawdopodobieństwa dla symboli \( a \) są łączone poprzez uśrednienie wagowe:  
     \[
     P'(q, a) = \frac{n_1 \cdot P(q_1, a) + n_2 \cdot P(q_2, a)}{n_1 + n_2},
     \]  
-    gdzie \( n_1 \) i \( n_2 \) to liczby obserwacji w stanach \( q_1 \) i \( q_2 \).  
-\end{itemize}  
+    gdzie \( n_1 \) i \( n_2 \) oznaczają liczby obserwacji dla stanów \( q_1 \) i \( q_2 \).  
+    \item Następnie wszystkie dzieci stanu \( q_2 \) zostają przeniesione do stanu \( q_1 \). Jeśli stan \( q_1 \) posiada już przejście dla danego symbolu, częstotliwości są sumowane. W przeciwnym przypadku tworzony jest nowy węzeł:  
+    \[
+    P'(q_1, a) = P(q_1, a) + P(q_2, a).
+    \]  
+    Proces ten jest kontynuowany rekurencyjnie dla wszystkich dzieci stanu \( q_2 \).  
+\end{enumerate}  
 \end{definition}  
 
-Łączenie stanów jest przeprowadzane tylko wtedy, gdy dwa stany są zgodne według definicji \ref{def:alergia_state_compatibility}. Po scaleniu stanów \( q_1 \) i \( q_2 \) nowy stan dziedziczy przejścia oraz rozkłady prawdopodobieństwa jako uśrednienie. Scalanie w algorytmie kończy się, gdy żadne dalsze połączenia nie spełniają powyższych kryteriów zgodności.
-
+Łączenie stanów jest przeprowadzane wyłącznie wtedy, gdy dwa stany oraz pary ich dzieci odpowiadające przejściom tych samych symboli spełniają kryteria zgodności określone w definicji \ref{def:alergia_state_compatibility}. Scalanie obejmuje także sumowanie obserwacji oraz prawdopodobieństw dla poddrzew, co zapewnia zachowanie struktury probabilistycznej danych wejściowych. Proces kończy się, gdy żadne dalsze połączenia nie spełniają warunków zgodności.  
 
 \subsection{Złożoność}  
 Algorytm \textit{ALERGIA} cechuje się złożonością wielomianową, zależną od rozmiaru danych wejściowych. W analizie złożoności czasowej i pamięciowej uwzględniamy następujące parametry:  
 \begin{itemize}  
     \item \(|S^+|\) - liczba przykładów pozytywnych,  
     \item \( l^+ \) - maksymalna długość ciągu w \( S^+ \),  
+    \item \(|Q|\) - liczba stanów w automacie,  
     \item \(|\Sigma|\) - liczba symboli w alfabecie.  
 \end{itemize}  
 
-\paragraph*{Złożoność czasowa}  
-Algorytm \textit{ALERGIA} składa się z dwóch głównych etapów:  
-\begin{enumerate}  
-    \item \textbf{Budowa drzewa prefiksowego (PTA):}  
-    Tworzenie drzewa wymaga przetworzenia wszystkich słów w zbiorze \( S^+ \), analizując je symbol po symbolu. Koszt tego kroku wynosi:  
-    \[
-    O(|S^+| \cdot l^+).
-    \]  
+\paragraph*{Złożoność czasowa.}  
+Algorytm \textit{ALERGIA} składa się z dwóch głównych etapów: budowy drzewa prefiksowego oraz iteracyjnego scalania stanów.  
 
-    \item \textbf{Scalanie stanów:}  
-    Każda para stanów w PTA jest analizowana pod kątem zgodności. Liczba stanów wynosi \( O(|S^+| \cdot l^+) \), co prowadzi do \( O((|S^+| \cdot l^+)^2) \) możliwych par do porównania.  
-
-    Ponadto, dla każdej pary stanów sprawdzana jest zgodność ich rozkładów prawdopodobieństwa, co wymaga przeprowadzenia testów statystycznych (np. testu Hoeffding’a) dla wszystkich symboli w alfabecie \( \Sigma \). Złożoność tego kroku wynosi:  
-    \[
-    O(|\Sigma|).
-    \]
-\end{enumerate}  
-
-\paragraph*{Łączna złożoność czasowa}  
-Po uwzględnieniu obu etapów oraz kosztów związanych z rekurencyjnym sprawdzaniem zgodności, całkowita złożoność czasowa algorytmu \textit{ALERGIA} w najgorszym przypadku wynosi:  
+\subparagraph*{Budowa drzewa prefiksowego (PTA).}  
+Pierwszy etap polega na utworzeniu drzewa prefiksowego (Prefix Tree Acceptor, PTA) na podstawie zbioru przykładów pozytywnych. Każde słowo jest dodawane do drzewa, a jego prefiksy są reprezentowane jako kolejne węzły. Proces ten wymaga analizy wszystkich przykładów oraz ich symboli, co prowadzi do złożoności:  
 \[
-O((|S^+| \cdot l^+)^2 \cdot |\Sigma|).
+O(|S^+| \cdot l^+).
+\]  
+
+\subparagraph*{Iteracyjne scalanie stanów.}  
+Drugi etap obejmuje iteracyjne porównywanie par stanów pod kątem zgodności, wykorzystując test Hoeffding’a. Każda para stanów jest sprawdzana pod względem zgodności prawdopodobieństw przejść i terminacji, a następnie wykonywane są rekurencyjne analizy następników. Sprawdzenie każdej pary stanów obejmuje:
+\begin{itemize}  
+    \item Porównanie prawdopodobieństw przejść dla wszystkich symboli w alfabecie \( \Sigma \).  
+    \item Rekurencyjne sprawdzenie zgodności następników.  
+    \item Ewentualne scalanie stanów, co wiąże się z aktualizacją przejść i prawdopodobieństw.  
+\end{itemize}  
+
+Złożoność iteracyjnego scalania stanów wynosi:  
+\[
+O(|Q|^4 \cdot |\Sigma|).
+\]  
+
+\subparagraph*{Złożoność rzeczywista.}  
+W praktyce rzeczywista złożoność algorytmu jest często znacznie niższa niż teoretyczna granica. Wynika to z dwóch głównych czynników:  
+\begin{itemize}  
+    \item Algorytm wcześnie scala zgodne stany, zmniejszając liczbę analizowanych stanów w kolejnych iteracjach.  
+    \item Stany znajdujące się na końcu porządku przetwarzania (liście drzewa) mają niewielu następców lub w ogóle ich nie posiadają, co ogranicza liczbę rekurencyjnych wywołań.  
+\end{itemize}  
+
+Z tego powodu empiryczna złożoność algorytmu jest często bliższa:  
+\[
+O(|Q|^3 \cdot |\Sigma|).
+\]  
+
+\paragraph*{Łączna złożoność.}  
+Podsumowując, całkowita złożoność czasowa algorytmu obejmuje budowę drzewa oraz iteracyjne porównania i scalania stanów:  
+\[
+O(|S^+| \cdot l^+ + |Q|^4 \cdot |\Sigma|).
 \]
+
+\paragraph*{Zależność liczby stanów \( Q \).}  
+Liczba stanów \( |Q| \) w automacie jest bezpośrednio zależna od danych wejściowych. W najgorszym przypadku każde słowo o długości \( l^+ \) wnosi dokładnie \( l^+ \) nowych stanów. Przy \( |S^+| \) przykładach liczba stanów może wynosić:  
+\[
+|Q| \leq |S^+| \cdot l^+.
+\]  
+Z tego powodu rzeczywista złożoność algorytmu jest silnie powiązana z rozmiarem zbioru przykładów i długością słów.   
+\[
+O((|S^+| \cdot l^+)^4 \cdot |\Sigma|).
+\]
+
 
 \paragraph*{Złożoność pamięciowa}  
 Algorytm przechowuje następujące struktury:  
@@ -158,7 +191,7 @@ O(|S^+| \cdot l^+ \cdot |\Sigma|).
 \]  
 
 \paragraph*{Czynniki wpływające na złożoność}  
-Efektywność algorytmu \textit{ALERGIA} zależy przede wszystkim od liczby przykładów pozytywnych (\( S^+ \)) oraz długości słów (\( l^+ \)), które determinują rozmiar drzewa prefiksowego i liczbę stanów do analizy. Dodatkowo, większy alfabet (\( |\Sigma| \)) zwiększa liczbę możliwych przejść, co wpływa zarówno na czas obliczeń, jak i wymagania pamięciowe. 
+Efektywność algorytmu \textit{ALERGIA} zależy przede wszystkim od liczby przykładów pozytywnych (\( S^+ \)) oraz długości słów (\( l^+ \)), które determinują rozmiar drzewa prefiksowego i liczbę stanów do analizy. Dodatkowo, większy alfabet (\( |\Sigma| \)) zwiększa liczbę możliwych przejść, co wpływa zarówno na czas obliczeń, jak i wymagania pamięciowe.
 
 \subsection{Przykład działania}  
 Aby zilustrować działanie algorytmu \textit{ALERGIA}, rozważmy prosty przykład danych wejściowych opisujących sekwencje wyników rzutów monetą. Każdy wynik jest oznaczony symbolem \( H \) (orzeł) lub \( T \) (reszka).
@@ -179,8 +212,8 @@ Na podstawie danych pozytywnych algorytm buduje drzewo prefiksowe (Prefix Tree A
     \label{fig:alergia_example_0}
 \end{figure}
 
-\paragraph*{Krok 2: Scalanie stanów \( q_1 \) i \( q_2 \).}  
-Algorytm rozpoczyna proces scalania stanów od analizy zgodności pierwszej pary stanów \( q_1 \) i \( q_2 \). Weryfikacja odbywa się na podstawie rozkładów prawdopodobieństw przejść oraz liczby zakończeń w obu stanach.  
+\paragraph*{Krok 2: Próba scalania stanów \( q_1 \) i \( q_2 \).}  
+Algorytm rozpoczyna proces od analizy zgodności pierwszej pary stanów \( q_1 \) i \( q_2 \). Weryfikacja odbywa się na podstawie rozkładów prawdopodobieństw przejść oraz prawdopodobieństwa terminacji w obu stanach.  
 
 \paragraph*{Dane stanów:}  
 \begin{itemize}  
@@ -200,75 +233,109 @@ Różnica:
 \]
 
 \paragraph*{Tolerancja Hoeffding’a:}  
-Przy poziomie ufności \( \alpha = 1.25 \) oraz liczbach obserwacji \( n_1 = 8 \) i \( n_2 = 5 \), granica zgodności \( \epsilon \) jest obliczana na podstawie wzoru:  
+Przy poziomie ufności \( \alpha = 1.7 \) oraz liczbach obserwacji \( n_1 = 8 \) i \( n_2 = 5 \), granica zgodności \( \epsilon \) jest obliczana na podstawie wzoru:  
 \[
-\epsilon = \sqrt{\frac{\ln(2 / \alpha)}{2}} \left( \frac{1}{\sqrt{n_1}} + \frac{1}{\sqrt{n_2}} \right).
+\epsilon = \sqrt{\frac{\ln(2 / \alpha)}{2}} \left( \frac{1}{\sqrt{n_1}} + \frac{1}{\sqrt{n_2}} \right)
+\]
+\[
+\epsilon \approx 0.228.
 \]
 
-\paragraph*{Podstawienie wartości:}  
+\paragraph*{Porównanie:}  
+Ponieważ \( 0.4 > 0.228 \), stany \( q_1 \) i \( q_2 \) \textbf{nie mogą zostać połączone}.
+
+\paragraph*{}
+
+\paragraph*{Krok 3: Scalanie stanów \( q_2 \) i \( q_3 \).}  
+Po odrzuceniu scalania stanów \( q_1 \) i \( q_2 \), algorytm przechodzi do analizy zgodności pary stanów \( q_2 \) i \( q_3 \).
+
+\paragraph*{Dane stanów:}  
+\begin{itemize}  
+    \item \( q_2 \): \( n = 5, F = 2 \), przejścia: \( H[2], T[1] \).  
+    \item \( q_3 \): \( n = 3, F = 1 \), przejścia: \( H[1], T[1] \).  
+\end{itemize}  
+
+\paragraph*{Test Hoeffding’a:}  
+Prawdopodobieństwo terminacji dla każdego stanu:  
 \[
-\epsilon = \sqrt{\frac{\ln(2 / 1.25)}{2}} \left( \frac{1}{\sqrt{8}} + \frac{1}{\sqrt{5}} \right).
+P(q_2, H) = \frac{2}{5} = 0.4, \quad P(q_3, H) = \frac{1}{3} \approx 0.333.
+\]
+\[
+P(q_2, T) = \frac{1}{5} = 0.2, \quad P(q_3, T) = \frac{1}{3} \approx 0.333.
+\]
+\[
+P_F(q_2) = \frac{2}{5} = 0.4, \quad P_F(q_3) = \frac{1}{3} \approx 0.333.
 \]
 
-Najpierw obliczamy logarytm:  
+Różnica:  
 \[
-\ln\left(\frac{2}{1.25}\right) = \ln(1.6) \approx 0.470.
+|P(q_2, H) - P(q_3, H)| \approx |0.4 - 0.333| = 0.067,
+\]
+\[
+|P(q_2, T) - P(q_3, T)| \approx |0.2 - 0.333| = 0.133,
+\]
+\[
+|P_F(q_2) - P_F(q_3)| \approx |0.4 - 0.333| = 0.067.
 \]
 
-Podstawiamy:  
+\paragraph*{Tolerancja Hoeffding’a:}  
+Przy poziomie ufności \( \alpha = 1.7 \) oraz liczbach obserwacji \( n_1 = 5 \) i \( n_2 = 3 \), granica zgodności \( \epsilon \) jest obliczana na podstawie wzoru:  
 \[
-\epsilon = \sqrt{\frac{0.470}{2}} \left( \frac{1}{\sqrt{8}} + \frac{1}{\sqrt{5}} \right).
+\epsilon = \sqrt{\frac{\ln(2 / \alpha)}{2}} \left( \frac{1}{\sqrt{n_1}} + \frac{1}{\sqrt{n_2}} \right)
 \]
-
 \[
-\epsilon = \sqrt{0.235} \left( \frac{1}{2.828} + \frac{1}{2.236} \right).
-\]
-
-\[
-\epsilon \approx 0.485 \left( 0.354 + 0.447 \right).
-\]
-
-\[
-\epsilon \approx 0.485 \cdot 0.801 \approx 0.389.
+\epsilon \approx 0.318.
 \]
 
 \paragraph*{Porównanie:}  
 Ponieważ:  
 \[
-0.4 > 0.389,
+|P(q_2, H) - P(q_3, H)| < 0.318, \quad
+\]
+\[
+|P(q_2, T) - P(q_3, T)| < 0.318, \quad
+\]
+\[
+|P_F(q_2) - P_F(q_3)| < 0.318,
 \]  
-stany \( q_1 \) i \( q_2 \) **nie mogą zostać połączone** bez dalszej analizy ich następców.  
-
-\paragraph*{Rekurencyjna zgodność:}  
-Aby kontynuować proces, algorytm przeprowadza sprawdzanie zgodności dla następujących par stanów:  
-\begin{itemize}  
-    \item \( q_1 \to q_3 \) i \( q_2 \to q_5 \).  
-    \item \( q_2 \to q_4 \) i \( q_4 \to q_8 \).  
-\end{itemize}  
-
-Po dodatkowej analizie Hoeffding’a, wszystkie pary okazują się zgodne, co umożliwia scalanie całych podstruktur.  
-
-\paragraph*{Rekurencyjne sprawdzanie następników:}  
-Aby kontynuować analizę, algorytm porównuje następujące pary stanów:  
-\begin{itemize}  
-    \item \( q_1 \to q_3 \) i \( q_2 \to q_5 \).  
-    \item \( q_2 \to q_4 \) i \( q_4 \to q_8 \).  
-\end{itemize}  
-
-Na podstawie testu Hoeffding’a wszystkie te pary okazują się zgodne, co pozwala na scalanie całych podstruktur.  
-
-\paragraph*{Wynik:}  
-Po scaleniu stanów \( q_1, q_2, q_4, q_8 \) oraz \( q_3, q_5 \) powstają dwa nowe stany:  
-\begin{itemize}  
-    \item \( q_1 \): \( n = 16, F = 4 \), przejścia: \( H[8], T[4] \).  
-    \item \( q_3 \): \( n = 4, F = 2 \), przejścia: \( H[1], T[1] \).  
-\end{itemize}  
-
-Wynik tego kroku przedstawiono na rysunku \ref{fig:alergia_example_1}.  
+stany \( q_2 \) i \( q_3 \) \textbf{są zgodne}. Aby mogły zostać połączone musimy sprawdzić rekurencyjnie zgodność dzieci stanu $q_3$ z odpowiednikami z gałęzi $q_2$, tj. $q_4$ i $q_6$ oraz $q_5$ i $q_7$. Analogiczne obliczenia wykazują zgodność wszystkich tych par stanów. Wynik tego kroku przedstawiono na rysunku \ref{fig:alergia_example_1}.  
 
 \begin{figure}[ht]
     \centering
     \includegraphics[width=0.8\textwidth]{images/run_example/alergia/1.png}
-    \caption{Graf po scaleniu stanów \( q_1, q_2, q_4, q_8 \) oraz \( q_3, q_5 \).}
+    \caption{Graf po scaleniu stanów \( q_2 \) i \( q_3 \).}
     \label{fig:alergia_example_1}
+\end{figure}
+
+\paragraph*{Krok 4: Scalanie stanów \( q_4 \) i \( q_8 \).}  
+Po wcześniejszym scaleniu stanów \( q_2 \) i \( q_3 \), \( q_4 \) i \( q_6 \) oraz \( q_5 \) i \( q_7 \), algorytm przechodzi do następnej zgodnej pary stanów \( q_4 \) i \( q_8 \). Stan \( q_4 \) po wcześniejszym scaleniu z \( q_6 \) posiada \( n = 3, F = 2 \) oraz przejście \( H[1] \). Stan \( q_8 \) ma \( n = 1, F = 1 \) i brak przejść. Obliczenia są przeprowadzane analogicznie do wcześniejszych kroków. Porównanie prawdopodobieństw przejść oraz terminacji pokazuje, że różnice mieszczą się w zakresie tolerancji Hoeffding’a. Dzięki temu stany mogą zostać połączone, tworząc nowy stan \( q_4 \) o wartościach \( n = 4, F = 3 \) oraz przejściem zwrotnym \( H[1] \). Wynik tego kroku przedstawiono na rysunku \ref{fig:alergia_example_2}.  
+
+\begin{figure}[ht]
+    \centering
+    \includegraphics[width=0.8\textwidth]{images/run_example/alergia/2.png}
+    \caption{Graf po scaleniu stanów \( q_4 \) i \( q_8 \).}
+    \label{fig:alergia_example_2}
 \end{figure}  
+
+\paragraph*{Krok 5: Scalanie stanów \( q_4 \) i \( q_5 \).}  
+Po wcześniejszych krokach, w których scalono stany \( q_2 \) z \( q_3 \), \( q_4 \) z \( q_6 \) oraz \( q_5 \) z \( q_7 \), algorytm przechodzi do analizy zgodności pary stanów \( q_4 \) i \( q_5 \). Stan \( q_4 \) po wcześniejszych operacjach posiada \( n = 3, F = 2 \) z przejściem zwrotnym \( H[1] \), natomiast stan \( q_5 \) ma \( n = 2, F = 2 \) i brak przejść. Obliczenia Hoeffding’a przeprowadzone w sposób analogiczny do wcześniejszych kroków pokazują, że różnice w rozkładach prawdopodobieństw przejść oraz terminacji mieszczą się w zakresie tolerancji. Dzięki temu stany zostają połączone, tworząc nowy stan \( q_4 \) z wartościami \( n = 5, F = 4 \) oraz przejściem zwrotnym \( H[1] \). Wynikowy graf można zobaczyć na rysunku \ref{fig:alergia_example_3}.
+
+\begin{figure}[ht]
+    \centering
+    \includegraphics[width=0.8\textwidth]{images/run_example/alergia/3.png}
+    \caption{Graf po scaleniu stanów \( q_4 \) i \( q_5 \).}
+    \label{fig:alergia_example_3}
+\end{figure}  
+
+\paragraph*{Przekształcenie do postaci probabilistycznej.}  
+W ostatnim kroku przekształcamy graf do postaci probabilistycznej. Prawdopodobieństwa terminacji oraz przejść są obliczane w sposób analogiczny do poprzednich kroków, uwzględniając wartości dla każdego stanu oraz przejść między nimi. Finalna postać grafu probabilistycznego reprezentuje rozkład danych wejściowych i umożliwia estymację nowych sekwencji. Wynikowy automat stochastyczny odwzorowuje prawdopodobieństwa przejść oraz terminacji, zapewniając zgodność probabilistyczną z danymi treningowymi. Wyniki tych kroków przedstawiono na rysunkach \ref{fig:alergia_example_4}.  
+
+\begin{figure}[ht]
+    \centering
+    \includegraphics[width=0.8\textwidth]{images/run_example/alergia/4.png}
+    \caption{Graf z probabilistycznymi przejściami i terminacjami.}
+    \label{fig:alergia_example_4}
+\end{figure}  
+
+\paragraph*{Podsumowanie:}  
+Algorytm zakończył proces scalania, redukując liczbę stanów i upraszczając strukturę automatu. Wynikowy automat stochastyczny zachowuje zgodność probabilistyczną z danymi wejściowymi, reprezentując ich rozkłady prawdopodobieństwa w sposób bardziej uogólniony. Finalna postać automatu pozwala na estymację nowych sekwencji zgodnych z rozkładem danych treningowych.  

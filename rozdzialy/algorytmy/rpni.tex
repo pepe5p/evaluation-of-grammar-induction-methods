@@ -1,7 +1,7 @@
 \section{Algorytm \textit{RPNI}}
 \label{sec:rpni}
 
-Algorytm \textit{RPNI} (\textit{Regular Positive and Negative Inference}) \cite{RPNI} jest jednym z klasycznych algorytmów do odkrywania gramatyki języka regularnego. Dokonuje on generalizacji na podstawie zbiorów przykładów pozytywnych oraz negatywnych, wykorzystując podejście łączenia stanów w drzewie akceptacji prefiksów (PTA).
+Algorytm \textit{RPNI} (\textit{Regular Positive and Negative Inference}) \cite{RPNI} jest jednym z klasycznych algorytmów do odkrywania gramatyki języka regularnego. Dokonuje on generalizacji na podstawie zbiorów przykładów pozytywnych oraz negatywnych, wykorzystując podejście łączenia stanów w akceptorze drzewa prefiksów (PTA).
 
 Model algorytmu zakłada, że język docelowy jest regularny, a dostępne dane (przykłady pozytywne \( S^+ \) i negatywne \( S^- \)) są wystarczająco reprezentatywne, aby umożliwić skonstruowanie minimalnego deterministycznego automatu skończonego (DFA). Proces ten polega na iteracyjnym scalaniu stanów w PTA w celu zbudowania modelu akceptującego wszystkie przykłady pozytywne i odrzucającego negatywne.
 
@@ -12,7 +12,7 @@ Algorytm RPNI pozwala na indukcję minimalnego deterministycznego automatu skoń
 \paragraph*{Opis algorytmu.}
 Algorytm RPNI składa się z następujących etapów:
 \begin{enumerate}
-    \item \textbf{Budowa automatu drzewa prefiksów (PTA):}
+    \item \textbf{Budowa akceptoru drzewa prefiksów (PTA):}
         Zbiór \( S^+ \) jest używany do budowy automatu reprezentującego dokładnie wszystkie słowa z \( S^+ \). Automatyczny akceptor prefiksów dokładnie reprezentuje język \( L(S^+) \).
     \item \textbf{Iteracyjne łączenie stanów:}
         Algorytm przegląda pary stanów w PTA i sprawdza, czy można je połączyć bez naruszania zgodności z \( S^- \). Połączenie stanów prowadzi do generalizacji języka \( L \).
@@ -31,7 +31,7 @@ Algorytm RPNI składa się z następujących etapów:
 
 \subsection{Formalizacja}
 
-Celem niniejszej sekcji jest dostarczenie formalnych definicji oraz narzędzi matematycznych niezbędnych do pełnego zrozumienia algorytmu RPNI. W szczególności omówione zostaną kluczowe koncepcje, takie jak deterministyczny automat skończony (DFA) oraz akceptor drzewa prefiksowego (Prefix Tree Acceptor, PTA), które stanowią podstawę teoretyczną algorytmu. Formalizacja ta pozwala na przejście od zestawu przykładów pozytywnych i negatywnych do precyzyjnego opisu języków regularnych oraz konstrukcji ich reprezentacji w postaci minimalnych automatów. Ponownie potrzebne nam są: definicja \ref{def:dfa} (DFA), definicja \ref{def:word_acceptance} (akceptowanie słowa) i definicja \ref{def:regular_language} (język regularny).
+Celem niniejszej sekcji jest dostarczenie formalnych definicji oraz narzędzi matematycznych niezbędnych do pełnego zrozumienia algorytmu RPNI. W szczególności omówione zostaną kluczowe koncepcje, takie jak deterministyczny automat skończony (DFA) oraz akceptor drzewa prefiksów (Prefix Tree Acceptor, PTA), które stanowią podstawę teoretyczną algorytmu. Formalizacja ta pozwala na przejście od zestawu przykładów pozytywnych i negatywnych do precyzyjnego opisu języków regularnych oraz konstrukcji ich reprezentacji w postaci minimalnych automatów. Ponownie potrzebne nam są: definicja \ref{def:dfa} (DFA), definicja \ref{def:word_acceptance} (akceptowanie słowa) i definicja \ref{def:regular_language} (język regularny).
 
 \begin{definition}[Zbiór pozytywny $S^+$]
     Zbiorem pozytywnym lub zbiorem przykładów pozytywnych nazywamy zbiór takich słów $w$, że \( w \in L \).
@@ -164,13 +164,13 @@ S^+ = \{ a, aa, ab, ba, aba, aab, baa, abaaa, baaaa, ac \},
 S^- = \{ \epsilon, b, bb, c, bc, bbb, bbbc \}.
 \]
 
-Na początku algorytm konstruuje drzewo prefiksowe (\textit{Prefix Tree Acceptor}, PTA) na podstawie zbioru \( S^+ \). Struktura PTA jest zaprezentowana na \textbf{Rys. \ref{fig:pta00}}. Następnie algorytm iteracyjnie łączy stany w taki sposób, aby zachować zgodność zarówno z danymi negatywnymi (\( S^- \)). 
+Na początku algorytm konstruuje akceptor drzewa prefiksów PTA na podstawie zbioru \( S^+ \). Struktura PTA jest zaprezentowana na rysunku \ref{fig:pta00}. Następnie algorytm iteracyjnie łączy stany w taki sposób, aby zachować zgodność zarówno z danymi negatywnymi (\( S^- \)). 
 
 Warto podkreślić, że kolejność wykonywanych operacji łączenia zależy od konkretnej implementacji algorytmu. Istotne jednak jest to, że niezależnie od przyjętej kolejności wynik końcowy pozostaje taki sam. Dla celów ilustracyjnych stany do połączenia będą wybierane przez autora.
 
 W pierwszej iteracji rozważamy połączenie stanów \( q_0 \) i \( q_1 \). Próba ich scalania nie może zakończyć się powodzeniem, ponieważ naruszyłaby zgodność z danymi negatywnymi (\( S^- \)). Przykładem takiego naruszenia jest słowo \( \epsilon \), które po połączeniu \( q_0 \) i \( q_1 \) zostałoby niesłusznie zaakceptowane. 
 
-W kolejnej iteracji analizujemy stany \( q_1 \) i \( q_2 \). Ich połączenie jest możliwe, ponieważ nie narusza zgodności z danymi negatywnymi (\( S^- \)). W wyniku tej operacji scalania powstaje zaktualizowany graf, przedstawiony na \textbf{Rys. \ref{fig:pta01}}.
+W kolejnej iteracji analizujemy stany \( q_1 \) i \( q_2 \). Ich połączenie jest możliwe, ponieważ nie narusza zgodności z danymi negatywnymi (\( S^- \)). W wyniku tej operacji scalania powstaje zaktualizowany graf, przedstawiony na rysunku \ref{fig:pta01}.
 
 \begin{figure}[ht]
     \centering
@@ -186,9 +186,9 @@ W kolejnej iteracji analizujemy stany \( q_1 \) i \( q_2 \). Ich połączenie je
     \label{fig:pta01}
 \end{figure} 
 
-Następne pary stanów będą tak wyznaczane, aby były to poprawne łączenia w celu usprawnienia pokazywania przykładu. Kolejnym krokiem jest połączenie stanów \( q_3 \) i \( q_7 \), co przedstawiono na \textbf{Rys. \ref{fig:pta02}}. Algorytm następnie łączy stany \( q_3 \) i \( q_{13} \), co przedstawiono na \textbf{Rys. \ref{fig:pta03}}. Połączenie stanów \( q_3 \) i \( q_5 \) prowadzi do zaktualizowanego grafu widocznego na \textbf{Rys. \ref{fig:pta04}}. 
+Następne pary stanów będą tak wyznaczane, aby były to poprawne łączenia w celu usprawnienia pokazywania przykładu. Kolejnym krokiem jest połączenie stanów \( q_3 \) i \( q_7 \), co przedstawiono na rysunku \ref{fig:pta02}. Algorytm następnie łączy stany \( q_3 \) i \( q_{13} \), co przedstawiono na rysunku \ref{fig:pta03}. Połączenie stanów \( q_3 \) i \( q_5 \) prowadzi do zaktualizowanego grafu widocznego na rysunku \ref{fig:pta04}. 
 
-W tym momencie łatwo można zauważyć podobieństwo dwóch gałęzi wychodzących z węzła \( q_3 \). Stąd, w tym kroku algorytm łączy pary stanów: \( q_6 \) i \( q_8 \), \( q_9 \) i \( q_{11} \), oraz \( q_{10} \) i \( q_{12} \). Zaktualizowany graf przedstawiono na \textbf{Rys. \ref{fig:pta05}}. 
+W tym momencie łatwo można zauważyć podobieństwo dwóch gałęzi wychodzących z węzła \( q_3 \). Stąd, w tym kroku algorytm łączy pary stanów: \( q_6 \) i \( q_8 \), \( q_9 \) i \( q_{11} \), oraz \( q_{10} \) i \( q_{12} \). Zaktualizowany graf przedstawiono na rysunku \ref{fig:pta05}. 
 
 Następnie zostaje przeprowadzone łączenie stanów \( q_9 \) i \( q_{10} \), \( q_6 \) i \( q_9 \), oraz \( q_3 \) i \( q_6 \). Warte odnotowania jest to, że po raz pierwszy łączymy stan akceptujący z nieakceptującym. W takim przypadku nowy stan będzie akceptujący. Jest to generalizacja, która jest poprawna, ponieważ zawsze sprawdzamy zgodność ze zbiorem \( S^- \).
 
@@ -220,7 +220,7 @@ Następnie zostaje przeprowadzone łączenie stanów \( q_9 \) i \( q_{10} \), \
     \label{fig:pta05}
 \end{figure}
 
-Algorytm wykonuje kolejne połączenia stanów, co prowadzi do grafu widocznego na \textbf{Rys. \ref{fig:pta06}}. W tym kroku stany \( q_0 \) i \( q_4 \) zostają połączone. Wynik przedstawiono na \textbf{Rys. \ref{fig:pta07}}. W ostatnim kroku algorytm łączy stany \( q_1 \) i \( q_3 \), uzyskując finalny graf przedstawiony na \textbf{Rys. \ref{fig:pta08}}. 
+Algorytm wykonuje kolejne połączenia stanów, co prowadzi do grafu widocznego na rysunku \ref{fig:pta06}. W tym kroku stany \( q_0 \) i \( q_4 \) zostają połączone. Wynik przedstawiono na rysunku \ref{fig:pta07}. W ostatnim kroku algorytm łączy stany \( q_1 \) i \( q_3 \), uzyskując finalny graf przedstawiony na rysunku \ref{fig:pta08}. 
 
 Nie jest to jednak koniec, ponieważ brakuje przejścia \( c \) ze stanu \( q_0 \). W takim wypadku konieczne jest dodanie nowego cyklicznego przejścia, czyli z \( q_0 \) do \( q_0 \). Po tej operacji uzyskujemy wynikowy DFA, który generuje język \( L \).
 

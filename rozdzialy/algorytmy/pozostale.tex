@@ -54,11 +54,11 @@ Poniżej przedstawiono krótki opis wybranych algorytmów, dla których nie znal
 
     \item \textbf{Inside-Outside} – Algorytm służący do indukcji probabilistycznych gramatyk bezkontekstowych. Operuje na danych pozytywnych i wykorzystuje iteracyjne oszacowania parametrów modelu w celu maksymalizacji prawdopodobieństwa. Jego zastosowanie do gramatyk regularnych jest ograniczone, co czyni go mniej odpowiednim dla analiz w tej pracy.  
 
-    \item \textbf{Byte Pair Encoding (BPE)} – Metoda kompresji danych stosowana w przetwarzaniu języka naturalnego (NLP). Działa na danych sekwencyjnych i iteracyjnie zastępuje najczęściej występujące pary symboli nowymi tokenami. Choć sprawdza się w zadaniach związanych z NLP, jej charakter kompresyjny ogranicza możliwości modelowania struktur gramatycznych.  
+    \item \textbf{Byte Pair Encoding} – Metoda kompresji danych stosowana w przetwarzaniu języka naturalnego (NLP). Działa na danych sekwencyjnych i iteracyjnie zastępuje najczęściej występujące pary symboli nowymi tokenami. Choć sprawdza się w zadaniach związanych z NLP, jej charakter kompresyjny ogranicza możliwości modelowania struktur gramatycznych.  
 
     \item \textbf{Forward-Backward} – Algorytm wykorzystywany w ukrytych modelach Markowa (HMM) do obliczania prawdopodobieństw przejść pomiędzy stanami. Operuje na danych probabilistycznych i jest szczególnie użyteczny w analizie sekwencji czasowych. Jego złożoność czyni go jednak mniej praktycznym dla problemów związanych z gramatykami regularnymi.  
 
-    \item \textbf{Lempel-Ziv-Welch (LZW)} – Metoda bezstratnej kompresji danych oparta na dynamicznym budowaniu słownika wzorców. Działa na danych pozytywnych i sprawdza się głównie w zadaniach związanych z kompresją. Jego zdolność do modelowania struktur językowych jest ograniczona, co sprawia, że nie nadaje się bezpośrednio do indukcji gramatyk formalnych.  
+    \item \textbf{Lempel-Ziv-Welch} – Metoda bezstratnej kompresji danych oparta na dynamicznym budowaniu słownika wzorców. Działa na danych pozytywnych i sprawdza się głównie w zadaniach związanych z kompresją. Jego zdolność do modelowania struktur językowych jest ograniczona, co sprawia, że nie nadaje się bezpośrednio do indukcji gramatyk formalnych.  
 
     \item \textbf{Sequitur} – Algorytm umożliwiający indukcję gramatyk bezkontekstowych na podstawie sekwencji wejściowych. Działa na danych pozytywnych i tworzy reguły gramatyczne poprzez wykrywanie powtarzających się wzorców. Pomimo wysokiej efektywności w odkrywaniu hierarchicznych struktur, nie spełnia on założeń dotyczących gramatyk regularnych, które były kluczowe w tej pracy.  
 \end{itemize}  
