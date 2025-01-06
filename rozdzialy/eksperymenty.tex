@@ -3,9 +3,9 @@
 
 % Mimo swoich zalet, \textit{ALERGIA} zazwyczaj nie jest odpowiednim wyborem do zastąpienia algorytmów \textit{GIG}, \textit{RPNI} lub \textit{L*}. Algorytm zakłada wyłącznie przykłady pozytywne, co ogranicza jego zdolność do wykrywania granic języka i może prowadzić do zbyt ogólnych modeli. Algorytmy takie jak \textit{RPNI} uwzględniają także przykłady negatywne, co pozwala na precyzyjniejsze modelowanie. Ponadto, \textit{ALERGIA} jest zoptymalizowana pod kątem modeli probabilistycznych, co czyni go mniej odpowiednim w przypadkach, gdzie wymagane są deterministyczne gramatyki lub klasyczne modele bez prawdopodobieństw, jak \textit{GIG} i \textit{L*}. Dlatego \textit{ALERGIA} sprawdza się głównie w zadaniach probabilistycznych, gdzie brak przykładów negatywnych, natomiast w kontekście klasycznych gramatyk regularnych bardziej odpowiednie pozostają algorytmy \textit{GIG}, \textit{RPNI} i \textit{L*}.
 
-Celem przeprowadzonych eksperymentów jest analiza zachowania wybranych algorytmów indukcji gramatyk formalnych w różnych warunkach oraz ocena ich wydajności, dokładności i odporności na zmiany parametrów. Badaniom poddano cztery algorytmy: \textit{RPNI}, \textit{L*}, \textit{ALERGIA} oraz \textit{GIG}. Eksperymenty opierają się na danych syntetycznych, które zostały dobrane indywidualnie pod kątem specyfiki każdego testowanego algorytmu. Dane zostały przygotowane tak, aby umożliwić ocenę złożoności czasowej, liczby stanów wynikowych automatów oraz zdolności do generalizacji na podstawie przykładów treningowych.  
+% Celem przeprowadzonych eksperymentów jest analiza zachowania wybranych algorytmów indukcji gramatyk formalnych w różnych warunkach oraz ocena ich wydajności, dokładności i odporności na zmiany parametrów. Badaniom poddano cztery algorytmy: \textit{RPNI}, \textit{L*}, \textit{ALERGIA} oraz \textit{GIG}. Eksperymenty opierają się na danych syntetycznych, które zostały dobrane indywidualnie pod kątem specyfiki każdego testowanego algorytmu. Dane zostały przygotowane tak, aby umożliwić ocenę złożoności czasowej, liczby stanów wynikowych automatów oraz zdolności do generalizacji na podstawie przykładów treningowych.  
 
-Algorytm \textit{RPNI} poddano analizie pod względem złożoności czasowej oraz dokładności modelu w zależności od rozmiaru alfabetu. Metryki użyte do oceny obejmują czas działania algorytmu oraz liczbę stanów wynikowego automatu. W przypadku algorytmu \textit{L*} skupiono się na liczbie zapytań EQ (Equivalence Query) i MQ (Membership Query) w zależności od złożoności problemu. Zebrane dane obejmują liczbę zapytań EQ i MQ oraz rozmiar wynikowego automatu. Dla algorytmu \textit{ALERGIA} przeprowadzono testy odporności na szum w danych, analizując procent poprawnie wygenerowanych zdań spośród \( N \) przykładów oraz liczbę stanów w automacie wynikowym. Z kolei algorytm \textit{GIG} poddano analizie pod kątem wpływu populacji początkowej na jego dokładność i wydajność. Wyniki oceniono na podstawie czasu działania, liczby generacji, liczby stanów automatu oraz procentu poprawnych klasyfikacji danych testowych.
+Algorytm \textit{RPNI} poddano analizie pod względem złożoności czasowej oraz dokładności modelu w zależności od rozmiaru alfabetu. Metryki użyte do oceny obejmują czas działania algorytmu oraz liczbę stanów wynikowego automatu. W przypadku algorytmu \textit{L*} skupiono się na liczbie zapytań EQ (\textit{Equivalence Query}) i MQ (\textit{Membership Query}) w zależności od złożoności problemu. Zebrane dane obejmują liczbę zapytań EQ i MQ oraz rozmiar wynikowego automatu. Dla algorytmu \textit{ALERGIA} przeprowadzono testy odporności na szum w danych, analizując procent poprawnie wygenerowanych zdań spośród \( N \) przykładów oraz liczbę stanów w automacie wynikowym. Z kolei algorytm \textit{GIG} poddano analizie pod kątem wpływu populacji początkowej na jego dokładność i wydajność. Wyniki oceniono na podstawie czasu działania, liczby generacji, liczby stanów automatu oraz procentu poprawnych klasyfikacji danych testowych.
 
 
 \section{Eksperymenty dla algorytmu \textit{L*}}
@@ -46,15 +46,12 @@ W trakcie eksperymentów analizowane są następujące metryki:
 
 Liczba zapytań \textit{EQ} oraz \textit{MQ} pozwala ocenić efektywność algorytmu pod względem liczby interakcji wymaganych do nauki modelu. Liczba stanów w wynikowym automacie służy do oceny zdolności algorytmu do odwzorowania struktury badanego języka przy jednoczesnym minimalizowaniu jego złożoności.  
 
-\subsection{Procedura eksperymentu}  
+\subsection{Procedura eksperymentów}  
 Każda konfiguracja parametrów jest analizowana pojedynczo, ponieważ algorytm działa w sposób deterministyczny, co oznacza, że wyniki są powtarzalne dla tych samych danych wejściowych. Dzięki temu nie ma potrzeby wielokrotnego wykonywania testów w celu uśrednienia wyników.  
 
 
 \section{Eksperyment dla algorytmu \textit{RPNI}}  
-Eksperymenty przeprowadzone dla algorytmu \textit{RPNI} mają na celu analizę wpływu rozmiaru alfabetu na złożoność czasową oraz strukturę wynikowego automatu.  
-
-\subsection{Opis danych wejściowych}  
-Badany język składa się ze wszystkich ciągów rozpoczynających się symbolem \( 0 \), po którym mogą występować dowolne symbole z przyjętego alfabetu. Formalnie język można opisać wyrażeniem regularnym:  
+Eksperymenty przeprowadzone dla algorytmu \textit{RPNI} mają na celu analizę wpływu rozmiaru alfabetu na złożoność czasową oraz strukturę wynikowego automatu. Badany język składa się ze wszystkich ciągów rozpoczynających się symbolem \( 0 \), po którym mogą występować dowolne symbole z przyjętego alfabetu. Formalnie język można opisać wyrażeniem regularnym:  
 \[
 L = 0(0 + 1 + \ldots + k)^*,
 \]  
@@ -65,16 +62,13 @@ Przykładowo, dla alfabetu \(\{0, 1\}\) język obejmuje ciągi:
 L = \{0, 01, 00, 010, 0111, 00101, \ldots \}.
 \]  
 
-Dane testowe są generowane w taki sposób, aby jednoznacznie opisywały język. Liczba przykładów oraz długości sekwencji są dobierane empirycznie, aby zapewnić porównywalną złożoność obliczeniową dla każdego rozmiaru alfabetu.  
-
-\subsection{Zakres parametrów}  
-Eksperyment bada wpływ rozmiaru alfabetu na działanie algorytmu. Testowane wartości wielkości alfabetu to:  
+Dane testowe są generowane w taki sposób, aby jednoznacznie opisywały język. Liczba przykładów oraz długości sekwencji są dobierane empirycznie, aby zapewnić porównywalną złożoność obliczeniową dla każdego rozmiaru alfabetu. Eksperyment bada wpływ rozmiaru alfabetu na działanie algorytmu. Testowane wartości wielkości alfabetu to:  
 \[
 |\Sigma| = \{2, 4, 8, 16, 32, 64\}.
 \]  
 Dla każdej wartości alfabetu dane są dynamicznie generowane, a następnie analizowane przez algorytm.  
 \subsection{Metryki oceny}  
-W trakcie eksperymentów analizowane są następujące metryki:  
+W trakcie eksperymentu analizowane są następujące metryki:  
 \begin{itemize}  
     \item Liczba stanów w wynikowym automacie,  
     \item Czas wykonania algorytmu.  
@@ -119,15 +113,20 @@ Język ten obejmuje wszystkie ciągi, w których liczba symboli \( a \) jest par
     \item Przykłady negatywne: \( a, ab, ba, aaa, aaba, abb, ababab \).  
 \end{itemize}
 
-\subsection{Procedura eksperymentu}  
+\subsection{Metryki oceny}  
+W trakcie eksperymentów analizowane są następujące metryki:  
+\begin{itemize}
+    \item Numer pokolenia najlepszego rozwiązania - liczba opisująca w ilu cyklach algorytm genetyczny znalazł rozwiązanie.
+    \item Jakość - procent poprawnych klasyfikacji najlepszego osobnika na danych testowych.
+    \item Macierz konfuzji - cztery wartości opisujące ilość błędów najlepszego osobnika.
+\end{itemize}  
+
+\subsection{Procedura eksperymentów}  
 Każda konfiguracja inicjalizacji populacji jest testowana 50 razy dla każdego z języków formalnych, a uzyskane wartości są uśredniane. Eksperymenty są przeprowadzane na wszystkich danych wejściowych, co umożliwia porównanie wydajności algorytmu w zależności od struktury danych i sposobu inicjalizacji populacji.  
 
 
-\section{Eksperymenty dla algorytmu \textit{ALERGIA}}  
-Eksperymenty przeprowadzone dla algorytmu \textit{ALERGIA} mają na celu analizę jego odporności na szum w danych wejściowych. Algorytm testowany jest pod kątem jakości wygenerowanego modelu oraz liczby stanów wynikowego automatu w zależności od poziomu zakłóceń.  
-
-\subsection{Opis danych wejściowych}  
-Badany język składa się z ciągów naprzemiennych symboli \( a \) i \( b \). Formalnie język można opisać wyrażeniem regularnym:  
+\section{Eksperyment dla algorytmu \textit{ALERGIA}}  
+Eksperyment przeprowadzony dla algorytmu \textit{ALERGIA} ma na celu analizę jego odporności na szum w danych wejściowych. Algorytm testowany jest pod kątem jakości wygenerowanego modelu oraz liczby stanów wynikowego automatu w zależności od poziomu zakłóceń. Badany język składa się z ciągów naprzemiennych symboli \( a \) i \( b \). Formalnie język można opisać wyrażeniem regularnym:  
 \[
 L = (ab)^* a?,
 \]  
@@ -138,17 +137,14 @@ Przykładowe ciągi należące do języka to:
 \{a, ab, aba, abab, ababa, abababab, \ldots\}.
 \]  
 
-Zbiór danych testowych zawiera 1000 przykładów pozytywnych oraz 1000 przykładów negatywnych. Przykłady negatywne są generowane losowo z automatu komplementarnego do badanego języka. Automat ten akceptuje wszystkie ciągi, które nie należą do języka naprzemiennych symboli \( a \) i \( b \). Dzięki temu przykłady negatywne obejmują zarówno strukturalnie błędne ciągi (np. \( abb \), \( baa \)), jak i losowe permutacje symboli spoza badanego języka.  
-
-\subsection{Zakres parametrów}  
-Eksperyment bada wpływ poziomu szumu w danych na jakość wynikowego modelu. Szum jest dodawany do danych z określonym prawdopodobieństwem, które przyjmuje wartości:  
+Zbiór danych testowych zawiera 1000 przykładów pozytywnych oraz 1000 przykładów negatywnych. Przykłady negatywne są generowane losowo z automatu komplementarnego do badanego języka. Automat ten akceptuje wszystkie ciągi, które nie należą do języka naprzemiennych symboli \( a \) i \( b \). Dzięki temu przykłady negatywne obejmują zarówno strukturalnie błędne ciągi (np. \( abb \), \( baa \)), jak i losowe permutacje symboli spoza badanego języka. Eksperyment bada wpływ poziomu szumu w danych na jakość wynikowego modelu. Szum jest dodawany do danych w stosunku, który przyjmuje wartości:  
 \[
 \{\num{0.0}, \num{0.001}, \num{0.005}, \num{0.01}, \num{0.02}, \num{0.05}, \num{0.1}, \num{0.2}, \num{0.3}, \num{0.4}, \num{0.5}\}.
 \]  
 Każdy zestaw danych z określonym poziomem zakłóceń jest analizowany niezależnie.  
 
 \subsection{Metryki oceny}  
-W trakcie eksperymentów analizowane są następujące metryki:  
+W trakcie eksperymentu analizowane są następujące metryki:  
 \begin{itemize}  
     \item Jakość modelu – procent poprawnych zdań wygenerowanych przez automat spośród \num{10000} losowo wygenerowanych prób.  
     \item Liczba stanów w wynikowym automacie.  

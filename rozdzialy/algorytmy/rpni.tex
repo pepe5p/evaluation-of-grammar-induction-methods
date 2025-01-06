@@ -90,65 +90,65 @@ Oczywistą, ale wartą odnotowania implikacją jest to, że zbiór przykładów 
 \paragraph*{Wynik:}
 Rezultatem algorytmu jest minimalny DFA \( M \), który akceptuje wszystkie słowa z \( S^+ \) i żadne słowo z \( S^- \). Dzięki iteracyjnemu łączeniu stanów \( PTA(S^+) \) zostaje stopniowo uproszczony do ostatecznej postaci minimalnego automatu.
 
-\subsection{Złożoność}
+% \subsection{Złożoność}
 
-Algorytm \textit{RPNI} charakteryzuje się złożonością wielomianową względem rozmiaru danych wejściowych. Aby dokładnie określić jego złożoność czasową i pamięciową, należy zdefiniować kluczowe parametry:
-\begin{itemize}
-    \item \(|S^+|\) - liczba słów w zbiorze pozytywnych przykładów,
-    \item \( l^+ \) - maksymalna długość słowa w \( S^+ \),
-    \item \(|S^-|\) - liczba słów w zbiorze negatywnych przykładów,
-    \item \( l^- \) - maksymalna długość słowa w \( S^- \),
-    \item \(|\Sigma|\) - rozmiar alfabetu.
-\end{itemize}
+% Algorytm \textit{RPNI} charakteryzuje się złożonością wielomianową względem rozmiaru danych wejściowych. Aby dokładnie określić jego złożoność czasową i pamięciową, należy zdefiniować kluczowe parametry:
+% \begin{itemize}
+%     \item \(|S^+|\) - liczba słów w zbiorze pozytywnych przykładów,
+%     \item \( l^+ \) - maksymalna długość słowa w \( S^+ \),
+%     \item \(|S^-|\) - liczba słów w zbiorze negatywnych przykładów,
+%     \item \( l^- \) - maksymalna długość słowa w \( S^- \),
+%     \item \(|\Sigma|\) - rozmiar alfabetu.
+% \end{itemize}
 
-\paragraph*{Złożoność czasowa}
-Algorytm RPNI składa się z dwóch głównych etapów:
-\begin{enumerate}
-    \item \textbf{Konstrukcja drzewa prefiksowego (PTA):}
-    Utworzenie PTA wymaga przejścia przez wszystkie słowa w \( S^+ \), co ma złożoność \( O(|S^+| \cdot l^+) \).
-    \item \textbf{Iteracyjne łączenie stanów:}
-    Liczba stanów w \( PTA(S^+) \) jest równa liczbie wszystkich prefiksów słów w \( S^+ \), co w najgorszym przypadku wynosi \( O(|S^+| \cdot l^+) \). Każde łączenie dwóch stanów wymaga sprawdzenia, czy wynikowy automat jest zgodny z danymi negatywnymi \( S^- \). Sprawdzenie tego wymaga przejścia przez \( |S^-| \) słów. Etap ten ma, więc złożoność \( O((|S^+| \cdot l)^2 \cdot |S^-|) \).
-\end{enumerate}
+% \paragraph*{Złożoność czasowa}
+% Algorytm RPNI składa się z dwóch głównych etapów:
+% \begin{enumerate}
+%     \item \textbf{Konstrukcja drzewa prefiksowego (PTA):}
+%     Utworzenie PTA wymaga przejścia przez wszystkie słowa w \( S^+ \), co ma złożoność \( O(|S^+| \cdot l^+) \).
+%     \item \textbf{Iteracyjne łączenie stanów:}
+%     Liczba stanów w \( PTA(S^+) \) jest równa liczbie wszystkich prefiksów słów w \( S^+ \), co w najgorszym przypadku wynosi \( O(|S^+| \cdot l^+) \). Każde łączenie dwóch stanów wymaga sprawdzenia, czy wynikowy automat jest zgodny z danymi negatywnymi \( S^- \). Sprawdzenie tego wymaga przejścia przez \( |S^-| \) słów. Etap ten ma, więc złożoność \( O((|S^+| \cdot l)^2 \cdot |S^-|) \).
+% \end{enumerate}
 
-Łączna złożoność czasowa algorytmu wynosi:
-\[
-O(|S^+| \cdot l^+ + (|S^+| \cdot l^+)^2 \cdot |S^-|),
-\]
-co można uprościć do:
-\[
-O((|S^+| \cdot l^+)^2 \cdot |S^-|).
-\]
+% Łączna złożoność czasowa algorytmu wynosi:
+% \[
+% O(|S^+| \cdot l^+ + (|S^+| \cdot l^+)^2 \cdot |S^-|),
+% \]
+% co można uprościć do:
+% \[
+% O((|S^+| \cdot l^+)^2 \cdot |S^-|).
+% \]
 
 
-\paragraph*{Złożoność pamięciowa}
-Algorytm przechowuje następujące struktury danych:
-\begin{itemize}
-    \item \textbf{Drzewo prefiksowe (PTA):}  
-    PTA zawiera \( O(|S^+| \cdot l^+) \) stanów, z których każdy może mieć do \( |\Sigma| \) przejść. Wymagana pamięć wynosi:
-    \[
-    O(|S^+| \cdot l^+ \cdot |\Sigma|).
-    \]
+% \paragraph*{Złożoność pamięciowa}
+% Algorytm przechowuje następujące struktury danych:
+% \begin{itemize}
+%     \item \textbf{Drzewo prefiksowe (PTA):}  
+%     PTA zawiera \( O(|S^+| \cdot l^+) \) stanów, z których każdy może mieć do \( |\Sigma| \) przejść. Wymagana pamięć wynosi:
+%     \[
+%     O(|S^+| \cdot l^+ \cdot |\Sigma|).
+%     \]
 
-    \item \textbf{Negatywne przykłady (\( S^- \)):}  
-    Przechowywane są do weryfikacji zgodności połączeń. Przechowywanie \( |S^-| \) słów o maksymalnej długości \( l^- \) wymaga:
-    \[
-    O(|S^-| \cdot l^-).
-    \]
-\end{itemize}
+%     \item \textbf{Negatywne przykłady (\( S^- \)):}  
+%     Przechowywane są do weryfikacji zgodności połączeń. Przechowywanie \( |S^-| \) słów o maksymalnej długości \( l^- \) wymaga:
+%     \[
+%     O(|S^-| \cdot l^-).
+%     \]
+% \end{itemize}
 
-Łączna złożoność pamięciowa algorytmu wynosi:
-\[
-O(|S^+| \cdot l^+ \cdot |\Sigma| + |S^-| \cdot l^-).
-\]
+% Łączna złożoność pamięciowa algorytmu wynosi:
+% \[
+% O(|S^+| \cdot l^+ \cdot |\Sigma| + |S^-| \cdot l^-).
+% \]
 
-\paragraph*{Czynniki wpływające na złożoność}
-Główne elementy mające wpływ na wydajność algorytmu RPNI to:
-\begin{itemize}
-    \item \textbf{Rozmiar zbioru pozytywnych przykładów (\( S^+ \)):} Większy zbiór przykładów pozytywnych prowadzi do większego drzewa prefiksowego oraz większej liczby stanów do połączenia.
-    \item \textbf{Rozmiar zbioru negatywnych przykładów (\( S^- \)):} Większy zbiór przykładów negatywnych zwiększa liczbę weryfikacji podczas łączenia stanów.
-    \item \textbf{Długość słów ($l^+$ i $l^-$):} Dłuższe słowa zwiększają zarówno liczbę stanów w \( PTA \), jak i czas przetwarzania weryfikacji.
-    \item \textbf{Rozmiar alfabetu (\( |\Sigma| \)):} Większy alfabet zwiększa liczbę przejść w \( PTA \).
-\end{itemize}
+% \paragraph*{Czynniki wpływające na złożoność}
+% Główne elementy mające wpływ na wydajność algorytmu RPNI to:
+% \begin{itemize}
+%     \item \textbf{Rozmiar zbioru pozytywnych przykładów (\( S^+ \)):} Większy zbiór przykładów pozytywnych prowadzi do większego drzewa prefiksowego oraz większej liczby stanów do połączenia.
+%     \item \textbf{Rozmiar zbioru negatywnych przykładów (\( S^- \)):} Większy zbiór przykładów negatywnych zwiększa liczbę weryfikacji podczas łączenia stanów.
+%     \item \textbf{Długość słów ($l^+$ i $l^-$):} Dłuższe słowa zwiększają zarówno liczbę stanów w \( PTA \), jak i czas przetwarzania weryfikacji.
+%     \item \textbf{Rozmiar alfabetu (\( |\Sigma| \)):} Większy alfabet zwiększa liczbę przejść w \( PTA \).
+% \end{itemize}
 
 \subsection{Przykład działania}
 

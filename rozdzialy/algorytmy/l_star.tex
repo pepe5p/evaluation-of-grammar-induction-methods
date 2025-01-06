@@ -136,37 +136,37 @@ Klasy równoważności w \( T \) grupują słowa \( s \in S \) o identycznym zac
 
 Jeśli język generowany z hipotezy \( H \) nie jest równoważny \( L \), Nauczyciel dostarcza kontrprzykład \( w \). Prefiksy \( w \) są dodawane do \( S \), a tabela jest aktualizowana zgodnie z wynikami zapytań \( MQ \). Proces ten jest iteracyjny i pozwala na sukcesywne udoskonalanie tabeli obserwacji oraz hipotezy automatu \( H \), aż do uzyskania poprawnego modelu języka.
 
-\subsection{Złożoność}
+% \subsection{Złożoność}
 
-Algorytm \textit{L*} składa się z kilku etapów, których złożoność można szczegółowo przeanalizować. Złożoność czasowa algorytmu jest wielomianowa, co zostało udowodnione \cite{L_STAR}. Aby wyliczyć złożoność pamięciową trzeba zdefiniować:
-\begin{itemize}
-    \item \(n\) - liczba stanów szukanego minimalnego DFA,
-    \item \(m\) - maksymalna długość kontrprzykładu,
-    \item \(|\Sigma|\) - rozmiar alfabetu.
-\end{itemize}
+% Algorytm \textit{L*} składa się z kilku etapów, których złożoność można szczegółowo przeanalizować. Złożoność czasowa algorytmu jest wielomianowa, co zostało udowodnione \cite{L_STAR}. Aby wyliczyć złożoność pamięciową trzeba zdefiniować:
+% \begin{itemize}
+%     \item \(n\) - liczba stanów szukanego minimalnego DFA,
+%     \item \(m\) - maksymalna długość kontrprzykładu,
+%     \item \(|\Sigma|\) - rozmiar alfabetu.
+% \end{itemize}
 
-Struktura danych w algorytmie składa się z dwóch komponentów:
-\begin{enumerate}
-    \item \textbf{Tabela obserwacji:}
-    \begin{itemize}
-        \item Zbiór \(S\) (prefiksy): maksymalnie \(O(n + m \cdot (n - 1))\) wpisów,
-        \item Zbiór \(E\) (sufiksy): maksymalnie \(O(n)\) wpisów,
-        \item Całkowity rozmiar tabeli: \(O(n \cdot m)\).
-    \end{itemize}
-    \item \textbf{DFA hipotezy:} DFA może mieć maksymalnie \(n\) stanów i \(O(n \cdot |\Sigma|)\) przejść.
-\end{enumerate}
+% Struktura danych w algorytmie składa się z dwóch komponentów:
+% \begin{enumerate}
+%     \item \textbf{Tabela obserwacji:}
+%     \begin{itemize}
+%         \item Zbiór \(S\) (prefiksy): maksymalnie \(O(n + m \cdot (n - 1))\) wpisów,
+%         \item Zbiór \(E\) (sufiksy): maksymalnie \(O(n)\) wpisów,
+%         \item Całkowity rozmiar tabeli: \(O(n \cdot m)\).
+%     \end{itemize}
+%     \item \textbf{DFA hipotezy:} DFA może mieć maksymalnie \(n\) stanów i \(O(n \cdot |\Sigma|)\) przejść.
+% \end{enumerate}
 
-Algorytm wymaga pamięci na tabelę obserwacji oraz strukturę DFA, stąd można obliczyć łączną złożoność pamięciową:
-\[
-O(n \cdot m + n \cdot |\Sigma|).
-\]
+% Algorytm wymaga pamięci na tabelę obserwacji oraz strukturę DFA, stąd można obliczyć łączną złożoność pamięciową:
+% \[
+% O(n \cdot m + n \cdot |\Sigma|).
+% \]
 
-Podsumowując czynnikami wpływającymi na złożoność pamięciową są:
-\begin{itemize}
-    \item \textbf{Rozmiar alfabetu (\(|\Sigma|\))}: Większy alfabet oznacza więcej przejść w tabeli obserwacji i DFA.
-    \item \textbf{Długość kontrprzykładów (\(m\))}: Dłuższe kontrprzykłady zwiększają liczbę zapytań o członkostwo i rozmiar tabeli obserwacji.
-    \item \textbf{Liczba stanów DFA (\(n\))}: Więcej stanów oznacza większą tabelę obserwacji i więcej iteracji algorytmu.
-\end{itemize}
+% Podsumowując czynnikami wpływającymi na złożoność pamięciową są:
+% \begin{itemize}
+%     \item \textbf{Rozmiar alfabetu (\(|\Sigma|\))}: Większy alfabet oznacza więcej przejść w tabeli obserwacji i DFA.
+%     \item \textbf{Długość kontrprzykładów (\(m\))}: Dłuższe kontrprzykłady zwiększają liczbę zapytań o członkostwo i rozmiar tabeli obserwacji.
+%     \item \textbf{Liczba stanów DFA (\(n\))}: Więcej stanów oznacza większą tabelę obserwacji i więcej iteracji algorytmu.
+% \end{itemize}
 
 \subsection{Przykład działania}
 

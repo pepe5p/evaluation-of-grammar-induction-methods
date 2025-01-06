@@ -7,7 +7,7 @@ Uczenie indukcyjne (\textit{inductive learning}) jest jednym z podstawowych pode
 
 Jednym z obszarów zastosowania uczenia indukcyjnego jest indukcja gramatyk formalnych, która stanowi istotne zagadnienie zarówno w uczeniu maszynowym, jak i teorii automatów. Jej celem jest odtworzenie reguł opisujących język formalny na podstawie skończonego zbioru danych wejściowych. Proces ten pozwala na budowę modeli, takich jak automaty skończone lub gramatyki formalne, które mogą zostać zastosowane do analizy danych sekwencyjnych, rozpoznawania wzorców, przetwarzania języka naturalnego oraz weryfikacji systemów.  
 
-Podstawą teoretyczną badań nad indukcją gramatyk jest koncepcja identyfikacji w granicy (\textit{identification in the limit}) \cite{GOLD1967447}. Określa ona warunki, w których algorytm jest zdolny do poprawnej rekonstrukcji struktury języka na podstawie skończonej liczby przykładów. Chociaż wyniki teoretyczne dostarczają istotnych gwarancji dotyczących poprawności algorytmów, praktyczne aspekty indukcji gramatyk pozostają przedmiotem dalszych badań, zwłaszcza w kontekście danych rzeczywistych, które często są obarczone szumem lub są niepełne.
+Głęboką podstawą teoretyczną dziedziny indukcji gramatyk jest koncepcja identyfikacji w granicy (\textit{identification in the limit}) \cite{GOLD1967447}. Określa ona warunki, w których algorytm jest zdolny do poprawnej rekonstrukcji struktury języka na podstawie skończonej liczby przykładów. Chociaż wyniki teoretyczne dostarczają istotnych gwarancji dotyczących poprawności algorytmów, praktyczne aspekty indukcji gramatyk pozostają przedmiotem dalszych badań, zwłaszcza w kontekście danych rzeczywistych, które często są obarczone szumem lub są niepełne.
 
 %---------------------------------------------------------------------------
 
@@ -22,7 +22,7 @@ Celem niniejszej pracy jest ewaluacja i porównanie wybranych algorytmów indukc
 
 Przedstawione badania mają na celu nie tylko porównanie istniejących algorytmów, ale również dostarczenie praktycznych wskazówek dotyczących ich zastosowania w zależności od charakterystyki danych i wymagań aplikacyjnych. Praca stanowi krok w kierunku lepszego zrozumienia możliwości oraz ograniczeń metod indukcji gramatyk, otwierając jednocześnie perspektywy dla dalszych badań w tym obszarze.  
 
-W ramach pracy zbudowane zostanie środowisko do ewaluacji metod indukcji gramatyk, umożliwiające porównanie różnych technik pod kątem ich wydajności i zastosowań praktycznych. Eksperymenty obejmują analizę danych syntetycznych, a wyniki zostaną ocenione pod względem jakości generowanych modeli, złożoności czasowej oraz pamięciowej. 
+W ramach pracy zbudowane zostanie środowisko do ewaluacji metod indukcji gramatyk, umożliwiające porównanie różnych technik pod kątem ich wydajności i zastosowań praktycznych. Eksperymenty obejmują analizę danych syntetycznych, a wyniki zostaną ocenione pod względem jakości generowanych modeli i złożoności czasowej. 
 
 %---------------------------------------------------------------------------
 
@@ -41,12 +41,10 @@ Pierwszy rozdział stanowi wprowadzenie do tematyki pracy. Przedstawiono w nim o
 
 Drugi rozdział opisuje metodykę badań, w tym kryteria wyboru algorytmów oraz przyjęte założenia eksperymentalne. Zawiera również szczegółowy opis sposobu oceny skuteczności analizowanych metod oraz charakterystykę danych użytych w eksperymentach. 
 
-Trzeci rozdział jest najobszerniejszą częścią pracy i zawiera szczegółowe opisy wybranych algorytmów. Przedstawiono w nim cztery kluczowe metody: \textit{L*}, \textit{RPNI}, \textit{GIG} oraz \textit{ALERGIA}. Każdy z tych algorytmów został opisany pod kątem swojej metody działania, formalizacji, złożoności obliczeniowej oraz zilustrowany praktycznymi przykładami zastosowań. Omówiono również różnice pomiędzy podejściem genetycznym a zachłannym, które są kluczowe w kontekście algorytmu \textit{GIG}. Dodatkowo przedstawiono krótki przegląd pozostałych algorytmów, które nie zostały uwzględnione w szczegółowej analizie.
+Trzeci rozdział jest najobszerniejszą częścią pracy i zawiera szczegółowe opisy wybranych algorytmów. Przedstawiono w nim cztery kluczowe metody: \textit{L*}, \textit{RPNI}, \textit{GIG} oraz \textit{ALERGIA}. Każdy z tych algorytmów został opisany pod kątem swojej metody działania, formalizacji oraz zilustrowany praktycznymi przykładami zastosowań. Omówiono również różnice pomiędzy podejściem genetycznym a zachłannym, które są kluczowe w kontekście algorytmu \textit{GIG}. Dodatkowo przedstawiono krótki przegląd pozostałych algorytmów, które nie zostały uwzględnione w szczegółowej analizie.
 
 Czwarty rozdział skupia się na eksperymentach przeprowadzonych w celu oceny skuteczności opisanych algorytmów. Opisano specyfikę eksperymentów, zestawy danych oraz metryki służące do oceny wyników.
 
-W piątym rozdziale omówiono wyniki eksperymentów. Przeprowadzono analizę uzyskanych rezultatów, porównując algorytmy pod kątem ich zdolności do generalizacji, jakości wyników oraz efektywności obliczeniowej. Przedstawiono również ograniczenia poszczególnych metod oraz wskazano potencjalne kierunki ich ulepszenia.
-
-Ostatni, szósty rozdział, zawiera podsumowanie pracy oraz wnioski płynące z przeprowadzonych badań. Zawarto w nim także możliwości wykorzystania badanych algorytmów w praktycznych zastosowaniach.
+W piątym rozdziale omówiono wyniki eksperymentów. Przeprowadzono analizę uzyskanych rezultatów, porównując algorytmy pod kątem ich zdolności do generalizacji, jakości wyników oraz efektywności obliczeniowej. Przedstawiono również ograniczenia poszczególnych metod oraz wskazano potencjalne kierunki ich ulepszenia. Zawiera podsumowanie pracy oraz wnioski płynące z przeprowadzonych badań.
 
 Przegląd literatury, podstawy teoretyczne oraz analiza istniejących rozwiązań zostały zintegrowane z poszczególnymi rozdziałami, co zapewnia spójność tematyczną i logiczną narrację całej pracy.

@@ -109,89 +109,89 @@ Dwa stany \( q_1, q_2 \in Q \) są uznawane za zgodne (kompatybilne), jeżeli sp
 
 Łączenie stanów jest przeprowadzane wyłącznie wtedy, gdy dwa stany oraz pary ich dzieci odpowiadające przejściom tych samych symboli spełniają kryteria zgodności określone w definicji \ref{def:alergia_state_compatibility}. Scalanie obejmuje także sumowanie obserwacji oraz prawdopodobieństw dla poddrzew, co zapewnia zachowanie struktury probabilistycznej danych wejściowych. Proces kończy się, gdy żadne dalsze połączenia nie spełniają warunków zgodności.  
 
-\subsection{Złożoność}  
-Algorytm \textit{ALERGIA} cechuje się złożonością wielomianową, zależną od rozmiaru danych wejściowych. W analizie złożoności czasowej i pamięciowej uwzględniamy następujące parametry:  
-\begin{itemize}  
-    \item \(|S^+|\) - liczba przykładów pozytywnych,  
-    \item \( l^+ \) - maksymalna długość ciągu w \( S^+ \),  
-    \item \(|Q|\) - liczba stanów w automacie,  
-    \item \(|\Sigma|\) - liczba symboli w alfabecie.  
-\end{itemize}  
+% \subsection{Złożoność}  
+% Algorytm \textit{ALERGIA} cechuje się złożonością wielomianową, zależną od rozmiaru danych wejściowych. W analizie złożoności czasowej i pamięciowej uwzględniamy następujące parametry:  
+% \begin{itemize}  
+%     \item \(|S^+|\) - liczba przykładów pozytywnych,  
+%     \item \( l^+ \) - maksymalna długość ciągu w \( S^+ \),  
+%     \item \(|Q|\) - liczba stanów w automacie,  
+%     \item \(|\Sigma|\) - liczba symboli w alfabecie.  
+% \end{itemize}  
 
-\paragraph*{Złożoność czasowa.}  
-Algorytm \textit{ALERGIA} składa się z dwóch głównych etapów: budowy drzewa prefiksowego oraz iteracyjnego scalania stanów.  
+% \paragraph*{Złożoność czasowa.}  
+% Algorytm \textit{ALERGIA} składa się z dwóch głównych etapów: budowy drzewa prefiksowego oraz iteracyjnego scalania stanów.  
 
-\subparagraph*{Budowa drzewa prefiksowego (PTA).}  
-Pierwszy etap polega na utworzeniu drzewa prefiksowego (Prefix Tree Acceptor, PTA) na podstawie zbioru przykładów pozytywnych. Każde słowo jest dodawane do drzewa, a jego prefiksy są reprezentowane jako kolejne węzły. Proces ten wymaga analizy wszystkich przykładów oraz ich symboli, co prowadzi do złożoności:  
-\[
-O(|S^+| \cdot l^+).
-\]  
+% \subparagraph*{Budowa drzewa prefiksowego (PTA).}  
+% Pierwszy etap polega na utworzeniu drzewa prefiksowego (Prefix Tree Acceptor, PTA) na podstawie zbioru przykładów pozytywnych. Każde słowo jest dodawane do drzewa, a jego prefiksy są reprezentowane jako kolejne węzły. Proces ten wymaga analizy wszystkich przykładów oraz ich symboli, co prowadzi do złożoności:  
+% \[
+% O(|S^+| \cdot l^+).
+% \]  
 
-\subparagraph*{Iteracyjne scalanie stanów.}  
-Drugi etap obejmuje iteracyjne porównywanie par stanów pod kątem zgodności, wykorzystując test Hoeffding’a. Każda para stanów jest sprawdzana pod względem zgodności prawdopodobieństw przejść i terminacji, a następnie wykonywane są rekurencyjne analizy następników. Sprawdzenie każdej pary stanów obejmuje:
-\begin{itemize}  
-    \item Porównanie prawdopodobieństw przejść dla wszystkich symboli w alfabecie \( \Sigma \).  
-    \item Rekurencyjne sprawdzenie zgodności następników.  
-    \item Ewentualne scalanie stanów, co wiąże się z aktualizacją przejść i prawdopodobieństw.  
-\end{itemize}  
+% \subparagraph*{Iteracyjne scalanie stanów.}  
+% Drugi etap obejmuje iteracyjne porównywanie par stanów pod kątem zgodności, wykorzystując test Hoeffding’a. Każda para stanów jest sprawdzana pod względem zgodności prawdopodobieństw przejść i terminacji, a następnie wykonywane są rekurencyjne analizy następników. Sprawdzenie każdej pary stanów obejmuje:
+% \begin{itemize}  
+%     \item Porównanie prawdopodobieństw przejść dla wszystkich symboli w alfabecie \( \Sigma \).  
+%     \item Rekurencyjne sprawdzenie zgodności następników.  
+%     \item Ewentualne scalanie stanów, co wiąże się z aktualizacją przejść i prawdopodobieństw.  
+% \end{itemize}  
 
-Złożoność iteracyjnego scalania stanów wynosi:  
-\[
-O(|Q|^4 \cdot |\Sigma|).
-\]  
+% Złożoność iteracyjnego scalania stanów wynosi:  
+% \[
+% O(|Q|^4 \cdot |\Sigma|).
+% \]  
 
-\subparagraph*{Złożoność rzeczywista.}  
-W praktyce rzeczywista złożoność algorytmu jest często znacznie niższa niż teoretyczna granica. Wynika to z dwóch głównych czynników:  
-\begin{enumerate}
-    \item Algorytm wcześnie scala zgodne stany, zmniejszając liczbę analizowanych stanów w kolejnych iteracjach.  
-    \item Stany znajdujące się na końcu porządku przetwarzania (liście drzewa) mają niewielu następców lub w ogóle ich nie posiadają, co ogranicza liczbę rekurencyjnych wywołań.  
-\end{enumerate}  
+% \subparagraph*{Złożoność rzeczywista.}  
+% W praktyce rzeczywista złożoność algorytmu jest często znacznie niższa niż teoretyczna granica. Wynika to z dwóch głównych czynników:  
+% \begin{enumerate}
+%     \item Algorytm wcześnie scala zgodne stany, zmniejszając liczbę analizowanych stanów w kolejnych iteracjach.  
+%     \item Stany znajdujące się na końcu porządku przetwarzania (liście drzewa) mają niewielu następców lub w ogóle ich nie posiadają, co ogranicza liczbę rekurencyjnych wywołań.  
+% \end{enumerate}  
 
-Z tego powodu empiryczna złożoność algorytmu jest często bliższa:  
-\[
-O(|Q|^3 \cdot |\Sigma|).
-\]  
+% Z tego powodu empiryczna złożoność algorytmu jest często bliższa:  
+% \[
+% O(|Q|^3 \cdot |\Sigma|).
+% \]  
 
-\paragraph*{Łączna złożoność.}  
-Podsumowując, całkowita złożoność czasowa algorytmu obejmuje budowę drzewa oraz iteracyjne porównania i scalania stanów:  
-\[
-O(|S^+| \cdot l^+ + |Q|^4 \cdot |\Sigma|).
-\]
+% \paragraph*{Łączna złożoność.}  
+% Podsumowując, całkowita złożoność czasowa algorytmu obejmuje budowę drzewa oraz iteracyjne porównania i scalania stanów:  
+% \[
+% O(|S^+| \cdot l^+ + |Q|^4 \cdot |\Sigma|).
+% \]
 
-\paragraph*{Zależność liczby stanów \( Q \).}  
-Liczba stanów \( |Q| \) w automacie jest bezpośrednio zależna od danych wejściowych. W najgorszym przypadku każde słowo o długości \( l^+ \) wnosi dokładnie \( l^+ \) nowych stanów. Przy \( |S^+| \) przykładach liczba stanów może wynosić:  
-\[
-|Q| \leq |S^+| \cdot l^+.
-\]  
-Z tego powodu rzeczywista złożoność algorytmu jest silnie powiązana z rozmiarem zbioru przykładów i długością słów.   
-\[
-O((|S^+| \cdot l^+)^4 \cdot |\Sigma|).
-\]
+% \paragraph*{Zależność liczby stanów \( Q \).}  
+% Liczba stanów \( |Q| \) w automacie jest bezpośrednio zależna od danych wejściowych. W najgorszym przypadku każde słowo o długości \( l^+ \) wnosi dokładnie \( l^+ \) nowych stanów. Przy \( |S^+| \) przykładach liczba stanów może wynosić:  
+% \[
+% |Q| \leq |S^+| \cdot l^+.
+% \]  
+% Z tego powodu rzeczywista złożoność algorytmu jest silnie powiązana z rozmiarem zbioru przykładów i długością słów.   
+% \[
+% O((|S^+| \cdot l^+)^4 \cdot |\Sigma|).
+% \]
 
 
-\paragraph*{Złożoność pamięciowa}  
-Algorytm przechowuje następujące struktury:  
-\begin{itemize}  
-    \item \textbf{Drzewo prefiksowe (PTA):}  
-    PTA składa się z \( O(|S^+| \cdot l^+) \) stanów, z których każdy może mieć do \( |\Sigma| \) przejść. Wymagana przestrzeń pamięci wynosi:  
-    \[
-    O(|S^+| \cdot l^+ \cdot |\Sigma|).
-    \]  
+% \paragraph*{Złożoność pamięciowa}  
+% Algorytm przechowuje następujące struktury:  
+% \begin{itemize}  
+%     \item \textbf{Drzewo prefiksowe (PTA):}  
+%     PTA składa się z \( O(|S^+| \cdot l^+) \) stanów, z których każdy może mieć do \( |\Sigma| \) przejść. Wymagana przestrzeń pamięci wynosi:  
+%     \[
+%     O(|S^+| \cdot l^+ \cdot |\Sigma|).
+%     \]  
 
-    \item \textbf{Statystyki przejść:}  
-    Dla każdego stanu przechowywane są rozkłady prawdopodobieństw oraz dane statystyczne, co daje dodatkowy koszt pamięciowy:  
-    \[
-    O(|S^+| \cdot l^+).
-    \]  
-\end{itemize}  
+%     \item \textbf{Statystyki przejść:}  
+%     Dla każdego stanu przechowywane są rozkłady prawdopodobieństw oraz dane statystyczne, co daje dodatkowy koszt pamięciowy:  
+%     \[
+%     O(|S^+| \cdot l^+).
+%     \]  
+% \end{itemize}  
 
-Łączna złożoność pamięciowa wynosi:  
-\[
-O(|S^+| \cdot l^+ \cdot |\Sigma|).
-\]  
+% Łączna złożoność pamięciowa wynosi:  
+% \[
+% O(|S^+| \cdot l^+ \cdot |\Sigma|).
+% \]  
 
-\paragraph*{Czynniki wpływające na złożoność}  
-Efektywność algorytmu \textit{ALERGIA} zależy przede wszystkim od liczby przykładów pozytywnych (\( S^+ \)) oraz długości słów (\( l^+ \)), które determinują rozmiar drzewa prefiksowego i liczbę stanów do analizy. Dodatkowo, większy alfabet (\( |\Sigma| \)) zwiększa liczbę możliwych przejść, co wpływa zarówno na czas obliczeń, jak i wymagania pamięciowe.
+% \paragraph*{Czynniki wpływające na złożoność}  
+% Efektywność algorytmu \textit{ALERGIA} zależy przede wszystkim od liczby przykładów pozytywnych (\( S^+ \)) oraz długości słów (\( l^+ \)), które determinują rozmiar drzewa prefiksowego i liczbę stanów do analizy. Dodatkowo, większy alfabet (\( |\Sigma| \)) zwiększa liczbę możliwych przejść, co wpływa zarówno na czas obliczeń, jak i wymagania pamięciowe.
 
 \subsection{Przykład działania}  
 Aby zilustrować działanie algorytmu \textit{ALERGIA}, rozważmy prosty przykład danych wejściowych opisujących sekwencje wyników rzutów monetą. Każdy wynik jest oznaczony symbolem \( H \) (orzeł) lub \( T \) (reszka).
