@@ -1,6 +1,162 @@
 \chapter{Eksperymenty}
 \label{cha:eksperymenty}
 
-% opisz jakie implementacje używasz
-
 % Mimo swoich zalet, \textit{ALERGIA} zazwyczaj nie jest odpowiednim wyborem do zastąpienia algorytmów \textit{GIG}, \textit{RPNI} lub \textit{L*}. Algorytm zakłada wyłącznie przykłady pozytywne, co ogranicza jego zdolność do wykrywania granic języka i może prowadzić do zbyt ogólnych modeli. Algorytmy takie jak \textit{RPNI} uwzględniają także przykłady negatywne, co pozwala na precyzyjniejsze modelowanie. Ponadto, \textit{ALERGIA} jest zoptymalizowana pod kątem modeli probabilistycznych, co czyni go mniej odpowiednim w przypadkach, gdzie wymagane są deterministyczne gramatyki lub klasyczne modele bez prawdopodobieństw, jak \textit{GIG} i \textit{L*}. Dlatego \textit{ALERGIA} sprawdza się głównie w zadaniach probabilistycznych, gdzie brak przykładów negatywnych, natomiast w kontekście klasycznych gramatyk regularnych bardziej odpowiednie pozostają algorytmy \textit{GIG}, \textit{RPNI} i \textit{L*}.
+
+Celem przeprowadzonych eksperymentów jest analiza zachowania wybranych algorytmów indukcji gramatyk formalnych w różnych warunkach oraz ocena ich wydajności, dokładności i odporności na zmiany parametrów. Badaniom poddano cztery algorytmy: \textit{RPNI}, \textit{L*}, \textit{ALERGIA} oraz \textit{GIG}. Eksperymenty opierają się na danych syntetycznych, które zostały dobrane indywidualnie pod kątem specyfiki każdego testowanego algorytmu. Dane zostały przygotowane tak, aby umożliwić ocenę złożoności czasowej, liczby stanów wynikowych automatów oraz zdolności do generalizacji na podstawie przykładów treningowych.  
+
+Algorytm \textit{RPNI} poddano analizie pod względem złożoności czasowej oraz dokładności modelu w zależności od rozmiaru alfabetu. Metryki użyte do oceny obejmują czas działania algorytmu oraz liczbę stanów wynikowego automatu. W przypadku algorytmu \textit{L*} skupiono się na liczbie zapytań EQ (Equivalence Query) i MQ (Membership Query) w zależności od złożoności problemu. Zebrane dane obejmują liczbę zapytań EQ i MQ oraz rozmiar wynikowego automatu. Dla algorytmu \textit{ALERGIA} przeprowadzono testy odporności na szum w danych, analizując procent poprawnie wygenerowanych zdań spośród \( N \) przykładów oraz liczbę stanów w automacie wynikowym. Z kolei algorytm \textit{GIG} poddano analizie pod kątem wpływu populacji początkowej na jego dokładność i wydajność. Wyniki oceniono na podstawie czasu działania, liczby generacji, liczby stanów automatu oraz procentu poprawnych klasyfikacji danych testowych.
+
+
+\section{Eksperymenty dla algorytmu \textit{L*}}
+Eksperymenty przeprowadzone dla algorytmu \textit{L*} mają na celu analizę liczby zapytań oraz rozmiaru wynikowego automatu w zależności od złożoności problemu. Badania obejmują dwa przypadki testowe, z których każdy analizuje inną klasę języków formalnych. W obu eksperymentach przyjęto alfabet \(\{0, 1\}\). 
+W eksperymentach nie powtarzano testów, ponieważ algorytm \textit{L*} działa w sposób deterministyczny, a jego wynik zależy wyłącznie od dostarczonych danych wejściowych oraz użytego źródła wiedzy (\textit{oracle}). Wykorzystana w badaniach wyrocznia jest deterministyczna, gdyż opiera się na wcześniej utworzonym deterministycznym automacie skończonym (DFA). Oznacza to, że odpowiada na każde zapytanie zgodnie z definicją języka i nie wprowadza niepewności ani błędów. W związku z tym algorytm zawsze generuje ten sam wynik dla tych samych parametrów, co eliminuje potrzebę wielokrotnego wykonywania testów w celu uśrednienia wyników.
+
+\subsection{Eksperyment 1: Język z prefiksem zer}
+\label{sec:eksperyment1}
+
+Pierwszy eksperyment bada język opisany wyrażeniem regularnym:  
+\[
+L_n = 0^n(0 \cup 1)^*,
+\]  
+gdzie \( n \) określa liczbę zer występujących na początku ciągu, a następnie mogą pojawiać się dowolne symbole z alfabetu \(\{0, 1\}\). Język ten opisuje wzorce o stałym prefiksie zer, które mogą być dowolnie kontynuowane. Badane są wartości \( n \) w zakresie od 1 do 64. Przykładowo, dla \( n = 2 \) język obejmuje ciągi takie jak:  
+\[
+L_2 = \{00, 000, 001, 0010, 0011, \ldots \}.
+\]  
+
+\subsection{Eksperyment 2: Język z równoważnymi blokami} 
+\label{sec:eksperyment2}
+
+Eksperyment bada język zdefiniowany jako:  
+\[
+L_n = \bigcup_{m=1}^{n} 0^m 1^m(0 + 1)^*,
+\]  
+gdzie \( n \) określa maksymalną liczbę powtórzeń symboli \( 0 \) i \( 1 \) w blokach symetrycznych, po których mogą następować dowolne symbole z alfabetu \(\{0, 1\}\). Język ten opisuje wzorce o równoważnych blokach zer i jedynek, które mogą stanowić prefiks dłuższego ciągu. Badany zakres wartości parametru \( n \) wynosi od 1 do 9. Przykładowo, dla \( n = 2 \) język obejmuje ciągi:  
+\[
+L_2 = \{01, 0011, 00110, 001101, 0011010111, \ldots\}.
+\]
+
+\subsection{Metryki oceny}  
+W trakcie eksperymentów analizowane są następujące metryki:  
+\begin{itemize}  
+    \item Liczba zapytań o równoważność (\textit{EQ}),  
+    \item Liczba zapytań o przynależność (\textit{MQ}),  
+    \item Liczba stanów w wynikowym automacie.
+\end{itemize}  
+
+Liczba zapytań \textit{EQ} oraz \textit{MQ} pozwala ocenić efektywność algorytmu pod względem liczby interakcji wymaganych do nauki modelu. Liczba stanów w wynikowym automacie służy do oceny zdolności algorytmu do odwzorowania struktury badanego języka przy jednoczesnym minimalizowaniu jego złożoności.  
+
+\subsection{Procedura eksperymentu}  
+Każda konfiguracja parametrów jest analizowana pojedynczo, ponieważ algorytm działa w sposób deterministyczny, co oznacza, że wyniki są powtarzalne dla tych samych danych wejściowych. Dzięki temu nie ma potrzeby wielokrotnego wykonywania testów w celu uśrednienia wyników.  
+
+
+\section{Eksperyment dla algorytmu \textit{RPNI}}  
+Eksperymenty przeprowadzone dla algorytmu \textit{RPNI} mają na celu analizę wpływu rozmiaru alfabetu na złożoność czasową oraz strukturę wynikowego automatu.  
+
+\subsection{Opis danych wejściowych}  
+Badany język składa się ze wszystkich ciągów rozpoczynających się symbolem \( 0 \), po którym mogą występować dowolne symbole z przyjętego alfabetu. Formalnie język można opisać wyrażeniem regularnym:  
+\[
+L = 0(0 + 1 + \ldots + k)^*,
+\]  
+gdzie \( k \) określa maksymalny symbol w danym alfabecie.  
+
+Przykładowo, dla alfabetu \(\{0, 1\}\) język obejmuje ciągi:  
+\[
+L = \{0, 01, 00, 010, 0111, 00101, \ldots \}.
+\]  
+
+Dane testowe są generowane w taki sposób, aby jednoznacznie opisywały język. Liczba przykładów oraz długości sekwencji są dobierane empirycznie, aby zapewnić porównywalną złożoność obliczeniową dla każdego rozmiaru alfabetu.  
+
+\subsection{Zakres parametrów}  
+Eksperyment bada wpływ rozmiaru alfabetu na działanie algorytmu. Testowane wartości wielkości alfabetu to:  
+\[
+|\Sigma| = \{2, 4, 8, 16, 32, 64\}.
+\]  
+Dla każdej wartości alfabetu dane są dynamicznie generowane, a następnie analizowane przez algorytm.  
+\subsection{Metryki oceny}  
+W trakcie eksperymentów analizowane są następujące metryki:  
+\begin{itemize}  
+    \item Liczba stanów w wynikowym automacie,  
+    \item Czas wykonania algorytmu.  
+\end{itemize}  
+
+Liczba stanów w wynikowym automacie służy do oceny zdolności algorytmu do poprawnego uogólniania danych wejściowych.  
+
+\subsection{Procedura eksperymentu}  
+Każda konfiguracja parametrów jest testowana 50 razy, a uzyskane wartości są uśredniane w celu zminimalizowania wpływu zmienności danych na pomiary. Eksperymenty są przeprowadzane w sposób deterministyczny, co oznacza, że wyniki dla danej konfiguracji parametrów są powtarzalne.  
+
+
+\section{Eksperymenty dla algorytmu \textit{GIG}} 
+Eksperymenty przeprowadzone dla algorytmu \textit{GIG} mają na celu analizę wpływu sposobu inicjalizacji populacji początkowej na jakość wynikowego automatu oraz liczbę generacji potrzebnych do znalezienia rozwiązania. Eksperyment bada dwa podejścia do inicjalizacji populacji początkowej:  
+\begin{itemize}  
+    \item Losowa populacja – generowana całkowicie losowo.  
+    \item Inteligentna populacja – skonstruowana tak jak zostało to opisane w sekcji \ref{sec:gig-formalizacja}.  
+\end{itemize}  
+
+Parametry algorytmu, takie jak liczba generacji (\(2000\)), liczba rodziców (\(20\)) oraz rozmiar populacji (\(100\)), pozostają stałe we wszystkich testach. Kryterium zatrzymania obejmuje warunek, który kończy proces po 50 generacjach bez poprawy jakości rozwiązania. W eksperymencie wykorzystano trzy różne języki formalne, dla których zdefiniowano zbiory przykładów pozytywnych i negatywnych. 
+
+\subsection{Język 1: Co najmniej jedno \( a \)}  
+\label{sec:eksperyment4}
+Język ten obejmuje wszystkie ciągi zawierające przynajmniej jeden symbol \( a \).  
+\begin{itemize}  
+    \item Przykłady pozytywne: \( \epsilon, a, aa, ab, ba, aba, aab, baa, abaaa, baaaa, ac, ca, aca, cac, cacac \).  
+    \item Przykłady negatywne: \( b, bb, c, bc, bbb, bbb, bbbc \).  
+\end{itemize}  
+
+\subsection{Język 2: Parzysta liczba \( a \) lub \( b \)}  
+\label{sec:eksperyment5}
+Język ten akceptuje ciągi, w których liczba symboli \( a \) lub \( b \) jest parzysta.  
+\begin{itemize}  
+    \item Przykłady pozytywne: \( \epsilon, a, b, aa, bb, abb, aab, baa, aba, abaaa, baaaa \).  
+    \item Przykłady negatywne: \( ab, ba, aaab, aaba, abaa, baaa, abbb, bbba, ababab \).  
+\end{itemize}  
+
+\subsection{Język 3: Parzysta liczba \( a \)}  
+\label{sec:eksperyment6}
+Język ten obejmuje wszystkie ciągi, w których liczba symboli \( a \) jest parzysta.  
+\begin{itemize}  
+    \item Przykłady pozytywne: \( \epsilon, b, aa, aab, bb, baa, aba, abaaa, baaaa \).  
+    \item Przykłady negatywne: \( a, ab, ba, aaa, aaba, abb, ababab \).  
+\end{itemize}
+
+\subsection{Procedura eksperymentu}  
+Każda konfiguracja inicjalizacji populacji jest testowana 50 razy dla każdego z języków formalnych, a uzyskane wartości są uśredniane. Eksperymenty są przeprowadzane na wszystkich danych wejściowych, co umożliwia porównanie wydajności algorytmu w zależności od struktury danych i sposobu inicjalizacji populacji.  
+
+
+\section{Eksperymenty dla algorytmu \textit{ALERGIA}}  
+Eksperymenty przeprowadzone dla algorytmu \textit{ALERGIA} mają na celu analizę jego odporności na szum w danych wejściowych. Algorytm testowany jest pod kątem jakości wygenerowanego modelu oraz liczby stanów wynikowego automatu w zależności od poziomu zakłóceń.  
+
+\subsection{Opis danych wejściowych}  
+Badany język składa się z ciągów naprzemiennych symboli \( a \) i \( b \). Formalnie język można opisać wyrażeniem regularnym:  
+\[
+L = (ab)^* a?,
+\]  
+gdzie symbol \( ? \) oznacza, że pojedyncze \( a \) może, ale nie musi, wystąpić na końcu.  
+
+Przykładowe ciągi należące do języka to:  
+\[
+\{a, ab, aba, abab, ababa, abababab, \ldots\}.
+\]  
+
+Zbiór danych testowych zawiera 1000 przykładów pozytywnych oraz 1000 przykładów negatywnych. Przykłady negatywne są generowane losowo z automatu komplementarnego do badanego języka. Automat ten akceptuje wszystkie ciągi, które nie należą do języka naprzemiennych symboli \( a \) i \( b \). Dzięki temu przykłady negatywne obejmują zarówno strukturalnie błędne ciągi (np. \( abb \), \( baa \)), jak i losowe permutacje symboli spoza badanego języka.  
+
+\subsection{Zakres parametrów}  
+Eksperyment bada wpływ poziomu szumu w danych na jakość wynikowego modelu. Szum jest dodawany do danych z określonym prawdopodobieństwem, które przyjmuje wartości:  
+\[
+\{0.0, 0.001, 0.005, 0.01, 0.02, 0.05, 0.1, 0.2, 0.3, 0.4, 0.5\}.
+\]  
+Każdy zestaw danych z określonym poziomem zakłóceń jest analizowany niezależnie.  
+
+\subsection{Metryki oceny}  
+W trakcie eksperymentów analizowane są następujące metryki:  
+\begin{itemize}  
+    \item Jakość modelu – procent poprawnych zdań wygenerowanych przez automat spośród 10000 losowo wygenerowanych prób.  
+    \item Liczba stanów w wynikowym automacie.  
+\end{itemize}  
+
+Jakość modelu jest mierzona przez symulację jego działania na losowo wygenerowanych ciągach. Automat uznaje ciąg za poprawny, jeśli spełnia on warunki języka naprzemiennych symboli \( a \) i \( b \).  
+
+\subsection{Procedura eksperymentu}  
+Każda konfiguracja poziomu szumu jest testowana 50 razy, a uzyskane wartości są uśredniane. Eksperymenty są przeprowadzane dla wszystkich poziomów zakłóceń w celu analizy wpływu szumu na zdolność algorytmu do odwzorowania struktury badanego języka.  
+
+
