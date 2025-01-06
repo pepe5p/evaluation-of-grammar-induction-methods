@@ -13,7 +13,7 @@ Jak pokazano na wykresie \ref{fig:lstar_prefix_mq}, liczba zapytań o przynależ
 
 Wyniki przedstawione na wykresie \ref{fig:lstar_blocks_mq} również wskazują wykładniczy wzrost liczby zapytań (\textit{MQ}) wraz z rozmiarem problemu. W tym przypadku odnotowano większą liczbę zapytań o równoważność (\textit{EQ}) w porównaniu do poprzedniego eksperymentu, co sugeruje, że algorytm wymaga więcej prób do rozpoznania bardziej złożonych wzorców. Liczba zapytań o równoważność zależy od specyfiki problemu i może być trudna do przewidzenia. Rozmiar automatu (\textit{DFA}) rośnie liniowo, co potwierdza minimalność modelu, zgodnie ze wzorem \( 2n + 2 \).
 
-\begin{table}[h]
+\begin{table}[ht]
 \centering
 \caption{Wyniki eksperymentu z sekcji \ref{sec:eksperyment1}.}
 \label{tab:lstar_prefix}
@@ -30,7 +30,7 @@ Rozmiar problemu (\(n\)) & EQ & MQ & Rozmiar DFA \\ \hline
 \end{tabular}
 \end{table}
 
-\begin{figure}[h]
+\begin{figure}[ht]
 \centering
 \begin{tikzpicture}
 \begin{axis}[
@@ -56,7 +56,7 @@ Rozmiar problemu (\(n\)) & EQ & MQ & Rozmiar DFA \\ \hline
 \label{fig:lstar_prefix_mq}
 \end{figure}
 
-\begin{table}[h]
+\begin{table}[ht]
 \centering
 \caption{Wyniki eksperymentu z sekcji \ref{sec:eksperyment2}.}
 \label{tab:lstar_blocks}
@@ -75,7 +75,7 @@ Rozmiar problemu (\(n\)) & EQ & MQ & Rozmiar DFA \\ \hline
 \end{tabular}
 \end{table}
 
-\begin{figure}[h]
+\begin{figure}[ht]
 \centering
 \begin{tikzpicture}
 \begin{axis}[
@@ -111,7 +111,7 @@ Wyniki pokazują, że czas działania algorytmu rośnie wraz z rozmiarem alfabet
 
 Porównywalna liczba stanów w \textit{PTA} dla różnych rozmiarów alfabetów zapewniła rzetelność wyników, eliminując wpływ różnic w danych wejściowych. Algorytm \textit{RPNI} zachowuje wydajność przy różnych konfiguracjach parametrów, choć czas działania rośnie dla większych alfabetów.
 
-\begin{table}[h]
+\begin{table}[ht]
 \centering
 \caption{Wyniki dla algorytmu \textit{RPNI}.}
 \label{tab:rpni_results}
@@ -127,7 +127,7 @@ Rozmiar alfabetu (\(|\Sigma|\)) & Liczba przykładów & Stany PTA & Stany DFA & 
 \end{tabular}
 \end{table}
 
-\begin{figure}[h]
+\begin{figure}[ht]
 \centering
 \begin{tikzpicture}
 \begin{axis}[
@@ -157,7 +157,7 @@ Obie metody inicjalizacji populacji osiągnęły wysoką jakość klasyfikacji w
 Analiza wyników pokazuje, że metoda losowej inicjalizacji była bardziej efektywna dla złożonych języków, podczas gdy dla prostszych obie metody osiągały podobne rezultaty. Różnice w liczbie generacji okazały się niewielkie, co wskazuje, że wybór metody inicjalizacji miał większy wpływ na jakość wynikowych modeli niż na tempo konwergencji algorytmu.
 
 
-\begin{table}[h]
+\begin{table}[ht]
 \centering
 \caption{Wyniki dla języka „Co najmniej jedno \( a \)” z sekcji \ref{sec:eksperyment4}.}
 \label{tab:gig_one_a}
@@ -169,7 +169,7 @@ Inicjalizacja losowa    & \num{91.46} & \num{0.943} & \num{0.887} & \num{1} & \n
 \end{tabular}
 \end{table}
 
-\begin{table}[h]
+\begin{table}[ht]
 \centering
 \caption{Wyniki dla języka „Parzysta liczba \( a \)” z sekcji \ref{sec:eksperyment5}.}
 \label{tab:gig_even_a}
@@ -181,7 +181,7 @@ Inicjalizacja losowa    & \num{96.44} & \num{0.987} & \num{1} & \num{0.973} & \n
 \end{tabular}
 \end{table}
 
-\begin{table}[h]
+\begin{table}[ht]
 \centering
 \caption{Wyniki dla języka „Parzysta liczba \( a \) lub \( b \)” z sekcji \ref{sec:eksperyment6}.}
 \label{tab:gig_even_a_or_b}
@@ -205,7 +205,7 @@ Liczba stanów w wynikowym automacie wzrasta wraz z poziomem zakłóceń, co wsk
 
 Wyniki eksperymentów pokazują, że algorytm \textit{ALERGIA} dobrze radzi sobie z niewielkimi zakłóceniami, zachowując wysoką jakość klasyfikacji i kompaktową strukturę automatu. W miarę wzrostu poziomu szumu jego zdolność do poprawnego odwzorowania języka stopniowo maleje, co objawia się zarówno spadkiem dokładności, jak i wzrostem liczby stanów automatu.
 
-\begin{table}[h]
+\begin{table}[ht]
 \centering
 \caption{Wyniki dla algorytmu \textit{ALERGIA}.}
 \label{tab:alergia_results}
@@ -226,7 +226,7 @@ Procent szumu & Jakość & Stany automatu \\ \hline
 \end{tabular}
 \end{table}
 
-\begin{figure}[h]
+\begin{figure}[ht]
 \centering
 \begin{tikzpicture}
 \begin{axis}[
@@ -247,7 +247,7 @@ Procent szumu & Jakość & Stany automatu \\ \hline
 \label{fig:alergia_quality}
 \end{figure}
 
-\begin{figure}[h]
+\begin{figure}[ht]
 \centering
 \begin{tikzpicture}
 \begin{axis}[
