@@ -118,12 +118,12 @@ Porównywalna liczba stanów w \textit{PTA} dla różnych rozmiarów alfabetów 
 \begin{tabular}{|c|c|c|c|c|}
 \hline
 Rozmiar alfabetu (\(|\Sigma|\)) & Liczba przykładów & Stany PTA & Stany DFA & Czas [s] \\ \hline
-2                               & 2807              & 5508.44   & 3         & 0.104656 \\ \hline
-4                               & 1821              & 4993.48   & 3         & 0.166168 \\ \hline
-8                               & 1673              & 5675.68   & 3         & 0.364098 \\ \hline
-16                              & 1673              & 5307.78   & 3.58      & 0.644382 \\ \hline
-32                              & 2257              & 5103.64   & 4.50      & 1.080040 \\ \hline
-64                              & 4561              & 4756.92   & 3.06      & 0.883063 \\ \hline
+\num{2}                         & \num{2807}        & \num{5508.44} & \num{3.00}      & \num{0.105} \\ \hline
+\num{4}                         & \num{1821}        & \num{4993.48} & \num{3.00}      & \num{0.166} \\ \hline
+\num{8}                         & \num{1673}        & \num{5675.68} & \num{3.00}      & \num{0.364} \\ \hline
+\num{16}                        & \num{1673}        & \num{5307.78} & \num{3.58}   & \num{0.644} \\ \hline
+\num{32}                        & \num{2257}        & \num{5103.64} & \num{4.50}   & \num{1.080} \\ \hline
+\num{64}                        & \num{4561}        & \num{4756.92} & \num{3.06}   & \num{0.883} \\ \hline
 \end{tabular}
 \end{table}
 
@@ -150,7 +150,7 @@ Rozmiar alfabetu (\(|\Sigma|\)) & Liczba przykładów & Stany PTA & Stany DFA & 
 \section{Algorytm \textit{GIG}}  
 Przeprowadzone eksperymenty dla algorytmu \textit{GIG} miały na celu zbadanie wpływu metody inicjalizacji populacji na jakość wynikowego automatu, liczbę generacji potrzebnych do uzyskania rozwiązania oraz dokładność klasyfikacji danych testowych.
 
-Tabele \ref{tab:gig_one_a}, \ref{tab:gig_even_a} oraz \ref{tab:gig_even_a_or_b} prezentują wyniki uzyskane dla różnych metod inicjalizacji populacji. Kolumna \textit{Inicjalizacja populacji} określa zastosowany sposób inicjalizacji – \textit{warstwowa} oznacza podejście opisane w sekcji \ref{sec:gig-formalizacja}, natomiast \textit{losowa} generuje populację bez dodatkowych założeń. Kolumna \textit{Pokolenie} przedstawia średnią liczbę pokoleń potrzebnych do znalezienia rozwiązania. Kolumna \textit{Jakość} podaje skuteczność modelu jako procent poprawnych klasyfikacji. Kolumny \textit{TP} (True Positives) i \textit{TN} (True Negatives) wskazują odsetek poprawnych klasyfikacji przykładów pozytywnych i negatywnych, natomiast kolumny \textit{FP} (False Positives) i \textit{FN} (False Negatives) pokazują odsetek błędnych klasyfikacji.
+Tabele \ref{tab:gig_one_a}, \ref{tab:gig_even_a} oraz \ref{tab:gig_even_a_or_b} prezentują wyniki uzyskane dla różnych metod inicjalizacji populacji. Kolumna \emph{Inicjalizacja populacji} określa zastosowany sposób inicjalizacji – \emph{warstwowa} oznacza podejście opisane w sekcji \ref{sec:gig-formalizacja}, natomiast \emph{losowa} generuje populację bez dodatkowych założeń. Kolumna \emph{Pokolenie} przedstawia średnią liczbę pokoleń potrzebnych do znalezienia rozwiązania. Kolumna \emph{Jakość} podaje skuteczność modelu jako procent poprawnych klasyfikacji. Kolumny \emph{TP} (\textit{True Positives}) i \emph{TN} (\textit{True Negatives}) wskazują odsetek poprawnych klasyfikacji przykładów pozytywnych i negatywnych, natomiast kolumny \emph{FP} (\textit{False Positives}) i \emph{FN} (\textit{False Negatives}) pokazują odsetek błędnych klasyfikacji.
 
 Obie metody inicjalizacji populacji osiągnęły wysoką jakość klasyfikacji w każdym teście, lecz metoda losowa przyniosła lepsze rezultaty, skracając czas konwergencji średnio o $5.42$ pokolenia w teście trzecim (tabela \ref{tab:gig_even_a_or_b}). Sugeruje to, że losowość skuteczniej eksploruje przestrzeń rozwiązań, zwiększając prawdopodobieństwo znalezienia optymalnych modeli. 
 
@@ -164,8 +164,8 @@ Analiza wyników pokazuje, że metoda losowej inicjalizacji była bardziej efekt
 \begin{tabular}{|l|c|c|c|c|c|c|}
 \hline
 Inicjalizacja populacji & Pokolenie & Jakość & TP & TN & FP & FN \\ \hline
-Inicjalizacja warstwowa & 94.64 & 0.944 & 0.889 & 1 & 0.111 & 0 \\ \hline
-Inicjalizacja losowa    & 91.46 & 0.943 & 0.887 & 1 & 0.113 & 0 \\ \hline
+Inicjalizacja warstwowa & \num{94.64} & \num{0.944} & \num{0.889} & \num{1} & \num{0.111} & \num{0} \\ \hline
+Inicjalizacja losowa    & \num{91.46} & \num{0.943} & \num{0.887} & \num{1} & \num{0.113} & \num{0} \\ \hline
 \end{tabular}
 \end{table}
 
@@ -176,8 +176,8 @@ Inicjalizacja losowa    & 91.46 & 0.943 & 0.887 & 1 & 0.113 & 0 \\ \hline
 \begin{tabular}{|l|c|c|c|c|c|c|}
 \hline
 Inicjalizacja populacji & Pokolenie & Jakość & TP & TN & FP & FN \\ \hline
-Inicjalizacja warstwowa & 95.7  & 0.974 & 1 & 0.945 & 0 & 0.055 \\ \hline
-Inicjalizacja losowa    & 96.44 & 0.987 & 1 & 0.973 & 0 & 0.028 \\ \hline
+Inicjalizacja warstwowa & \num{95.7}  & \num{0.974} & \num{1} & \num{0.945} & \num{0} & \num{0.055} \\ \hline
+Inicjalizacja losowa    & \num{96.44} & \num{0.987} & \num{1} & \num{0.973} & \num{0} & \num{0.028} \\ \hline
 \end{tabular}
 \end{table}
 
@@ -188,8 +188,8 @@ Inicjalizacja losowa    & 96.44 & 0.987 & 1 & 0.973 & 0 & 0.028 \\ \hline
 \begin{tabular}{|l|c|c|c|c|c|c|}
 \hline
 Inicjalizacja populacji & Pokolenie & Jakość & TP & TN & FP & FN \\ \hline
-Inicjalizacja warstwowa & 96.2  & 0.923 & 0.97  & 0.875 & 0.03  & 0.125 \\ \hline
-Inicjalizacja losowa    & 90.78 & 0.968 & 0.988 & 0.948 & 0.013 & 0.053 \\ \hline
+Inicjalizacja warstwowa & \num{96.2}  & \num{0.923} & \num{0.97}  & \num{0.875} & \num{0.03}  & \num{0.125} \\ \hline
+Inicjalizacja losowa    & \num{90.78} & \num{0.968} & \num{0.988} & \num{0.948} & \num{0.013} & \num{0.053} \\ \hline
 \end{tabular}
 \end{table}
 
@@ -212,17 +212,17 @@ Wyniki eksperymentów pokazują, że algorytm \textit{ALERGIA} dobrze radzi sobi
 \begin{tabular}{|c|c|c|}
 \hline
 Procent szumu & Jakość & Stany automatu \\ \hline
-0             & 1.0000 & 2             \\ \hline
-0.001         & 0.9941 & 2             \\ \hline
-0.005         & 0.9734 & 2.14          \\ \hline
-0.01          & 0.9527 & 2.56          \\ \hline
-0.02          & 0.9280 & 3.30           \\ \hline
-0.05          & 0.8921 & 3.92          \\ \hline
-0.1           & 0.8985 & 4             \\ \hline
-0.2           & 0.9100 & 4             \\ \hline
-0.3           & 0.8664 & 4.32          \\ \hline
-0.4           & 0.7998 & 4.98          \\ \hline
-0.5           & 0.7412 & 5.36          \\ \hline
+\num{0.000}  & \num{1.000} & \num{2.00}         \\ \hline
+\num{0.001}  & \num{0.994} & \num{2.00}         \\ \hline
+\num{0.005}  & \num{0.973} & \num{2.14}         \\ \hline
+\num{0.010}  & \num{0.953} & \num{2.56}         \\ \hline
+\num{0.020}  & \num{0.928} & \num{3.30}         \\ \hline
+\num{0.050}  & \num{0.892} & \num{3.92}         \\ \hline
+\num{0.100}  & \num{0.898} & \num{4.00}         \\ \hline
+\num{0.200}  & \num{0.910} & \num{4.00}         \\ \hline
+\num{0.300}  & \num{0.866} & \num{4.32}         \\ \hline
+\num{0.400}  & \num{0.799} & \num{4.98}         \\ \hline
+\num{0.500}  & \num{0.741} & \num{5.36}         \\ \hline
 \end{tabular}
 \end{table}
 
@@ -235,7 +235,9 @@ Procent szumu & Jakość & Stany automatu \\ \hline
     legend pos=south west,
     grid=major,
     width=0.85\textwidth,
-    height=0.5\textwidth
+    height=0.5\textwidth,
+    x tick label style={/pgf/number format/use comma, /pgf/number format/1000 sep={\,}},
+    y tick label style={/pgf/number format/use comma, /pgf/number format/1000 sep={\,}}
 ]
 \addplot coordinates {(0, 1.0) (0.001, 0.994074) (0.005, 0.97336) (0.01, 0.95268) (0.02, 0.927988) (0.05, 0.892144) (0.1, 0.898522) (0.2, 0.909984) (0.3, 0.866366) (0.4, 0.799828) (0.5, 0.741206)};
 \addlegendentry{Średnia jakość modelu}
@@ -254,7 +256,9 @@ Procent szumu & Jakość & Stany automatu \\ \hline
     legend pos=north west,
     grid=major,
     width=0.85\textwidth,
-    height=0.5\textwidth
+    height=0.5\textwidth,
+    x tick label style={/pgf/number format/use comma, /pgf/number format/1000 sep={\,}},
+    y tick label style={/pgf/number format/use comma, /pgf/number format/1000 sep={\,}}
 ]
 \addplot coordinates {(0, 2) (0.001, 2) (0.005, 2.14) (0.01, 2.56) (0.02, 3.3) (0.05, 3.92) (0.1, 4) (0.2, 4) (0.3, 4.32) (0.4, 4.98) (0.5, 5.36)};
 \addlegendentry{Liczba stanów}

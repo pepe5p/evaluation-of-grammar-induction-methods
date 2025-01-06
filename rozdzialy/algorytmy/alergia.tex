@@ -142,10 +142,10 @@ O(|Q|^4 \cdot |\Sigma|).
 
 \subparagraph*{Złożoność rzeczywista.}  
 W praktyce rzeczywista złożoność algorytmu jest często znacznie niższa niż teoretyczna granica. Wynika to z dwóch głównych czynników:  
-\begin{itemize}  
+\begin{enumerate}
     \item Algorytm wcześnie scala zgodne stany, zmniejszając liczbę analizowanych stanów w kolejnych iteracjach.  
     \item Stany znajdujące się na końcu porządku przetwarzania (liście drzewa) mają niewielu następców lub w ogóle ich nie posiadają, co ogranicza liczbę rekurencyjnych wywołań.  
-\end{itemize}  
+\end{enumerate}  
 
 Z tego powodu empiryczna złożoność algorytmu jest często bliższa:  
 \[
@@ -224,25 +224,25 @@ Algorytm rozpoczyna proces od analizy zgodności pierwszej pary stanów \( q_1 \
 \paragraph*{Sprawdzenie terminacji:}  
 Prawdopodobieństwo terminacji dla każdego stanu:  
 \[
-P_F(q_1) = \frac{0}{8} = 0, \quad P_F(q_2) = \frac{2}{5} = 0.4.
+P_F(q_1) = \frac{0}{8} = 0, \quad P_F(q_2) = \frac{2}{5} = \num{0.4},
 \]
 
 Różnica:  
 \[
-|P_F(q_1) - P_F(q_2)| = |0 - 0.4| = 0.4.
+|P_F(q_1) - P_F(q_2)| = |0 - \num{0.4}| = \num{0.4}.
 \]
 
 \paragraph*{Tolerancja Hoeffding’a:}  
-Przy poziomie ufności \( \alpha = 1.7 \) oraz liczbach obserwacji \( n_1 = 8 \) i \( n_2 = 5 \), granica zgodności \( \epsilon \) jest obliczana na podstawie wzoru:  
+Przy poziomie ufności \( \alpha = \num{1.7} \) oraz liczbach obserwacji \( n_1 = 8 \) i \( n_2 = 5 \), granica zgodności \( \epsilon \) jest obliczana na podstawie wzoru:  
 \[
 \epsilon = \sqrt{\frac{\ln(2 / \alpha)}{2}} \left( \frac{1}{\sqrt{n_1}} + \frac{1}{\sqrt{n_2}} \right)
 \]
 \[
-\epsilon \approx 0.228.
+\epsilon \approx \num{0.228}.
 \]
 
 \paragraph*{Porównanie:}  
-Ponieważ \( 0.4 > 0.228 \), stany \( q_1 \) i \( q_2 \) \textbf{nie mogą zostać połączone}.
+Ponieważ \( \num{0.4} > \num{0.228} \), stany \( q_1 \) i \( q_2 \) \textbf{nie mogą zostać połączone}.
 
 \paragraph*{}
 
@@ -258,45 +258,45 @@ Po odrzuceniu scalania stanów \( q_1 \) i \( q_2 \), algorytm przechodzi do ana
 \paragraph*{Test Hoeffding’a:}  
 Prawdopodobieństwo terminacji dla każdego stanu:  
 \[
-P(q_2, H) = \frac{2}{5} = 0.4, \quad P(q_3, H) = \frac{1}{3} \approx 0.333,
+P(q_2, H) = \frac{2}{5} = \num{0.4}, \quad P(q_3, H) = \frac{1}{3} \approx \num{0.333},
 \]
 \[
-P(q_2, T) = \frac{1}{5} = 0.2, \quad P(q_3, T) = \frac{1}{3} \approx 0.333,
+P(q_2, T) = \frac{1}{5} = \num{0.2}, \quad P(q_3, T) = \frac{1}{3} \approx \num{0.333},
 \]
 \[
-P_F(q_2) = \frac{2}{5} = 0.4, \quad P_F(q_3) = \frac{1}{3} \approx 0.333.
+P_F(q_2) = \frac{2}{5} = \num{0.4}, \quad P_F(q_3) = \frac{1}{3} \approx \num{0.333}.
 \]
 
 Różnica:  
 \[
-|P(q_2, H) - P(q_3, H)| \approx |0.4 - 0.333| = 0.067,
+|P(q_2, H) - P(q_3, H)| \approx |\num{0.4} - \num{0.333}| = \num{0.067},
 \]
 \[
-|P(q_2, T) - P(q_3, T)| \approx |0.2 - 0.333| = 0.133,
+|P(q_2, T) - P(q_3, T)| \approx |\num{0.2} - \num{0.333}| = \num{0.133},
 \]
 \[
-|P_F(q_2) - P_F(q_3)| \approx |0.4 - 0.333| = 0.067.
+|P_F(q_2) - P_F(q_3)| \approx |\num{0.4} - \num{0.333}| = \num{0.067}.
 \]
 
 \paragraph*{Tolerancja Hoeffding’a:}  
-Przy poziomie ufności \( \alpha = 1.7 \) oraz liczbach obserwacji \( n_1 = 5 \) i \( n_2 = 3 \), granica zgodności \( \epsilon \) jest obliczana na podstawie wzoru:  
+Przy poziomie ufności \( \alpha = \num{1.7} \) oraz liczbach obserwacji \( n_1 = 5 \) i \( n_2 = 3 \), granica zgodności \( \epsilon \) jest obliczana na podstawie wzoru:  
 \[
 \epsilon = \sqrt{\frac{\ln(2 / \alpha)}{2}} \left( \frac{1}{\sqrt{n_1}} + \frac{1}{\sqrt{n_2}} \right)
 \]
 \[
-\epsilon \approx 0.318.
+\epsilon \approx \num{0.318}.
 \]
 
 \paragraph*{Porównanie:}  
 Ponieważ:  
 \[
-|P(q_2, H) - P(q_3, H)| < 0.318, \quad
+|P(q_2, H) - P(q_3, H)| < \num{0.318}, \quad
 \]
 \[
-|P(q_2, T) - P(q_3, T)| < 0.318, \quad
+|P(q_2, T) - P(q_3, T)| < \num{0.318}, \quad
 \]
 \[
-|P_F(q_2) - P_F(q_3)| < 0.318,
+|P_F(q_2) - P_F(q_3)| < \num{0.318},
 \]  
 stany \( q_2 \) i \( q_3 \) \textbf{są zgodne}. Aby mogły zostać połączone musimy sprawdzić rekurencyjnie zgodność dzieci stanu $q_3$ z odpowiednikami z gałęzi $q_2$, tj. $q_4$ i $q_6$ oraz $q_5$ i $q_7$. Analogiczne obliczenia wykazują zgodność wszystkich tych par stanów. Wynik tego kroku przedstawiono na rysunku \ref{fig:alergia_example_1}.  
 

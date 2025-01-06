@@ -143,14 +143,14 @@ Zbiór danych testowych zawiera 1000 przykładów pozytywnych oraz 1000 przykła
 \subsection{Zakres parametrów}  
 Eksperyment bada wpływ poziomu szumu w danych na jakość wynikowego modelu. Szum jest dodawany do danych z określonym prawdopodobieństwem, które przyjmuje wartości:  
 \[
-\{0.0, 0.001, 0.005, 0.01, 0.02, 0.05, 0.1, 0.2, 0.3, 0.4, 0.5\}.
+\{\num{0.0}, \num{0.001}, \num{0.005}, \num{0.01}, \num{0.02}, \num{0.05}, \num{0.1}, \num{0.2}, \num{0.3}, \num{0.4}, \num{0.5}\}.
 \]  
 Każdy zestaw danych z określonym poziomem zakłóceń jest analizowany niezależnie.  
 
 \subsection{Metryki oceny}  
 W trakcie eksperymentów analizowane są następujące metryki:  
 \begin{itemize}  
-    \item Jakość modelu – procent poprawnych zdań wygenerowanych przez automat spośród 10000 losowo wygenerowanych prób.  
+    \item Jakość modelu – procent poprawnych zdań wygenerowanych przez automat spośród \num{10000} losowo wygenerowanych prób.  
     \item Liczba stanów w wynikowym automacie.  
 \end{itemize}  
 

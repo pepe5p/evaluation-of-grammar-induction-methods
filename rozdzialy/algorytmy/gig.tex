@@ -3,7 +3,7 @@
 
 Algorytm \textit{GIG} (\textit{Grammatical Inference by Genetic search}) \cite{GIG}, podobnie jak algorytm \textit{RPNI}, jest przeznaczony do indukcji gramatyk regularnych na podstawie przykładów pozytywnych \( S^+ \) i negatywnych \( S^- \). Oba algorytmy opierają się na iteracyjnym łączeniu stanów w celu skonstruowania deterministycznego automatu skończonego (DFA), który jak najlepiej opisuje dane. W przypadku \textit{RPNI} znaleziony DFA zawsze jest minimalny i akceptuje wszystkie słowa z \( S^+ \), odrzucając słowa z \( S^- \). Natomiast wynik algorytmu \textit{GIG} nie jest jednoznacznie określony.
 
-W algorytmie \textit{GIG} przestrzeń możliwych rozwiązań jest reprezentowana jako podziały stanów maksymalnego automatu kanonicznego (MCA, ang. maximal canonical automaton) zbudowanego na podstawie zbioru \( S^+ \). Przeszukiwanie tej przestrzeni odbywa się przy użyciu algorytmu genetycznego, który iteracyjnie modyfikuje populację podziałów poprzez operacje takie jak krzyżowanie i mutacja. Funkcja dopasowania (\textit{fitness}) ocenia jakość każdego rozwiązania, preferując modele akceptujące jak najwięcej słów z \( S^+ \), odrzucające \( S^- \), a jednocześnie minimalizujące liczbę stanów. W efekcie uzyskane rozwiązanie może nie być optymalne ani w pełni poprawne.
+W algorytmie \textit{GIG} przestrzeń możliwych rozwiązań jest reprezentowana jako podziały stanów maksymalnego automatu kanonicznego (MCA, \textit{maximal canonical automaton}) zbudowanego na podstawie zbioru \( S^+ \). Przeszukiwanie tej przestrzeni odbywa się przy użyciu algorytmu genetycznego, który iteracyjnie modyfikuje populację podziałów poprzez operacje takie jak krzyżowanie i mutacja. Funkcja dopasowania (\textit{fitness}) ocenia jakość każdego rozwiązania, preferując modele akceptujące jak najwięcej słów z \( S^+ \), odrzucające \( S^- \), a jednocześnie minimalizujące liczbę stanów. W efekcie uzyskane rozwiązanie może nie być optymalne ani w pełni poprawne.
 
 W przeciwieństwie do deterministycznego podejścia algorytmu \textit{RPNI}, \textit{GIG} wykorzystuje mechanizmy ewolucyjne, co umożliwia efektywne przeszukiwanie dużych i złożonych przestrzeni rozwiązań. Jest to szczególnie istotne w przypadkach, gdy liczba stanów automatu lub rozmiar zbioru przykładów uczących znacząco rośnie.
 
@@ -26,7 +26,7 @@ GIG wykorzystuje algorytm genetyczny do indukcji deterministycznego automatu sko
     \item \textbf{Ocena dopasowania osobników (\textit{fitness}):}
         Każdy osobnik jest oceniany na podstawie skonstruowanego z niego DFA. Wartość dopasowania jest wyznaczana na podstawie liczby stanów DFA, zgodności z \( S^+ \) oraz zdolności do odrzucania \( S^- \). Preferowane są mniejsze automaty, które poprawnie klasyfikują dane.
     \item \textbf{Zakończenie:}
-        Algorytm kończy działanie po osiągnięciu określonej liczby generacji lub spełnieniu kryterium stopu (np. brak poprawy w kolejnych iteracjach). Wynikowy podział definiuje DFA zgodny z \( S^+ \) i \( S^- \).
+        Algorytm kończy działanie po osiągnięciu określonej liczby generacji lub spełnieniu kryterium stopu (np.\ brak poprawy w kolejnych iteracjach). Wynikowy podział definiuje DFA zgodny z \( S^+ \) i \( S^- \).
 \end{enumerate}
 
 \subsection{Różnice podejścia genetycznego i zachłannego}

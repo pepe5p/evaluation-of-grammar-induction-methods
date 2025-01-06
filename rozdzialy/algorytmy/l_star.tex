@@ -20,10 +20,10 @@ Model algorytmu składa się z dwóch aktorów: \textbf{nauczyciela} oraz \textb
 \subsection{Metoda}
 
 Konstruowanie minimalnego automatu deterministycznego (DFA), który akceptuje język \( L \), odbywa się przy pomocy dwóch rodzajów zapytań:
-\begin{itemize}
+\begin{enumerate}
     \item \textbf{Zapytania o członkostwo (Membership Queries, \textit{MQ}):} Uczeń pyta, czy słowo \( w \) należy do języka \( L \). Nauczyciel odpowiada „tak” (\( w \in L \)) lub „nie” (\( w \notin L \)).
     \item \textbf{Zapytania o równoważność (Equivalence Queries, \textit{EQ}):} Uczeń przedstawia hipotezę \( H \), reprezentującą język \( L(H) \), i pyta, czy \( L(H) = L \). Jeśli hipoteza jest niepoprawna, nauczyciel dostarcza kontrprzykład \( w \), dla którego \( w \in L \) i \( w \notin L(H) \), lub \( w \notin L \) i \( w \in L(H) \).
-\end{itemize}
+\end{enumerate}
 
 Dla poprawnego działania algorytmu wymagane jest, aby nauczyciel mógł udzielać prawdziwych odpowiedzi na oba rodzaje zadawanych pytań. Nauczyciela często nazywa się również \textbf{wyrocznią}, co jest skrótem myślowym, ponieważ formalnie nauczyciel składa się z pary \textbf{wyroczni (oracles)}: \textit{MQ} i \textit{EQ}. Zazwyczaj to na użytkowniku algorytmu spoczywa odpowiedzialność za określenie nauczyciela, co wymaga już na wstępie posiadania pewnej wiedzy na temat danego języka. Jest to największe ograniczenie w zastosowaniu algorytmu \textit{L*}.
 
@@ -146,7 +146,7 @@ Algorytm \textit{L*} składa się z kilku etapów, których złożoność można
 \end{itemize}
 
 Struktura danych w algorytmie składa się z dwóch komponentów:
-\begin{itemize}
+\begin{enumerate}
     \item \textbf{Tabela obserwacji:}
     \begin{itemize}
         \item Zbiór \(S\) (prefiksy): maksymalnie \(O(n + m \cdot (n - 1))\) wpisów,
@@ -154,7 +154,7 @@ Struktura danych w algorytmie składa się z dwóch komponentów:
         \item Całkowity rozmiar tabeli: \(O(n \cdot m)\).
     \end{itemize}
     \item \textbf{DFA hipotezy:} DFA może mieć maksymalnie \(n\) stanów i \(O(n \cdot |\Sigma|)\) przejść.
-\end{itemize}
+\end{enumerate}
 
 Algorytm wymaga pamięci na tabelę obserwacji oraz strukturę DFA, stąd można obliczyć łączną złożoność pamięciową:
 \[
@@ -177,12 +177,12 @@ L = \{ w \in \{a, b\}^* \mid \text{liczba liter } a \text{ jest parzysta lub lic
 \]
 
 DFA dla języka $L$ zawiera cztery stany, ponieważ istnieją cztery możliwe kombinacje parzystości:
-\begin{itemize}
+\begin{enumerate}
     \item Stan $s_0$: parzysta liczba $a$ i parzysta liczba $b$,
     \item Stan $s_1$: nieparzysta liczba $a$ i parzysta liczba $b$,
     \item Stan $s_2$: nieparzysta liczba $a$ i nieparzysta liczba $b$,
     \item Stan $s_3$: parzysta liczba $a$ i nieparzysta liczba $b$.
-\end{itemize}
+\end{enumerate}
 
 Schemat minimalnego DFA można zobaczyć na rysunku \ref{fig:dfa_even_a_or_even_b}.
 
@@ -376,7 +376,7 @@ Na podstawie tabeli obserwacji konstruujemy hipotezę $H_3$:
 \end{itemize}
 
 \paragraph*{Testowanie hipotezy $H_3$.}
-Hipoteza jest testowana przez zapytanie o równoważność (EQ). Nauczyciel odpowiada "tak", co kończy działanie algorytmu.
+Hipoteza jest testowana przez zapytanie o równoważność (EQ). Nauczyciel odpowiada ,,tak'', co kończy działanie algorytmu.
 
 \paragraph*{Ostateczny automat.}
 Automat DFA reprezentujący język \( L \) ma następującą macierz przejść:
