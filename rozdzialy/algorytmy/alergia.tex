@@ -36,11 +36,11 @@ A = (Q, \Sigma, \delta, q_0, P),
 \]
 gdzie:  
 \begin{itemize}  
-    \item \( Q \) – skończony zbiór stanów,  
-    \item \( \Sigma \) – alfabet,  
-    \item \( \delta : Q \times \Sigma \to Q \) – funkcja przejścia,  
-    \item \( q_0 \in Q \) – stan początkowy,  
-    \item \( P: Q \times \Sigma \to [0, 1] \) – funkcja prawdopodobieństwa przejść, spełniająca:  
+    \item \( Q \) -- skończony zbiór stanów,  
+    \item \( \Sigma \) -- alfabet,  
+    \item \( \delta : Q \times \Sigma \to Q \) -- funkcja przejścia,  
+    \item \( q_0 \in Q \) -- stan początkowy,  
+    \item \( P: Q \times \Sigma \to [0, 1] \) -- funkcja prawdopodobieństwa przejść, spełniająca:  
     \[
     \sum_{a \in \Sigma} P(q, a) \leq 1, \quad \forall q \in Q, \quad a \in \Sigma.
     \]  
@@ -57,8 +57,8 @@ Test Hoeffding’a w algorytmie ALERGIA jest wykorzystywany do porównania dwóc
 \]
 gdzie:  
 \begin{itemize}  
-    \item \( n_1, n_2 \) – liczba obserwacji w stanach \( q_1 \) i \( q_2 \),  
-    \item \( \alpha \) – poziom ufności określający dopuszczalny margines błędu.  
+    \item \( n_1, n_2 \) -- liczba obserwacji w stanach \( q_1 \) i \( q_2 \),  
+    \item \( \alpha \) -- poziom ufności określający dopuszczalny margines błędu.  
 \end{itemize}  
 \end{definition}
 

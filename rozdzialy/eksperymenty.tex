@@ -83,8 +83,8 @@ Każda konfiguracja parametrów jest testowana 50 razy, a uzyskane wartości są
 \section{Eksperymenty dla algorytmu \textit{GIG}} 
 Eksperymenty przeprowadzone dla algorytmu \textit{GIG} mają na celu analizę wpływu sposobu inicjalizacji populacji początkowej na jakość wynikowego automatu oraz liczbę generacji potrzebnych do znalezienia rozwiązania. Eksperyment bada dwa podejścia do inicjalizacji populacji początkowej:  
 \begin{itemize}  
-    \item Losowa populacja – generowana całkowicie losowo.  
-    \item Inteligentna populacja – skonstruowana tak jak zostało to opisane w sekcji \ref{sec:gig-formalizacja}.  
+    \item Losowa populacja -- generowana całkowicie losowo.  
+    \item Inteligentna populacja -- skonstruowana tak jak zostało to opisane w sekcji \ref{sec:gig-formalizacja}.  
 \end{itemize}  
 
 Parametry algorytmu, takie jak liczba generacji (\(2000\)), liczba rodziców (\(20\)) oraz rozmiar populacji (\(100\)), pozostają stałe we wszystkich testach. Kryterium zatrzymania obejmuje warunek, który kończy proces po 50 generacjach bez poprawy jakości rozwiązania. W eksperymencie wykorzystano trzy różne języki formalne, dla których zdefiniowano zbiory przykładów pozytywnych i negatywnych. 
@@ -116,9 +116,9 @@ Język ten obejmuje wszystkie ciągi, w których liczba symboli \( a \) jest par
 \subsection{Metryki oceny}  
 W trakcie eksperymentów analizowane są następujące metryki:  
 \begin{itemize}
-    \item Numer pokolenia najlepszego rozwiązania - liczba opisująca w ilu cyklach algorytm genetyczny znalazł rozwiązanie.
-    \item Jakość - procent poprawnych klasyfikacji najlepszego osobnika na danych testowych.
-    \item Macierz konfuzji - cztery wartości opisujące ilość błędów najlepszego osobnika.
+    \item Numer pokolenia najlepszego rozwiązania -- liczba opisująca w ilu cyklach algorytm genetyczny znalazł rozwiązanie.
+    \item Jakość -- procent poprawnych klasyfikacji najlepszego osobnika na danych testowych.
+    \item Macierz konfuzji -- cztery wartości opisujące ilość błędów najlepszego osobnika.
 \end{itemize}  
 
 \subsection{Procedura eksperymentów}  
@@ -146,7 +146,7 @@ Każdy zestaw danych z określonym poziomem zakłóceń jest analizowany niezale
 \subsection{Metryki oceny}  
 W trakcie eksperymentu analizowane są następujące metryki:  
 \begin{itemize}  
-    \item Jakość modelu – procent poprawnych zdań wygenerowanych przez automat spośród \num{10000} losowo wygenerowanych prób.  
+    \item Jakość modelu -- procent poprawnych zdań wygenerowanych przez automat spośród \num{10000} losowo wygenerowanych prób.  
     \item Liczba stanów w wynikowym automacie.  
 \end{itemize}  
 
