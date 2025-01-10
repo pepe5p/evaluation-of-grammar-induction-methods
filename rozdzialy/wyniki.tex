@@ -159,7 +159,7 @@ Analiza wyników pokazuje, że metoda losowej inicjalizacji była bardziej efekt
 
 \begin{table}[ht]
 \centering
-\caption{Wyniki dla języka „Co najmniej jedno \( a \)” z sekcji \ref{sec:eksperyment4}.}
+\caption{Wyniki dla języka ,,Co najmniej jedno \( a \)'' z sekcji \ref{sec:eksperyment4}.}
 \label{tab:gig_one_a}
 \begin{tabular}{|l|c|c|c|c|c|c|}
 \hline
@@ -171,7 +171,7 @@ Inicjalizacja losowa    & \num{91.46} & \num{0.943} & \num{0.887} & \num{1} & \n
 
 \begin{table}[ht]
 \centering
-\caption{Wyniki dla języka „Parzysta liczba \( a \)” z sekcji \ref{sec:eksperyment5}.}
+\caption{Wyniki dla języka ,,Parzysta liczba \( a \)'' z sekcji \ref{sec:eksperyment5}.}
 \label{tab:gig_even_a}
 \begin{tabular}{|l|c|c|c|c|c|c|}
 \hline
@@ -183,7 +183,7 @@ Inicjalizacja losowa    & \num{96.44} & \num{0.987} & \num{1} & \num{0.973} & \n
 
 \begin{table}[ht]
 \centering
-\caption{Wyniki dla języka „Parzysta liczba \( a \) lub \( b \)” z sekcji \ref{sec:eksperyment6}.}
+\caption{Wyniki dla języka ,,Parzysta liczba \( a \) lub \( b \)'' z sekcji \ref{sec:eksperyment6}.}
 \label{tab:gig_even_a_or_b}
 \begin{tabular}{|l|c|c|c|c|c|c|}
 \hline
@@ -269,9 +269,5 @@ Procent szumu & Jakość & Stany automatu \\ \hline
 \end{figure}
 
 
-\section{Podsumowanie}  
-Przeprowadzone eksperymenty pozwoliły na ocenę skuteczności i wydajności algorytmów \textit{L*}, \textit{RPNI}, \textit{GIG} oraz \textit{ALERGIA}. Algorytm \textit{L*} efektywnie generował minimalne automaty deterministyczne (\textit{DFA}), utrzymując niską liczbę zapytań o równoważność (\textit{EQ}), choć liczba zapytań o przynależność (\textit{MQ}) rosła wykładniczo wraz ze złożonością problemu, co czyni go odpowiednim w sytuacjach z dobrze zdefiniowanymi źródłami wiedzy. Algorytm \textit{RPNI} wyróżniał się prostotą, niską złożonością i wysoką wydajnością, co czyni go dobrym wyborem do szybkiego uogólniania danych, niezależnie od rozmiaru alfabetu. Algorytm \textit{GIG}, oparty na metodach ewolucyjnych, oferował elastyczność, lecz jego większa złożoność i czasochłonność nie zawsze przekładały się na lepsze wyniki w porównaniu z prostszymi metodami, a eksperymenty wykazały, że losowa inicjalizacja populacji częściej prowadziła do lepszych wyników niż inicjalizacja warstwowa. Algorytm \textit{ALERGIA} okazał się odporny na niewielkie zakłócenia, zachowując wysoką jakość klasyfikacji i kompaktową strukturę modelu, jednak jego skuteczność spadała przy większym poziomie szumu, co czyni go bardziej odpowiednim do danych probabilistycznych o umiarkowanym poziomie zakłóceń.  
-
-Wybór algorytmu powinien być zatem dostosowany do specyfiki problemu -- \textit{L*} sprawdza się tam, gdzie dostępna jest wyrocznia wysokiej jakości, \textit{RPNI} oferuje szybkość i prostotę, \textit{GIG} nadaje się do złożonych problemów optymalizacyjnych, a \textit{ALERGIA} jest przydatna w modelowaniu danych probabilistycznych.  
-
-Możliwości dalszego rozwoju obejmują powtórzenie eksperymentów na bardziej złożonych lub rzeczywistych danych, co pozwoliłoby na dokładniejsze zbadanie praktycznych zastosowań algorytmów. Ponadto warto przeprowadzić dodatkowe analizy dla innych metod indukcji gramatyk formalnych, które nie zostały uwzględnione w tej pracy, w celu poszerzenia porównania i oceny ich skuteczności w różnych warunkach.
+\section{Analiza wyników}  
+Przeprowadzone eksperymenty pozwoliły na ocenę skuteczności i wydajności algorytmów \textit{L*}, \textit{RPNI}, \textit{GIG} oraz \textit{ALERGIA}. Algorytm \textit{L*} efektywnie generował minimalne automaty deterministyczne (\textit{DFA}), utrzymując niską liczbę zapytań o równoważność (\textit{EQ}), choć liczba zapytań o przynależność (\textit{MQ}) rosła wykładniczo wraz ze złożonością problemu, co czyni go odpowiednim w sytuacjach z dobrze zdefiniowanymi źródłami wiedzy. Algorytm \textit{RPNI} wyróżniał się prostotą, niską złożonością i wysoką wydajnością, co czyni go dobrym wyborem do szybkiego uogólniania danych, niezależnie od rozmiaru alfabetu. Algorytm \textit{GIG}, oparty na metodach ewolucyjnych, oferował elastyczność, lecz jego większa złożoność i czasochłonność nie zawsze przekładały się na lepsze wyniki w porównaniu z prostszymi metodami, a eksperymenty wykazały, że losowa inicjalizacja populacji częściej prowadziła do lepszych wyników niż inicjalizacja warstwowa. Algorytm \textit{ALERGIA} okazał się odporny na niewielkie zakłócenia, zachowując wysoką jakość klasyfikacji i kompaktową strukturę modelu, jednak jego skuteczność spadała przy większym poziomie szumu, co czyni go bardziej odpowiednim do danych probabilistycznych o umiarkowanym poziomie zakłóceń. Wybór algorytmu powinien być zatem dostosowany do specyfiki problemu -- \textit{L*} sprawdza się tam, gdzie dostępna jest wyrocznia wysokiej jakości, \textit{RPNI} oferuje szybkość i prostotę, \textit{GIG} nadaje się do złożonych problemów optymalizacyjnych, a \textit{ALERGIA} jest przydatna w modelowaniu danych probabilistycznych. 

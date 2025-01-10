@@ -156,3 +156,31 @@ Jakość modelu jest mierzona przez symulację jego działania na losowo wygener
 Każda konfiguracja poziomu szumu jest testowana 50 razy, a uzyskane wartości są uśredniane. Eksperymenty są przeprowadzane dla wszystkich poziomów zakłóceń w celu analizy wpływu szumu na zdolność algorytmu do odwzorowania struktury badanego języka.  
 
 
+\section{Kod źródłowy i odtwarzanie eksperymentów}  
+\label{sec:code}  
+
+Wszystkie eksperymenty opisane w pracy zostały zaimplementowane i udostępnione w publicznym repozytorium dostępnym pod adresem:  
+\begin{center}  
+\url{https://github.com/pepe5p/grammar-induction}  
+\end{center}  
+
+Repozytorium zawiera kod źródłowy, dane testowe oraz szczegółowe instrukcje umożliwiające odtworzenie eksperymentów. Aby uruchomić eksperymenty, należy wykonać następujące kroki:  
+\begin{itemize}  
+    \item Upewnić się, że \textit{Docker} oraz \textit{Docker Compose} są zainstalowane w systemie.  
+    \item Sklonować repozytorium i przejść do jego katalogu. Przykładowe polecenia:  
+    \begin{minted}{bash}
+    git clone https://github.com/pepe5p/grammar-induction
+    cd grammar-induction
+    \end{minted} 
+    \item Zbudować obraz Dockerowy, wykonując polecenie:  
+    \begin{minted}{bash}
+    docker compose build grammar-induction
+    \end{minted}  
+    \item Uruchomić eksperyment za pomocą polecenia:  
+    \begin{minted}{bash}
+    make dc_run
+    \end{minted}
+    Po wywołaniu polecenia należy podać nazwę algorytmu, np.\ ,,\texttt{alergia}''.
+\end{itemize} 
+
+Aby zmienić parametry testów, należy edytować kod źródłowy repozytorium.
